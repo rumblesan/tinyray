@@ -4,8 +4,22 @@
 #include "tests/test_coordinates.h"
 #include "tests/test_shapes.h"
 #include "tests/test_camera.h"
+#include "tests/test_config.h"
 
-int tests_run;
+int tests_run = 0;
+
+int run_test(char *test_name, char *(*test_runner)()) {
+    tests_run = 0;
+    char *test_results = test_runner();
+    if (test_results != 0) {
+        printf("%s\n", test_results);
+    } else {
+        printf("%s tests passed\n", test_name);
+    }
+    printf("    Tests run: %d\n", tests_run);
+    printf("\n");
+    return (test_results != 0);
+}
 
 int main(int argc, char *argv[]) {
 
@@ -14,44 +28,14 @@ int main(int argc, char *argv[]) {
     printf("* Running tests *\n");
     printf("*****************\n\n");
 
-    int result = 0;
+    int coord_result  = run_test("Coordinates", test_coordinates);
+    int shape_result  = run_test("Shape", test_shapes);
+    int camera_result = run_test("Camera", test_camera);
 
-    tests_run = 0;
-    char *coord_results = test_coordinates();
-    if (coord_results != 0) {
-        printf("%s\n", coord_results);
-    } else {
-        printf("COORDINATE TESTS PASSED\n");
-    }
-    printf("    Tests run: %d\n", tests_run);
-    printf("\n");
-
-    result = result || (coord_results != 0);
-
-    tests_run = 0;
-    char *shape_results = test_shapes();
-    if (shape_results != 0) {
-        printf("%s\n", shape_results);
-    } else {
-        printf("SHAPE TESTS PASSED\n");
-    }
-    printf("    Tests run: %d\n", tests_run);
-    printf("\n");
-
-    result = result || (shape_results != 0);
-
-    tests_run = 0;
-    char *camera_results = test_camera();
-    if (camera_results != 0) {
-        printf("%s\n", camera_results);
-    } else {
-        printf("CAMERA TESTS PASSED\n");
-    }
-    printf("    Tests run: %d\n", tests_run);
-    printf("\n");
-
-    result = result || (camera_results != 0);
-
-    return result;
+    return (
+        coord_result ||
+        shape_result ||
+        camera_result
+    );
 }
 
