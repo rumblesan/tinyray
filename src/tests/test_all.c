@@ -3,6 +3,7 @@
 #include "tests/min_unit.h"
 #include "tests/test_coordinates.h"
 #include "tests/test_shapes.h"
+#include "tests/test_camera.h"
 
 int tests_run;
 
@@ -38,6 +39,18 @@ int main(int argc, char *argv[]) {
     printf("\n");
 
     result = result || (shape_results != 0);
+
+    tests_run = 0;
+    char *camera_results = test_camera();
+    if (camera_results != 0) {
+        printf("%s\n", camera_results);
+    } else {
+        printf("CAMERA TESTS PASSED\n");
+    }
+    printf("    Tests run: %d\n", tests_run);
+    printf("\n");
+
+    result = result || (camera_results != 0);
 
     return result;
 }
