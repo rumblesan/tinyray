@@ -5,6 +5,7 @@
 #include "tests/test_shapes.h"
 #include "tests/test_camera.h"
 #include "tests/test_config.h"
+#include "tests/test_lights.h"
 
 int tests_run = 0;
 
@@ -32,12 +33,14 @@ int main(int argc, char *argv[]) {
     int shape_result  = run_test("Shape", test_shapes);
     int camera_result = run_test("Camera", test_camera);
     int config_result = run_test("Config", test_config);
+    int lights_result = run_test("Config", test_lights);
 
     return (
         coord_result  ||
         shape_result  ||
         camera_result ||
-        config_result
+        config_result ||
+        lights_result
     );
 }
 
