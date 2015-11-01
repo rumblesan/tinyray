@@ -5,8 +5,8 @@ SDLFLAGS          = `sdl-config --cflags --libs`
 VPATH             = src src/core src/tests
 LIBS              = 
 
-TEST_CFLAGS       = --coverage $(CFLAGS)
-TEST_LIBS         = -lprofile_rt
+TEST_CFLAGS       = $(CFLAGS) -fprofile-instr-generate -fcoverage-mapping
+TEST_LIBS         =
 
 LCOV_FLAGS        = -c -b ./ -d ./
 
@@ -14,7 +14,7 @@ MAIN_BUILD_DIR    = build/main
 TEST_BUILD_DIR    = build/tests
 HEADER_DIRS       = include
 COVERAGE_DIR      = coverage
-COVERAGE_FILE     = $(COVERAGE_DIR)/coverage.info
+COVERAGE_FILE     = default.profraw
 
 INCLUDES          = $(addprefix -I, $(HEADER_DIRS))
 
@@ -35,15 +35,14 @@ tests: $(TEST_EXECUTABLE)
 
 coverage: $(TEST_EXECUTABLE)
 	./$(TEST_EXECUTABLE)
-	lcov $(LCOV_FLAGS) -o $(COVERAGE_FILE)
-	lcov -r $(COVERAGE_FILE) test\* -o $(COVERAGE_FILE)
-	genhtml $(COVERAGE_FILE) -o $(COVERAGE_DIR)
+	xcrun llvm-profdata merge -o $(COVERAGE_DIR)/test_fray.profdata $(COVERAGE_FILE)
+	xcrun llvm-cov show $(TEST_EXECUTABLE) -instr-profile=$(COVERAGE_DIR)/test_fray.profdata
 
 $(MAIN_BUILD_DIR)/%.o: %.c
 	$(CC) $(LDFLAGS) $(CFLAGS) $(INCLUDES) $< -o $@
 
 $(TEST_BUILD_DIR)/%.o: %.c
-	$(CC) $(LDFLAGS) $(TEST_CFLAGS) $(INCLUDES) $< -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) $(TEST_CFLAGS) $(INCLUDES) $< -o $@
 
 $(EXECUTABLE): $(MAIN_OBJECTS)
 	$(CC) $(CFLAGS) $(SDLFLAGS) $(MAIN_OBJECTS) -o $@
