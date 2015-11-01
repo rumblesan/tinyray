@@ -31,11 +31,13 @@ int main(int argc, char *argv[]) {
     int coord_result  = run_test("Coordinates", test_coordinates);
     int shape_result  = run_test("Shape", test_shapes);
     int camera_result = run_test("Camera", test_camera);
+    int config_result = run_test("Config", test_config);
 
     return (
-        coord_result ||
-        shape_result ||
-        camera_result
+        coord_result  ||
+        shape_result  ||
+        camera_result ||
+        config_result
     );
 }
 
