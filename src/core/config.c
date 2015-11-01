@@ -3,7 +3,7 @@
 
 #include "core/config.h"
 
-Config config_create(int width, int height, int background) {
+Config config_create(int width, int height, Colour background) {
 
     Config config = (Config) malloc(sizeof(Config_Data));
 

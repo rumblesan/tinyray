@@ -1,10 +1,13 @@
 #include "tests/min_unit.h"
 
 #include "core/config.h"
+#include "core/colours.h"
 
 static char * test_creation() {
 
-    Config config = config_create(640, 480, 0);
+    Colour background = colour(0, 100, 100, 0);
+
+    Config config = config_create(640, 480, background);
 
     mu_assert("Error: Config object not created correctly", config->width == 640);
 
