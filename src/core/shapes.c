@@ -6,9 +6,9 @@
 
 Shape sphere_create(double x, double y, double z, double radius) {
 
-    Shape shape = (Shape) malloc(sizeof(Shape_Data));
+    Shape shape = (Shape) malloc(sizeof(ShapeData));
 
-    Sphere sphere = (Sphere) malloc(sizeof(Sphere_Data));
+    Sphere sphere = (Sphere) malloc(sizeof(SphereData));
 
     sphere->centre = coord3d_create(x, y, z);
     sphere->radius = radius;

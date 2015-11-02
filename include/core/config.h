@@ -11,7 +11,7 @@ typedef struct config {
 
     Colour background;
 
-} Config_Data;
+} ConfigData;
 
 Config config_create(int width, int height, Colour background);
 

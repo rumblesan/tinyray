@@ -10,7 +10,7 @@ typedef struct camera {
 
     Coord3D looking_at;
 
-} Camera_Data;
+} CameraData;
 
 Camera camera_create(Coord3D position, Coord3D looking_at);
 

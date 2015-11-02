@@ -6,7 +6,7 @@
 
 Camera camera_create(Coord3D position, Coord3D looking_at) {
 
-    Camera camera = (Camera) malloc(sizeof(Camera_Data));
+    Camera camera = (Camera) malloc(sizeof(CameraData));
 
     camera->position = position;
     camera->looking_at = looking_at;

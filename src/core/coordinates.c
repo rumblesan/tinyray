@@ -5,7 +5,7 @@
 
 Coord3D coord3d_create(double x, double y, double z) {
 
-    Coord3D coord = (Coord3D) malloc(sizeof(Coord3D_Data));
+    Coord3D coord = (Coord3D) malloc(sizeof(Coord3DData));
 
     coord->x = x;
     coord->y = y;

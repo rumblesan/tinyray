@@ -6,7 +6,7 @@
 
 Light light_create(Coord3D centre, double intensity) {
 
-    Light light = (Light) malloc(sizeof(Light_Data));
+    Light light = (Light) malloc(sizeof(LightData));
 
     light->centre = centre;
 

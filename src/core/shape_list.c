@@ -6,7 +6,7 @@
 
 ShapeList shape_list_create() {
 
-    ShapeList list = (ShapeList) malloc(sizeof(Shape_List_El));
+    ShapeList list = (ShapeList) malloc(sizeof(ShapeListEl));
 
     list->head = NULL;
     list->tail = NULL;

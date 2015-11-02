@@ -5,7 +5,7 @@
 
 Config config_create(int width, int height, Colour background) {
 
-    Config config = (Config) malloc(sizeof(Config_Data));
+    Config config = (Config) malloc(sizeof(ConfigData));
 
     config->width = width;
     config->height = height;

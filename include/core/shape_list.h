@@ -10,7 +10,7 @@ typedef struct shape_list_el {
 
     ShapeList tail;
 
-} Shape_List_El;
+} ShapeListEl;
 
 ShapeList shape_list_create();
 

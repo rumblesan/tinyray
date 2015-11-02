@@ -10,7 +10,7 @@ typedef struct light_point {
 
     double intensity;
 
-} Light_Data;
+} LightData;
 
 Light light_create(Coord3D centre, double intensity);
 

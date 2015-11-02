@@ -12,7 +12,7 @@ typedef struct sphere {
 
     double radius;
 
-} Sphere_Data;
+} SphereData;
 
 typedef struct shape *Shape;
 typedef struct shape {
@@ -23,7 +23,7 @@ typedef struct shape {
         Sphere sphere;
     };
 
-} Shape_Data;
+} ShapeData;
 
 Shape sphere_create(double x, double y, double z, double radius);
 

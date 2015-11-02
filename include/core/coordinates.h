@@ -8,7 +8,7 @@ typedef struct coord_3d {
     double y;
     double z;
 
-} Coord3D_Data;
+} Coord3DData;
 
 Coord3D coord3d_create(double x, double y, double z);
 
