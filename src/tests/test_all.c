@@ -7,6 +7,7 @@
 #include "tests/test_camera.h"
 #include "tests/test_config.h"
 #include "tests/test_lights.h"
+#include "tests/test_light_list.h"
 
 int tests_run = 0;
 
@@ -32,18 +33,20 @@ int main(int argc, char *argv[]) {
 
     int coord_result  = run_test("Coordinates", test_coordinates);
     int shape_result  = run_test("Shape", test_shapes);
-    int shape_list_result  = run_test("Shape", test_shape_list);
+    int shape_list_result  = run_test("ShapeList", test_shape_list);
     int camera_result = run_test("Camera", test_camera);
     int config_result = run_test("Config", test_config);
-    int lights_result = run_test("Config", test_lights);
+    int lights_result = run_test("Lights", test_lights);
+    int light_list_result = run_test("LightList", test_light_list);
 
     return (
-        coord_result       ||
-        shape_result       ||
-        shape_list_result  ||
-        camera_result      ||
-        config_result      ||
-        lights_result
+        coord_result        ||
+        shape_result        ||
+        shape_list_result   ||
+        camera_result       ||
+        config_result       ||
+        lights_result       ||
+        light_list_result
     );
 }
 
