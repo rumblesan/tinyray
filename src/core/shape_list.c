@@ -14,6 +14,16 @@ ShapeList shape_list_create() {
     return list;
 }
 
+void shape_list_cleanup(ShapeList list) {
+    if (list->tail != NULL) {
+        shape_list_cleanup(list->tail);
+    }
+    if (list->head != NULL) {
+        shape_cleanup(list->head);
+    }
+    free(list);
+}
+
 ShapeList shape_list_add(ShapeList list, Shape shape) {
 
     ShapeList new_head = shape_list_create();
