@@ -3,18 +3,33 @@
 
 #include "core/coordinates.h"
 
-typedef struct shape_sphere *Shape;
-typedef struct shape_sphere {
+typedef enum {SPHERE} ShapeType;
+
+typedef struct sphere *Sphere;
+typedef struct sphere {
 
     Coord3D centre;
 
     double radius;
 
+} Sphere_Data;
+
+typedef struct shape *Shape;
+typedef struct shape {
+
+    ShapeType type;
+
+    union {
+        Sphere sphere;
+    };
+
 } Shape_Data;
 
-Shape shape_create(Coord3D centre, double radius);
+Shape sphere_create(Coord3D centre, double radius);
 
 void shape_cleanup(Shape shape);
+
+void sphere_cleanup(Sphere shape);
 
 #endif
 
