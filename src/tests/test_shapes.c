@@ -5,13 +5,11 @@
 
 static char * test_creation() {
 
-    Coord3D centre = coord3d_create(1.0, 1.0, 1.0);
-    Shape shape = sphere_create(centre, 1.0);
+    Shape shape = sphere_create(1.0, 2.0, 3.0, 1.0);
 
     mu_assert("Error: Shape object not created correctly", shape->type == SPHERE);
 
     shape_cleanup(shape);
-    coord3d_cleanup(centre);
     return 0;
 }
 

@@ -25,7 +25,7 @@ typedef struct shape {
 
 } Shape_Data;
 
-Shape sphere_create(Coord3D centre, double radius);
+Shape sphere_create(double x, double y, double z, double radius);
 
 void shape_cleanup(Shape shape);
 
