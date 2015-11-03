@@ -2,9 +2,9 @@
 #include <math.h>
 
 #include "core/camera.h"
-#include "core/coordinates.h"
+#include "core/vector.h"
 
-Camera camera_create(Coord3D position, Coord3D looking_at) {
+Camera camera_create(Vector3D position, Vector3D looking_at) {
 
     Camera camera = (Camera) malloc(sizeof(CameraData));
 

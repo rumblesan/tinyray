@@ -1,14 +1,14 @@
 #ifndef SHAPES_H
 #define SHAPES_H
 
-#include "core/coordinates.h"
+#include "core/vector.h"
 
 typedef enum {SPHERE} ShapeType;
 
 typedef struct sphere *Sphere;
 typedef struct sphere {
 
-    Coord3D centre;
+    Vector3D centre;
 
     double radius;
 

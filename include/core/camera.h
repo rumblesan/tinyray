@@ -1,18 +1,18 @@
 #ifndef CAMERA_H
 #define CAMERA_H
 
-#include "core/coordinates.h"
+#include "core/vector.h"
 
 typedef struct camera *Camera;
 typedef struct camera {
 
-    Coord3D position;
+    Vector3D position;
 
-    Coord3D looking_at;
+    Vector3D looking_at;
 
 } CameraData;
 
-Camera camera_create(Coord3D position, Coord3D looking_at);
+Camera camera_create(Vector3D position, Vector3D looking_at);
 
 void camera_cleanup(Camera camera);
 

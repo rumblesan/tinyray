@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 #include "tests/min_unit.h"
-#include "tests/test_coordinates.h"
+#include "tests/test_vector.h"
 #include "tests/test_shapes.h"
 #include "tests/test_shape_list.h"
 #include "tests/test_camera.h"
@@ -32,7 +32,7 @@ int main(int argc, char *argv[]) {
     printf("* Running tests *\n");
     printf("*****************\n\n");
 
-    int coord_result  = run_test("Coordinates", test_coordinates);
+    int vector_result  = run_test("Vector", test_vector);
     int shape_result  = run_test("Shape", test_shapes);
     int shape_list_result  = run_test("ShapeList", test_shape_list);
     int camera_result = run_test("Camera", test_camera);
@@ -42,7 +42,7 @@ int main(int argc, char *argv[]) {
     int light_list_result = run_test("LightList", test_light_list);
 
     return (
-        coord_result        ||
+        vector_result       ||
         shape_result        ||
         shape_list_result   ||
         camera_result       ||

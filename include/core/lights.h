@@ -1,12 +1,12 @@
 #ifndef LIGHTS_H
 #define LIGHTS_H
 
-#include "core/coordinates.h"
+#include "core/vector.h"
 
 typedef struct light_point *Light;
 typedef struct light_point {
 
-    Coord3D centre;
+    Vector3D centre;
 
     double intensity;
 

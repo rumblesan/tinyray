@@ -2,7 +2,7 @@
 #include <math.h>
 
 #include "core/shapes.h"
-#include "core/coordinates.h"
+#include "core/vector.h"
 
 Shape sphere_create(double x, double y, double z, double radius) {
 
@@ -10,7 +10,7 @@ Shape sphere_create(double x, double y, double z, double radius) {
 
     Sphere sphere = (Sphere) malloc(sizeof(SphereData));
 
-    sphere->centre = coord3d_create(x, y, z);
+    sphere->centre = vector3d_create(x, y, z);
     sphere->radius = radius;
 
     shape->type = SPHERE;
@@ -27,7 +27,7 @@ void shape_cleanup(Shape shape) {
 }
 
 void sphere_cleanup(Sphere sphere) {
-    coord3d_cleanup(sphere->centre);
+    vector3d_cleanup(sphere->centre);
     free(sphere);
 }
 
