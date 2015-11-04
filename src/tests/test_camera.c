@@ -6,6 +6,7 @@
 static char * test_creation() {
 
     Camera camera = camera_create(
+        45,
         1.0, 2.0, 3.0,
         0.0, 2.0, 0.0
     );

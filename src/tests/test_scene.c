@@ -15,7 +15,7 @@ static char * test_creation() {
     Colour background = colour(0, 100, 100, 0);
 
     Canvas canvas = canvas_create(640, 480);
-    Camera camera = camera_create(1.0, 0.0, 2.0, 0.0, 0.0, 0.0);
+    Camera camera = camera_create(45, 1.0, 0.0, 2.0, 0.0, 0.0, 0.0);
     Config config = config_create(640, 480, background);
     Light light = light_create(1.0, 2.0, 3.0, 1.0);
     LightList lights = light_list_add(light_list_create(), light);

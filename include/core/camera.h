@@ -6,6 +6,8 @@
 typedef struct camera *Camera;
 typedef struct camera {
 
+    double fov;
+
     Vector3D position;
 
     Vector3D looking_at;
@@ -13,6 +15,7 @@ typedef struct camera {
 } CameraData;
 
 Camera camera_create(
+    double fov,
     double posx, double posy, double posz,
     double lookx, double looky, double lookz
 );
