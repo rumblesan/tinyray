@@ -2,6 +2,7 @@
 
 #include "tests/min_unit.h"
 #include "tests/test_vector.h"
+#include "tests/test_scene.h"
 #include "tests/test_shapes.h"
 #include "tests/test_shape_list.h"
 #include "tests/test_camera.h"
@@ -33,6 +34,7 @@ int main(int argc, char *argv[]) {
     printf("*****************\n\n");
 
     int vector_result  = run_test("Vector", test_vector);
+    int scene_result  = run_test("Scene", test_scene);
     int shape_result  = run_test("Shape", test_shapes);
     int shape_list_result  = run_test("ShapeList", test_shape_list);
     int camera_result = run_test("Camera", test_camera);
@@ -43,6 +45,7 @@ int main(int argc, char *argv[]) {
 
     return (
         vector_result       ||
+        scene_result        ||
         shape_result        ||
         shape_list_result   ||
         camera_result       ||
