@@ -1,5 +1,5 @@
-#ifndef SHAPE_LIST_H
-#define SHAPE_LIST_H
+#ifndef LIGHT_LIST_H
+#define LIGHT_LIST_H
 
 #include "core/lights.h"
 
