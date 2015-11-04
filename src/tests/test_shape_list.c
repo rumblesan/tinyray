@@ -3,7 +3,6 @@
 #include "tests/min_unit.h"
 
 #include "core/shapes.h"
-#include "core/coordinates.h"
 #include "core/shape_list.h"
 
 static char * test_creation() {

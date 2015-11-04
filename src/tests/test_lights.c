@@ -1,7 +1,6 @@
 #include "tests/min_unit.h"
 
 #include "core/lights.h"
-#include "core/coordinates.h"
 
 static char * test_creation() {
 
