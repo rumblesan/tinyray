@@ -4,17 +4,22 @@
 #include "core/camera.h"
 #include "core/vector.h"
 
-Camera camera_create(Vector3D position, Vector3D looking_at) {
+Camera camera_create(
+    double posx, double posy, double posz,
+    double lookx, double looky, double lookz
+) {
 
     Camera camera = (Camera) malloc(sizeof(CameraData));
 
-    camera->position = position;
-    camera->looking_at = looking_at;
+    camera->position = vector3d_create(posx, posy, posz);
+    camera->looking_at = vector3d_create(lookx, looky, lookz);
 
     return camera;
 }
 
 void camera_cleanup(Camera camera) {
+    vector3d_cleanup(camera->position);
+    vector3d_cleanup(camera->looking_at);
     free(camera);
 }
 

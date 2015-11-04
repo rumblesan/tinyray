@@ -5,16 +5,14 @@
 
 static char * test_creation() {
 
-    Vector3D position = vector3d_create(1.0, 1.0, 1.0);
-    Vector3D looking_at = vector3d_create(0.0, 0.0, 0.0);
-
-    Camera camera = camera_create(position, looking_at);
+    Camera camera = camera_create(
+        1.0, 2.0, 3.0,
+        0.0, 2.0, 0.0
+    );
 
     mu_assert("Error: Camera object not created correctly", camera->position->x == 1);
 
     camera_cleanup(camera);
-    vector3d_cleanup(position);
-    vector3d_cleanup(looking_at);
     return 0;
 }
 
