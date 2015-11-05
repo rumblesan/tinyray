@@ -11,7 +11,7 @@ static char * test_creation() {
         0.0, 2.0, 0.0
     );
 
-    mu_assert("Error: Camera object not created correctly", camera->position->x == 1);
+    mu_assert("Error: Camera object not created correctly", camera->position.x == 1);
 
     camera_cleanup(camera);
     return 0;

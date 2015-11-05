@@ -6,7 +6,7 @@ static char * test_creation() {
 
     Light light = light_create(1.0, 2.0, 3.0, 1.0);
 
-    mu_assert("Error: Light object not created correctly", light->centre->x == 1);
+    mu_assert("Error: Light object not created correctly", light->centre.x == 1);
 
     light_cleanup(light);
     return 0;

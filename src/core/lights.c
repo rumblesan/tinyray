@@ -8,7 +8,7 @@ Light light_create(double x, double y, double z, double intensity) {
 
     Light light = (Light) malloc(sizeof(LightData));
 
-    light->centre = vector3d_create(x, y, z);
+    light->centre = vector3d(x, y, z);
 
     light->intensity = intensity;
 
@@ -16,7 +16,6 @@ Light light_create(double x, double y, double z, double intensity) {
 }
 
 void light_cleanup(Light light) {
-    vector3d_cleanup(light->centre);
     free(light);
 }
 

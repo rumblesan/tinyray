@@ -10,7 +10,7 @@ static char * test_creation() {
     Light light = light_create(1.0, 2.0, 3.0, 1.0);
     LightList list = light_list_add(light_list_create(), light);
 
-    mu_assert("Error: LightList not created correctly", list->head->centre->x == 1.0);
+    mu_assert("Error: LightList not created correctly", list->head->centre.x == 1.0);
 
     light_list_cleanup(list);
     return 0;
