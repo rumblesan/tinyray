@@ -1,7 +1,6 @@
 CC                = clang
 CFLAGS            = -Wall
 LDFLAGS           = -c
-SDLFLAGS          = `sdl-config --cflags --libs`
 VPATH             = src src/core src/tests
 LIBS              = 
 
@@ -55,7 +54,7 @@ $(TEST_BUILD_DIR)/%.o: %.c
 	$(CC) $(CFLAGS) $(LDFLAGS) $(TEST_CFLAGS) $(INCLUDES) $< -o $@
 
 $(EXECUTABLE): $(MAIN_OBJECTS)
-	$(CC) $(CFLAGS) $(SDLFLAGS) $(MAIN_OBJECTS) -o $@
+	$(CC) $(CFLAGS) $(MAIN_OBJECTS) -o $@
 
 $(TEST_EXECUTABLE): $(TEST_OBJECTS)
 	$(CC) $(TEST_LIBS) $(TEST_CFLAGS) $(TEST_OBJECTS) -o $@
