@@ -21,4 +21,6 @@ double vector3d_length(Vector3D vect);
 
 Vector3D vector3d_unit(Vector3D vect);
 
+Vector3D vector3d_cross(Vector3D vectA, Vector3D vectB);
+
 #endif

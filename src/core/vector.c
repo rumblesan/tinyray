@@ -66,3 +66,14 @@ Vector3D vector3d_unit(Vector3D vect) {
     return newV;
 }
 
+Vector3D vector3d_cross(Vector3D vectA, Vector3D vectB) {
+
+    Vector3D newV;
+
+    newV.x = (vectA.y * vectB.z) - (vectA.z * vectB.y);
+    newV.y = (vectA.z * vectB.x) - (vectA.x * vectB.z);
+    newV.z = (vectA.x * vectB.y) - (vectA.y * vectB.x);
+
+    return newV;
+}
+
