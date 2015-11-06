@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "core/lights.h"
-#include "core/light_list.h"
+#include "core/collections/light_list.h"
 
 LightList light_list_create() {
 

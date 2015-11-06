@@ -5,10 +5,10 @@
 #include "core/camera.h"
 #include "core/config.h"
 #include "core/lights.h"
-#include "core/light_list.h"
 #include "core/scene.h"
 #include "core/shapes.h"
-#include "core/shape_list.h"
+#include "core/collections/light_list.h"
+#include "core/collections/shape_list.h"
 
 static char * test_creation() {
 

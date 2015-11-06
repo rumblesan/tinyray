@@ -4,12 +4,12 @@
 #include "tests/test_vector.h"
 #include "tests/test_scene.h"
 #include "tests/test_shapes.h"
-#include "tests/test_shape_list.h"
 #include "tests/test_camera.h"
 #include "tests/test_config.h"
 #include "tests/test_canvas.h"
 #include "tests/test_lights.h"
-#include "tests/test_light_list.h"
+#include "tests/collections/test_shape_list.h"
+#include "tests/collections/test_light_list.h"
 
 int tests_run = 0;
 

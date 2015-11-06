@@ -2,7 +2,7 @@
 #include <stdio.h>
 
 #include "core/shapes.h"
-#include "core/shape_list.h"
+#include "core/collections/shape_list.h"
 
 ShapeList shape_list_create() {
 
