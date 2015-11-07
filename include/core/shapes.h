@@ -2,6 +2,7 @@
 #define SHAPES_H
 
 #include "core/vector.h"
+#include "core/ray.h"
 
 typedef enum {SPHERE} ShapeType;
 
@@ -26,6 +27,10 @@ typedef struct shape {
 } ShapeData;
 
 Shape sphere_create(double x, double y, double z, double radius);
+
+double shape_intersect(Shape shape, Ray ray);
+
+double sphere_intersect(Sphere sphere, Ray ray);
 
 void shape_cleanup(Shape shape);
 
