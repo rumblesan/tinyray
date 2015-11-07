@@ -27,7 +27,7 @@ static char * test_length() {
 
     int len = shape_list_length(list4);
 
-    mu_assert("Error: ShapeList is notempty", shape_list_empty(empty) == false);
+    mu_assert("Error: ShapeList is not empty", shape_list_empty(list4) == false);
     mu_assert("Error: ShapeList length not correct", len == 4);
 
     shape_list_cleanup(list4);
