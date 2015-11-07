@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include <stdio.h>
 
 #include "core/shapes.h"
@@ -42,16 +43,20 @@ ShapeList shape_list_tail(ShapeList list) {
     return list->tail;
 }
 
-int shape_list_length(ShapeList list) {
-    ShapeList next;
-    if (shape_list_head(list) == NULL) {
-        return 0;
+bool shape_list_empty(ShapeList list) {
+    if (list->tail == NULL) {
+        return true;
+    } else {
+        return false;
     }
+}
+
+int shape_list_length(ShapeList list) {
+    ShapeList l = list;
     int i = 0;
-    next = shape_list_tail(list);
-    while(next != NULL) {
+    while(!shape_list_empty(l)) {
         i += 1;
-        next = shape_list_tail(next);
+        l = shape_list_tail(l);
     }
     return i;
 }

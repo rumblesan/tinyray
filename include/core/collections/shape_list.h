@@ -1,6 +1,8 @@
 #ifndef SHAPE_LIST_H
 #define SHAPE_LIST_H
 
+#include <stdbool.h>
+
 #include "core/shapes.h"
 
 typedef struct shape_list_el *ShapeList;
@@ -21,6 +23,8 @@ ShapeList shape_list_add(ShapeList list, Shape shape);
 Shape shape_list_head(ShapeList list); 
 
 ShapeList shape_list_tail(ShapeList list); 
+
+bool shape_list_empty(ShapeList list); 
 
 int shape_list_length(ShapeList list); 
 

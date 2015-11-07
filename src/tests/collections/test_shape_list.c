@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "tests/min_unit.h"
 
@@ -18,6 +19,7 @@ static char * test_creation() {
 
 static char * test_length() {
     ShapeList empty = shape_list_create();
+    mu_assert("Error: ShapeList should be empty", shape_list_empty(empty) == true);
     ShapeList list1 = shape_list_add(empty, sphere_create(1.0, 2.0, 3.0, 1.0));
     ShapeList list2 = shape_list_add(list1, sphere_create(1.0, 2.0, 3.0, 1.0));
     ShapeList list3 = shape_list_add(list2, sphere_create(1.0, 2.0, 3.0, 1.0));
@@ -25,6 +27,7 @@ static char * test_length() {
 
     int len = shape_list_length(list4);
 
+    mu_assert("Error: ShapeList is notempty", shape_list_empty(empty) == false);
     mu_assert("Error: ShapeList length not correct", len == 4);
 
     shape_list_cleanup(list4);
