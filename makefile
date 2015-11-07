@@ -14,6 +14,7 @@ TEST_BUILD_DIR    = build/tests
 HEADER_DIRS       = include
 CORE_SRC_DIRS     = $(shell find src/core -type d)
 TEST_SRC_DIRS     = $(shell find src/tests -type d)
+LIB_SRC_DIRS      = $(shell find src/libs -type d)
 
 COVERAGE_DIR      = coverage
 COVERAGE_FILE     = default.profraw
@@ -22,7 +23,8 @@ INCLUDES          = $(addprefix -I, $(HEADER_DIRS))
 
 CORE_SOURCES      = $(foreach dir,$(CORE_SRC_DIRS),$(wildcard $(dir)/*.c))
 TEST_SOURCES      = $(foreach dir,$(TEST_SRC_DIRS),$(wildcard $(dir)/*.c)) $(CORE_SOURCES)
-MAIN_SOURCES      = main.c $(CORE_SOURCES)
+LIB_SOURCES       = $(foreach dir,$(LIB_SRC_DIRS),$(wildcard $(dir)/*.c))
+MAIN_SOURCES      = main.c $(CORE_SOURCES) $(LIB_SOURCES)
 
 MAIN_OBJECTS      = $(addprefix $(MAIN_BUILD_DIR)/, $(MAIN_SOURCES:.c=.o))
 TEST_OBJECTS      = $(addprefix $(TEST_BUILD_DIR)/, $(TEST_SOURCES:.c=.o))
