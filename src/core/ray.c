@@ -1,6 +1,6 @@
+#include "core/ray.h"
 
 #include "core/vector.h"
-#include "core/ray.h"
 
 Ray ray(Vector3D point, Vector3D vector) {
     Ray ray;

@@ -1,8 +1,8 @@
 #include <stdlib.h>
-#include <math.h>
+
+#include "core/canvas.h"
 
 #include "core/colours.h"
-#include "core/canvas.h"
 
 Canvas canvas_create(int width, int height) {
 

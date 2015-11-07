@@ -1,11 +1,10 @@
 #include <stdlib.h>
 
 #include "core/scene.h"
+
 #include "core/canvas.h"
 #include "core/camera.h"
 #include "core/config.h"
-#include "core/lights.h"
-#include "core/shapes.h"
 #include "core/collections/light_list.h"
 #include "core/collections/shape_list.h"
 

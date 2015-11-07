@@ -1,7 +1,7 @@
 #include <stdlib.h>
-#include <math.h>
 
 #include "core/camera.h"
+
 #include "core/vector.h"
 
 Camera camera_create(

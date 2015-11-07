@@ -1,7 +1,8 @@
 #include <stdlib.h>
-#include <math.h>
 
 #include "core/config.h"
+
+#include "core/colours.h"
 
 Config config_create(int width, int height, Colour background) {
 

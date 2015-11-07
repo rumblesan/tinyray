@@ -2,6 +2,7 @@
 #include <math.h>
 
 #include "core/shapes.h"
+
 #include "core/vector.h"
 #include "core/ray.h"
 

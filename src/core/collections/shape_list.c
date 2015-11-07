@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
-#include <stdio.h>
+
+#include "core/collections/shape_list.h"
 
 #include "core/shapes.h"
-#include "core/collections/shape_list.h"
 
 ShapeList shape_list_create() {
 

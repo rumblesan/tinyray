@@ -1,7 +1,5 @@
-#include <stdlib.h>
-#include <math.h>
-
 #include "core/lights.h"
+
 #include "core/vector.h"
 
 Light light_create(double x, double y, double z, double intensity) {
