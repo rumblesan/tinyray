@@ -1,6 +1,8 @@
 #ifndef LIGHT_LIST_H
 #define LIGHT_LIST_H
 
+#include <stdbool.h>
+
 #include "core/lights.h"
 
 typedef struct light_list_el *LightList;
@@ -21,6 +23,8 @@ LightList light_list_add(LightList list, Light light);
 Light light_list_head(LightList list); 
 
 LightList light_list_tail(LightList list); 
+
+bool light_list_empty(LightList list); 
 
 int light_list_length(LightList list); 
 

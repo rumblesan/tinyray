@@ -18,6 +18,7 @@ static char * test_creation() {
 
 static char * test_length() {
     LightList empty = light_list_create();
+    mu_assert("Error: LightList should be empty", light_list_empty(empty) == true);
     LightList list1 = light_list_add(empty, light_create(1.0, 2.0, 3.0, 1.0));
     LightList list2 = light_list_add(list1, light_create(1.0, 2.0, 3.0, 1.0));
     LightList list3 = light_list_add(list2, light_create(1.0, 2.0, 3.0, 1.0));
@@ -25,6 +26,7 @@ static char * test_length() {
 
     int len = light_list_length(list4);
 
+    mu_assert("Error: LightList is not empty", light_list_empty(list4) == false);
     mu_assert("Error: LightList length not correct", len == 4);
 
     light_list_cleanup(list4);

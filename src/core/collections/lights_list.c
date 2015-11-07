@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include <stdio.h>
 
 #include "core/lights.h"
@@ -38,12 +39,20 @@ LightList light_list_tail(LightList list) {
     return list->tail;
 }
 
+bool light_list_empty(LightList list) {
+    if (list->tail == NULL) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 int light_list_length(LightList list) {
+    LightList l = list;
     int i = 0;
-    LightList next = light_list_tail(list);
-    while(next != NULL) {
+    while(!light_list_empty(l)) {
         i += 1;
-        next = light_list_tail(next);
+        l = light_list_tail(l);
     }
     return i;
 }
