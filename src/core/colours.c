@@ -3,7 +3,13 @@
 
 Colour colour(Component red, Component green, Component blue, Component alpha) {
 
-    return ((red << 24) + (green << 16) + (blue << 8) + alpha);
+    Colour c;
 
+    c.red   = red;
+    c.green = green;
+    c.blue  = blue;
+    c.alpha = alpha;
+
+    return c;
 }
 

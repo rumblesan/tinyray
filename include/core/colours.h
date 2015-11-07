@@ -3,8 +3,16 @@
 
 #include <stdint.h>
 
-typedef uint32_t Colour;
 typedef uint8_t Component;
+
+typedef struct colour_data {
+
+    Component red;
+    Component green;
+    Component blue;
+    Component alpha;
+
+} Colour;
 
 Colour colour(Component red, Component green, Component blue, Component alpha);
 

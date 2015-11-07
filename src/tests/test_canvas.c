@@ -19,7 +19,8 @@ static char * test_get_set() {
     Colour c = colour(0, 0, 100, 0);
     canvas_set(canvas, 4, 5, c);
 
-    mu_assert("Error: Canvas get/set doesn't work", canvas_get(canvas, 4, 5) == c);
+    Colour retc = canvas_get(canvas, 4, 5);
+    mu_assert("Error: Canvas get/set doesn't work", retc.red == c.red);
 
     return 0;
 }
