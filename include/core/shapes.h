@@ -26,13 +26,18 @@ typedef struct shape {
 
 } ShapeData;
 
-Shape sphere_create(double x, double y, double z, double radius);
-
 double shape_intersect(Shape shape, Ray ray);
+
+void shape_cleanup(Shape shape);
+
+Vector3D shape_normal(Shape shape, Vector3D pos);
+
+/* Sphere functions */
+Shape sphere_create(double x, double y, double z, double radius);
 
 double sphere_intersect(Sphere sphere, Ray ray);
 
-void shape_cleanup(Shape shape);
+Vector3D sphere_normal(Sphere sphere, Vector3D pos);
 
 void sphere_cleanup(Sphere shape);
 

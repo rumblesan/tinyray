@@ -5,6 +5,26 @@
 #include "core/vector.h"
 #include "core/ray.h"
 
+double shape_intersect(Shape shape, Ray ray) {
+    switch(shape->type) {
+        case SPHERE: return sphere_intersect(shape->sphere, ray);
+    }
+}
+
+Vector3D shape_normal(Shape shape, Vector3D pos) {
+    switch(shape->type) {
+        case SPHERE: return sphere_normal(shape->sphere, pos);
+    }
+}
+
+void shape_cleanup(Shape shape) {
+    switch(shape->type) {
+        case SPHERE: sphere_cleanup(shape->sphere);
+    }
+    free(shape);
+}
+
+/* Sphere functions */
 Shape sphere_create(double x, double y, double z, double radius) {
 
     Shape shape = (Shape) malloc(sizeof(ShapeData));
@@ -20,15 +40,6 @@ Shape sphere_create(double x, double y, double z, double radius) {
     return shape;
 }
 
-double shape_intersect(Shape shape, Ray ray) {
-    double dist;
-    switch(shape->type) {
-        case SPHERE:
-            dist = sphere_intersect(shape->sphere, ray);
-    }
-    return dist;
-}
-
 double sphere_intersect(Sphere sphere, Ray ray) {
     Vector3D eye_to_centre = vector3d_subtract(sphere->centre, ray.point);
     double v = vector3d_dot(eye_to_centre, ray.vector);
@@ -41,11 +52,10 @@ double sphere_intersect(Sphere sphere, Ray ray) {
     }
 }
 
-void shape_cleanup(Shape shape) {
-    switch(shape->type) {
-        case SPHERE: sphere_cleanup(shape->sphere);
-    }
-    free(shape);
+Vector3D sphere_normal(Sphere sphere, Vector3D pos) {
+    return vector3d_unit(
+        vector3d_subtract(pos, sphere->centre)
+    );
 }
 
 void sphere_cleanup(Sphere sphere) {
