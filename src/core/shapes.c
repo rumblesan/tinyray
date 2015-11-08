@@ -42,8 +42,8 @@ Shape sphere_create(double x, double y, double z, double radius) {
 }
 
 double sphere_intersect(Sphere sphere, Ray ray) {
-    Vector3D eye_to_centre = vector3d_subtract(sphere->centre, ray.point);
-    double v = vector3d_dot(eye_to_centre, ray.vector);
+    Vector3D eye_to_centre = vector3d_subtract(sphere->centre, ray.origin);
+    double v = vector3d_dot(eye_to_centre, ray.direction);
     double d = vector3d_length(eye_to_centre);
     double discriminant = (sphere->radius * sphere->radius) - d + (v * v);
     if (discriminant < 0) {

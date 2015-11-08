@@ -2,11 +2,11 @@
 
 #include "core/vector.h"
 
-Ray ray(Vector3D point, Vector3D vector) {
+Ray ray(Vector3D origin, Vector3D direction) {
     Ray ray;
 
-    ray.point  = point;
-    ray.vector = vector;
+    ray.origin  = origin;
+    ray.direction = direction;
 
     return ray;
 }

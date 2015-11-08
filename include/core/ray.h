@@ -5,12 +5,12 @@
 
 typedef struct ray {
 
-    Vector3D point;
+    Vector3D origin;
 
-    Vector3D vector;
+    Vector3D direction;
 
 } Ray;
 
-Ray ray(Vector3D point, Vector3D vector);
+Ray ray(Vector3D origin, Vector3D direction);
 
 #endif

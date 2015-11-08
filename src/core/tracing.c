@@ -78,8 +78,8 @@ Colour trace(Ray ray, Scene scene, int depth) {
     }
 
     Vector3D intersectPoint = vector3d_add(
-        ray.point,
-        vector3d_scale(distObject.distance, ray.vector)
+        ray.origin,
+        vector3d_scale(distObject.distance, ray.direction)
     );
 
     return surface(ray, scene, distObject.object, intersectPoint, depth);
