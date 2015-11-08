@@ -10,6 +10,7 @@
 #include "tests/test_lights.h"
 #include "tests/collections/test_shape_list.h"
 #include "tests/collections/test_light_list.h"
+#include "tests/test_tracing.h"
 
 int tests_run = 0;
 
@@ -42,6 +43,7 @@ int main(int argc, char *argv[]) {
     int canvas_result = run_test("Canvas", test_canvas);
     int lights_result = run_test("Lights", test_lights);
     int light_list_result = run_test("LightList", test_light_list);
+    int tracing_result    = run_test("Tracing", test_tracing);
 
     return (
         vector_result       ||
@@ -52,7 +54,8 @@ int main(int argc, char *argv[]) {
         config_result       ||
         canvas_result       ||
         lights_result       ||
-        light_list_result
+        light_list_result   ||
+        tracing_result
     );
 }
 
