@@ -28,7 +28,7 @@ static char * test_creation() {
         1.0,
         colour(0, 0, 0)
     );
-    ShapeList shapes = shape_list_add(shape_list_create(), shape);
+    ShapeList shapes = shape_list_add(shape_list_create(), 1, shape);
 
     Scene scene = scene_create(
         canvas,

@@ -18,7 +18,7 @@ ShapeList shape_list_create();
 
 void shape_list_cleanup(ShapeList list);
 
-ShapeList shape_list_add(ShapeList list, Shape shape);
+ShapeList shape_list_add(ShapeList list, int count, ...);
 
 Shape shape_list_head(ShapeList list); 
 

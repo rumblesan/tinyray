@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdarg.h>
 
 #include "core/collections/shape_list.h"
 
@@ -25,14 +26,25 @@ void shape_list_cleanup(ShapeList list) {
     free(list);
 }
 
-ShapeList shape_list_add(ShapeList list, Shape shape) {
+ShapeList shape_list_add(ShapeList list, int count, ...) {
 
-    ShapeList new_head = shape_list_create();
+    va_list args;
+    va_start (args, count);
+    int i;
 
-    new_head->head = shape;
-    new_head->tail = list;
+    Shape add_shape;
+    ShapeList head;
+    ShapeList tail = list;
 
-    return new_head;
+    for (i = 0; i < count; i++) {
+        head = shape_list_create();
+        add_shape = va_arg(args, Shape);
+        head->head = add_shape;
+        head->tail = tail;
+        tail = head;
+    }
+
+    return head;
 }
 
 Shape shape_list_head(ShapeList list) {
