@@ -4,7 +4,9 @@ tinyray
 About
 -----
 
-This is where your desciption needs to go
+I'm building a raytracer!
+
+Because everybody should... and my C really needs brushing up;
 
 Contact
 -------
