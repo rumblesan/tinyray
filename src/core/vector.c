@@ -77,6 +77,6 @@ Vector3D vector3d_cross(Vector3D vectA, Vector3D vectB) {
 }
 
 double vector3d_dot(Vector3D vectA, Vector3D vectB) {
-    return ((vectA.x * vectB.x) + (vectA.y + vectB.y) + (vectA.z + vectB.z));
+    return ((vectA.x * vectB.x) + (vectA.y * vectB.y) + (vectA.z * vectB.z));
 }
 
