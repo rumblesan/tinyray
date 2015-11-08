@@ -14,11 +14,7 @@ typedef struct camera {
 
 } CameraData;
 
-Camera camera_create(
-    double fov,
-    double posx, double posy, double posz,
-    double lookx, double looky, double lookz
-);
+Camera camera_create(double fov, Vector3D position, Vector3D looking_at);
 
 void camera_cleanup(Camera camera);
 

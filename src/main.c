@@ -54,17 +54,17 @@ int main(int argc, char *argv[]) {
     Canvas canvas = canvas_create(config->width, config->height);
     Camera camera = camera_create(
         45,
-        -4.0, 0.0, 0.0,
-        0.0, 0.0, 0.0
+        vector3d(-4.0, 0.0, 0.0),
+        vector3d(0.0, 0.0, 0.0)
     );
     LightList lights = light_list_add(
         light_list_create(),
-        light_create(-4.0, 0.0, 3.0, 1.0)
+        light_create(vector3d(-4.0, 0.0, 3.0), 1.0)
     );
     ShapeList shapes = shape_list_add(
         shape_list_create(),
         sphere_create(
-            9.0, 0.0, 0.0,
+            vector3d(9.0, 0.0, 0.0),
             1.0,
             colour(200, 50, 100)
         )

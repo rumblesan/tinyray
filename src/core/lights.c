@@ -2,11 +2,11 @@
 
 #include "core/vector.h"
 
-Light light_create(double x, double y, double z, double intensity) {
+Light light_create(Vector3D position, double intensity) {
 
     Light light;
 
-    light.centre = vector3d(x, y, z);
+    light.centre = position;
 
     light.intensity = intensity;
 

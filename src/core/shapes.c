@@ -27,13 +27,13 @@ void shape_cleanup(Shape shape) {
 }
 
 /* Sphere functions */
-Shape sphere_create(double x, double y, double z, double radius, Colour colour) {
+Shape sphere_create(Vector3D position, double radius, Colour colour) {
 
     Shape shape = (Shape) malloc(sizeof(ShapeData));
 
     Sphere sphere = (Sphere) malloc(sizeof(SphereData));
 
-    sphere->centre = vector3d(x, y, z);
+    sphere->centre = position;
     sphere->radius = radius;
 
     shape->type = SPHERE;

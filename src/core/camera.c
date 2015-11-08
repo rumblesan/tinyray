@@ -4,17 +4,13 @@
 
 #include "core/vector.h"
 
-Camera camera_create(
-    double fov,
-    double posx, double posy, double posz,
-    double lookx, double looky, double lookz
-) {
+Camera camera_create(double fov, Vector3D position, Vector3D looking_at) {
 
     Camera camera = (Camera) malloc(sizeof(CameraData));
 
     camera->fov = fov;
-    camera->position = vector3d(posx, posy, posz);
-    camera->looking_at = vector3d(lookx, looky, lookz);
+    camera->position = position;
+    camera->looking_at = looking_at;
 
     return camera;
 }

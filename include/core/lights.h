@@ -11,7 +11,7 @@ typedef struct light_point {
 
 } Light;
 
-Light light_create(double x, double y, double z, double intensity);
+Light light_create(Vector3D position, double intensity);
 
 #endif
 

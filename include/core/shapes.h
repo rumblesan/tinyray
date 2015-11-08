@@ -36,7 +36,7 @@ void shape_cleanup(Shape shape);
 Vector3D shape_normal(Shape shape, Vector3D pos);
 
 /* Sphere functions */
-Shape sphere_create(double x, double y, double z, double radius, Colour colour);
+Shape sphere_create(Vector3D position, double radius, Colour colour);
 
 double sphere_intersect(Sphere sphere, Ray ray);
 
