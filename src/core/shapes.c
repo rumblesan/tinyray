@@ -99,9 +99,12 @@ Shape plane_create(Vector3D position, Vector3D normal, Colour colour) {
 }
 
 double plane_intersect(Plane plane, Ray ray) {
-    double n = vector3d_dot(ray.direction, plane->normal);
+    double n = fabs(vector3d_dot(ray.direction, plane->normal));
+    if (n <= 0) {
+        return -1;
+    }
     Vector3D eye_to_plane = vector3d_subtract(plane->position, ray.origin);
-    double d = vector3d_dot(eye_to_plane, plane->normal);
+    double d = fabs(vector3d_dot(eye_to_plane, plane->normal));
     double distance = (d / n);
     return distance;
 }
