@@ -16,7 +16,7 @@ static char * test_creation() {
 static char * test_get_set() {
 
     Canvas canvas = canvas_create(640, 480);
-    Colour c = colour(0, 0, 100, 0);
+    Colour c = colour(0, 0, 100);
     canvas_set(canvas, 4, 5, c);
 
     Colour retc = canvas_get(canvas, 4, 5);

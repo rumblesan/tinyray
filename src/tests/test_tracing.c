@@ -21,7 +21,7 @@ static char * test_intersection() {
     Ray r = ray(origin, direction);
     ShapeList shapes = shape_list_add(
         shape_list_create(),
-        sphere_create(0.0, 0.0, 0.0, 2.0)
+        sphere_create(vector3d(0.0, 0.0, 0.0), 2.0, colour(0, 0, 0))
     );
 
     Intersection distObject = intersectedObject(r, shapes);

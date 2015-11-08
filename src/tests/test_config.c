@@ -5,7 +5,7 @@
 
 static char * test_creation() {
 
-    Colour background = colour(0, 100, 100, 0);
+    Colour background = colour(0, 100, 100);
 
     Config config = config_create(640, 480, background);
 

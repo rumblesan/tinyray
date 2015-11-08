@@ -6,7 +6,7 @@
 
 static char * test_creation() {
 
-    Shape shape = sphere_create(1.0, 2.0, 3.0, 1.0);
+    Shape shape = sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, colour(0, 0, 0));
 
     mu_assert("Error: Shape object not created correctly", shape->type == SPHERE);
 
@@ -14,12 +14,13 @@ static char * test_creation() {
     return 0;
 }
 
-static char * test_intersect() {
+static char * test_sphere_intersect() {
 
     Ray r = ray(
         vector3d(0.0, 0.0, 0.0), vector3d_unit(vector3d(1.0, 0.0, 0.0))
     );
-    Shape shape = sphere_create(4.0, 0.0, 0.0, 2.0);
+    Shape shape = sphere_create(vector3d(4.0, 0.0, 0.0), 2.0, colour(0, 0, 0));
+
 
     double distance = shape_intersect(shape, r);
 
@@ -32,7 +33,7 @@ static char * test_intersect() {
 char * test_shapes() {
     printf("Running shape tests\n");
     mu_run_test(test_creation);
-    mu_run_test(test_intersect);
+    mu_run_test(test_sphere_intersect);
     return 0;
 }
 

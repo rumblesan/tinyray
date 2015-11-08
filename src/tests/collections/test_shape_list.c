@@ -8,7 +8,7 @@
 
 static char * test_creation() {
 
-    Shape shape = sphere_create(1.0, 2.0, 3.0, 1.0);
+    Shape shape = sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, colour(0, 0, 0));
     ShapeList list = shape_list_add(shape_list_create(), shape);
 
     mu_assert("Error: ShapeList not created correctly", list->head->type == SPHERE);
@@ -18,12 +18,13 @@ static char * test_creation() {
 }
 
 static char * test_length() {
+    Colour c = colour(0, 0, 0);
     ShapeList empty = shape_list_create();
     mu_assert("Error: ShapeList should be empty", shape_list_empty(empty) == true);
-    ShapeList list1 = shape_list_add(empty, sphere_create(1.0, 2.0, 3.0, 1.0));
-    ShapeList list2 = shape_list_add(list1, sphere_create(1.0, 2.0, 3.0, 1.0));
-    ShapeList list3 = shape_list_add(list2, sphere_create(1.0, 2.0, 3.0, 1.0));
-    ShapeList list4 = shape_list_add(list3, sphere_create(1.0, 2.0, 3.0, 1.0));
+    ShapeList list1 = shape_list_add(empty, sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, c));
+    ShapeList list2 = shape_list_add(list1, sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, c));
+    ShapeList list3 = shape_list_add(list2, sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, c));
+    ShapeList list4 = shape_list_add(list3, sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, c));
 
     int len = shape_list_length(list4);
 

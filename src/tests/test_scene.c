@@ -12,14 +12,22 @@
 
 static char * test_creation() {
 
-    Colour background = colour(0, 100, 100, 0);
+    Colour background = colour(0, 100, 100);
 
     Canvas canvas = canvas_create(640, 480);
-    Camera camera = camera_create(45, 1.0, 0.0, 2.0, 0.0, 0.0, 0.0);
+    Camera camera = camera_create(
+        45,
+        vector3d(1.0, 0.0, 2.0),
+        vector3d(0.0, 0.0, 0.0)
+    );
     Config config = config_create(640, 480, background);
-    Light light = light_create(1.0, 2.0, 3.0, 1.0);
+    Light light = light_create(vector3d(1.0, 2.0, 3.0), 1.0);
     LightList lights = light_list_add(light_list_create(), light);
-    Shape shape = sphere_create(1.0, 2.0, 3.0, 1.0);
+    Shape shape = sphere_create(
+        vector3d(1.0, 2.0, 3.0),
+        1.0,
+        colour(0, 0, 0)
+    );
     ShapeList shapes = shape_list_add(shape_list_create(), shape);
 
     Scene scene = scene_create(
