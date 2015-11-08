@@ -9,19 +9,22 @@
 
 double shape_intersect(Shape shape, Ray ray) {
     switch(shape->type) {
-        case SPHERE: return sphere_intersect(shape->sphere, ray);
+        case SPHERE: return sphere_intersect(shape->sphere, ray); break;
+        case PLANE: return plane_intersect(shape->plane, ray); break;
     }
 }
 
 Vector3D shape_normal(Shape shape, Vector3D pos) {
     switch(shape->type) {
-        case SPHERE: return sphere_normal(shape->sphere, pos);
+        case SPHERE: return sphere_normal(shape->sphere, pos); break;
+        case PLANE: return plane_normal(shape->plane, pos); break;
     }
 }
 
 void shape_cleanup(Shape shape) {
     switch(shape->type) {
-        case SPHERE: sphere_cleanup(shape->sphere);
+        case SPHERE: sphere_cleanup(shape->sphere); break;
+        case PLANE: plane_cleanup(shape->plane); break;
     }
     free(shape);
 }
@@ -76,5 +79,38 @@ Vector3D sphere_normal(Sphere sphere, Vector3D pos) {
 
 void sphere_cleanup(Sphere sphere) {
     free(sphere);
+}
+
+/* Plane functions */
+Shape plane_create(Vector3D position, Vector3D normal, Colour colour) {
+
+    Shape shape = (Shape) malloc(sizeof(ShapeData));
+
+    Plane plane = (Plane) malloc(sizeof(PlaneData));
+
+    plane->position = position;
+    plane->normal = normal;
+
+    shape->type = PLANE;
+    shape->plane = plane;
+    shape->colour = colour;
+
+    return shape;
+}
+
+double plane_intersect(Plane plane, Ray ray) {
+    double n = vector3d_dot(ray.direction, plane->normal);
+    Vector3D eye_to_plane = vector3d_subtract(plane->position, ray.origin);
+    double d = vector3d_dot(eye_to_plane, plane->normal);
+    double distance = (d / n);
+    return distance;
+}
+
+Vector3D plane_normal(Plane plane, Vector3D pos) {
+    return plane->normal;
+}
+
+void plane_cleanup(Plane plane) {
+    free(plane);
 }
 

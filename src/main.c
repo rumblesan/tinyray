@@ -62,11 +62,18 @@ int main(int argc, char *argv[]) {
         light_create(vector3d(-4.0, 0.0, 3.0), 1.0)
     );
     ShapeList shapes = shape_list_add(
-        shape_list_create(),
-        sphere_create(
+        shape_list_add(
+            shape_list_create(),
+            sphere_create(
+                vector3d(9.0, 0.0, 0.0),
+                1.0,
+                colour(200, 50, 100)
+            )
+        ),
+        plane_create(
             vector3d(9.0, 0.0, 0.0),
-            1.0,
-            colour(200, 50, 100)
+            vector3d(0.0, -1.0, 0.0),
+            colour(0, 0, 100)
         )
     );
 
