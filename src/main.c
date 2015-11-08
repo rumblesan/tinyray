@@ -48,7 +48,7 @@ int main(int argc, char *argv[]) {
 
     Config config = config_create(
         640, 480,
-        colour(0, 0, 0, 255)
+        colour(0, 0, 0)
     );
 
     Canvas canvas = canvas_create(config->width, config->height);
@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
         sphere_create(
             9.0, 0.0, 0.0,
             1.0,
-            colour(200, 0, 100, 255)
+            colour(200, 50, 100)
         )
     );
 

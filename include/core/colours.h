@@ -14,7 +14,7 @@ typedef struct colour_data {
 
 } Colour;
 
-Colour colour(Component red, Component green, Component blue, Component alpha);
+Colour colour(Component red, Component green, Component blue);
 
 Colour colour_mult(Colour c, double scaler);
 
