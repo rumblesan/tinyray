@@ -18,8 +18,8 @@ void rays_calc(Scene scene) {
     Config config = scene->config;
     Camera camera = scene->camera;
 
-    double fovRadians   = tan((M_PI / 180) * (camera->fov/2));
-    double heightWidthRatio = config->height/config->width;
+    double fovRadians   = (M_PI / 180) * (camera->fov / 2);
+    double heightWidthRatio = (double)config->height / config->width;
     double halfWidth    = tan(fovRadians);
     double halfHeight   = heightWidthRatio * halfWidth;
     double cameraWidth  = halfWidth * 2;
@@ -52,7 +52,7 @@ void rays_calc(Scene scene) {
     for (x = 0; x < config->width; x += 1) {
         for (y = 0; y < config->height; y += 1) {
             xcomp = vector3d_scale((x * pixelWidth) - halfWidth, vpRight);
-            ycomp = vector3d_scale((x * pixelHeight) - halfHeight, vpUp);
+            ycomp = vector3d_scale((y * pixelHeight) - halfHeight, vpUp);
             rayDirection = vector3d_unit(
                 vector3d_add(
                     vector3d_add(
