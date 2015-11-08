@@ -58,27 +58,31 @@ int main(int argc, char *argv[]) {
     Canvas canvas = canvas_create(config->width, config->height);
     Camera camera = camera_create(
         45,
-        vector3d(-4.0, 0.0, 0.0),
+        vector3d(-5.0, 5.0, 0.0),
         vector3d(0.0, 0.0, 0.0)
     );
     LightList lights = light_list_add(
         light_list_create(),
-        light_create(vector3d(-4.0, 0.0, 3.0), 1.0)
+        light_create(vector3d(0.0, 3.0, 0.0), 0.3)
     );
+    Shape sphereO = sphere_create(
+        vector3d(0.0, 0.0, 0.0),
+        0.3,
+        colour(255, 255, 255)
+    );
+    Shape sphere1 = sphere_create(
+        vector3d(0.0, 1.0, 0.0),
+        0.1,
+        colour(255, 255, 255)
+    );
+    Shape plane = plane_create(
+        vector3d(0.0, -1.0, 0.0),
+        vector3d(0.0, 1.0, 0.0),
+        colour(100, 255, 255)
+    );
+
     ShapeList shapes = shape_list_add(
-        shape_list_add(
-            shape_list_create(),
-            sphere_create(
-                vector3d(9.0, 0.0, 0.0),
-                1.0,
-                colour(200, 50, 100)
-            )
-        ),
-        plane_create(
-            vector3d(9.0, 0.0, 0.0),
-            vector3d(0.0, -1.0, 0.0),
-            colour(0, 0, 100)
-        )
+        shape_list_create(), 3, sphereO, sphere1, plane
     );
 
     Scene scene = scene_create(
