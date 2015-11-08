@@ -120,7 +120,7 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
                 normal
             );
             if (contribution > 0) {
-                lambertAmount += contribution;
+                lambertAmount += (contribution * light.intensity);
             }
         }
         lights = light_list_tail(lights);
