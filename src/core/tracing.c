@@ -88,14 +88,14 @@ Colour trace(Ray ray, Scene scene, int depth) {
 Intersection intersectedObject(Ray ray, ShapeList shapes) {
     Intersection distObject;
     distObject.object = NULL;
-    distObject.distance = 0;
+    distObject.distance = 100000;
 
     ShapeList s = shapes;
 
     double d;
     while (!shape_list_empty(s)) {
         d = shape_intersect(s->head, ray);
-        if (d > distObject.distance) {
+        if (d > 0 && d < distObject.distance) {
             distObject.object = s->head;
             distObject.distance = d;
         }
