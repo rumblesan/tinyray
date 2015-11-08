@@ -116,7 +116,7 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
         light = lights->head;
         if (light_is_visible(intersection, scene, light)) {
             contribution = vector3d_dot(
-                vector3d_unit(vector3d_subtract(light.centre, intersection)),
+                vector3d_unit(vector3d_subtract(light.position, intersection)),
                 normal
             );
             if (contribution > 0) {
@@ -132,7 +132,7 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
 bool light_is_visible(Vector3D intersection, Scene scene, Light light) {
     Intersection distObject = intersectedObject(
         ray(intersection, vector3d_unit(
-            vector3d_subtract(intersection, light.centre)
+            vector3d_subtract(intersection, light.position)
         )),
         scene->shapes
     );

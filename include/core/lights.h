@@ -5,7 +5,7 @@
 
 typedef struct light_point {
 
-    Vector3D centre;
+    Vector3D position;
 
     double intensity;
 

@@ -6,7 +6,7 @@ Light light_create(Vector3D position, double intensity) {
 
     Light light;
 
-    light.centre = position;
+    light.position = position;
 
     light.intensity = intensity;
 
