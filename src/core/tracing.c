@@ -47,13 +47,13 @@ void rays_calc(Scene scene) {
 
     int depth = 0;
     Ray pxRay;
-    Vector3D rayVector;
+    Vector3D rayDirection;
     Colour pxColour;
     for (x = 0; x < config->width; x += 1) {
         for (y = 0; y < config->height; y += 1) {
             xcomp = vector3d_scale((x * pixelWidth) - halfWidth, vpRight);
             ycomp = vector3d_scale((x * pixelHeight) - halfHeight, vpUp);
-            rayVector = vector3d_unit(
+            rayDirection = vector3d_unit(
                 vector3d_add(
                     vector3d_add(
                         eyeVector, xcomp
@@ -61,7 +61,7 @@ void rays_calc(Scene scene) {
                     ycomp
                 )
             );
-            pxRay = ray(camera->position, rayVector);
+            pxRay = ray(camera->position, rayDirection);
             pxColour = trace(pxRay, scene, depth);
             canvas_set(scene->canvas, x, y, pxColour);
         }
