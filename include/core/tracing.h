@@ -4,6 +4,7 @@
 #include "core/colours.h"
 #include "core/scene.h"
 #include "core/shapes.h"
+#include "core/collections/shape_list.h"
 #include "core/ray.h"
 
 typedef struct intersection {
@@ -18,7 +19,7 @@ void rays_calc(Scene scene);
 
 Colour trace(Ray ray, Scene scene, int depth);
 
-Intersection intersectedObject(Ray ray, Scene scene);
+Intersection intersectedObject(Ray ray, ShapeList shapes);
 
 Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int depth);
 
