@@ -29,11 +29,15 @@ void render_png(Scene scene, char* output_file)
 
     for (int y = 0; y < height; y++) {
         for (int x = 0; x < width; x++) {
+            // Fix image being upside down
+            // We trace from bottom left to top right
+            // Logepng goes topleft to bottom right
+            int yc = (height - 1) - y;
             colour = data[x][y];
-            image[4 * width * y + 4 * x + 0] = colour.red;
-            image[4 * width * y + 4 * x + 1] = colour.green;
-            image[4 * width * y + 4 * x + 2] = colour.blue;
-            image[4 * width * y + 4 * x + 3] = colour.alpha;
+            image[4 * width * yc + 4 * x + 0] = colour.red;
+            image[4 * width * yc + 4 * x + 1] = colour.green;
+            image[4 * width * yc + 4 * x + 2] = colour.blue;
+            image[4 * width * yc + 4 * x + 3] = colour.alpha;
         }
     }
 
