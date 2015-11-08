@@ -106,6 +106,7 @@ Intersection intersectedObject(Ray ray, ShapeList shapes) {
 }
 
 Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int depth) {
+
     Colour sc = colour(0, 200, 0, 255);
 
     Vector3D normal = shape_normal(object, intersection);
@@ -125,6 +126,7 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
                 lambertAmount += contribution;
             }
         }
+        lights = light_list_tail(lights);
     }
 
     return colour_mult(sc, fmin(1, lambertAmount));
