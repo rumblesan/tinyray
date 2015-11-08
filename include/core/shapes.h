@@ -3,6 +3,7 @@
 
 #include "core/vector.h"
 #include "core/ray.h"
+#include "core/colours.h"
 
 typedef enum {SPHERE} ShapeType;
 
@@ -20,6 +21,8 @@ typedef struct shape {
 
     ShapeType type;
 
+    Colour colour;
+
     union {
         Sphere sphere;
     };
@@ -33,7 +36,7 @@ void shape_cleanup(Shape shape);
 Vector3D shape_normal(Shape shape, Vector3D pos);
 
 /* Sphere functions */
-Shape sphere_create(double x, double y, double z, double radius);
+Shape sphere_create(double x, double y, double z, double radius, Colour colour);
 
 double sphere_intersect(Sphere sphere, Ray ray);
 

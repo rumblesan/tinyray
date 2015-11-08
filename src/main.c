@@ -48,25 +48,26 @@ int main(int argc, char *argv[]) {
 
     Config config = config_create(
         640, 480,
-        colour(100, 200, 255, 255)
+        colour(0, 0, 0, 255)
     );
 
     Canvas canvas = canvas_create(config->width, config->height);
     Camera camera = camera_create(
         45,
-        4.0, 4.0, 4.0,
+        -4.0, 0.0, 0.0,
         0.0, 0.0, 0.0
     );
     LightList lights = light_list_add(
         light_list_create(),
-        light_create(1.0, 2.0, 3.0, 1.0)
+        light_create(-4.0, 0.0, 3.0, 1.0)
     );
     ShapeList shapes = shape_list_add(
-        shape_list_add(
-            shape_list_create(),
-            sphere_create(1.0, 0.0, 3.0, 1.0)
-        ),
-        sphere_create(0.0, -1.0, 1.0, 1.0)
+        shape_list_create(),
+        sphere_create(
+            9.0, 0.0, 0.0,
+            1.0,
+            colour(200, 0, 100, 255)
+        )
     );
 
     Scene scene = scene_create(

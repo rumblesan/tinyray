@@ -5,6 +5,7 @@
 
 #include "core/vector.h"
 #include "core/ray.h"
+#include "core/colours.h"
 
 double shape_intersect(Shape shape, Ray ray) {
     switch(shape->type) {
@@ -26,7 +27,7 @@ void shape_cleanup(Shape shape) {
 }
 
 /* Sphere functions */
-Shape sphere_create(double x, double y, double z, double radius) {
+Shape sphere_create(double x, double y, double z, double radius, Colour colour) {
 
     Shape shape = (Shape) malloc(sizeof(ShapeData));
 
@@ -37,6 +38,7 @@ Shape sphere_create(double x, double y, double z, double radius) {
 
     shape->type = SPHERE;
     shape->sphere = sphere;
+    shape->colour = colour;
 
     return shape;
 }
