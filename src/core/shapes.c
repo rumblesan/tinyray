@@ -41,16 +41,29 @@ Shape sphere_create(double x, double y, double z, double radius) {
     return shape;
 }
 
+// TODO
+// This could certainly be made more efficient
 double sphere_intersect(Sphere sphere, Ray ray) {
-    Vector3D eye_to_centre = vector3d_subtract(sphere->centre, ray.origin);
-    double v = vector3d_dot(eye_to_centre, ray.direction);
-    double d = vector3d_length(eye_to_centre);
-    double discriminant = (sphere->radius * sphere->radius) - d + (v * v);
-    if (discriminant < 0) {
+
+    Vector3D origin_to_centre = vector3d_subtract(sphere->centre, ray.origin);
+
+    // calculate length of vector from origin to a point perpendicular with
+    // the centre of the circle. works because ray.direction is a unit vector
+    double v = vector3d_dot(origin_to_centre, ray.direction);
+    if (v < 0) {
         return -1;
-    } else {
-        return v - sqrt(discriminant);
     }
+
+    double ol = vector3d_length(origin_to_centre);
+
+    double d = sqrt(pow(ol, 2) - pow(v, 2));
+    if (d > sphere->radius) {
+        return -1;
+    }
+
+    double diff = sqrt(pow(d, 2) + pow(sphere->radius, 2));
+
+    return v - diff;
 }
 
 Vector3D sphere_normal(Sphere sphere, Vector3D pos) {

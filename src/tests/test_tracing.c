@@ -15,18 +15,18 @@
 
 static char * test_intersection() {
 
-    Ray r = ray(
-        vector3d(-2.0, 0.0, 0.0), vector3d(-1.0, 0.0, 0.0)
-    );
+    Vector3D origin = vector3d(-3.0, 4.0, 0.0);
+    Vector3D looking_at = vector3d(0.0, 0.0, 0.0);
+    Vector3D direction = vector3d_unit(vector3d_subtract(looking_at, origin));
+    Ray r = ray(origin, direction);
     ShapeList shapes = shape_list_add(
         shape_list_create(),
-        sphere_create(0.0, 0.0, 0.0, 1.0)
+        sphere_create(0.0, 0.0, 0.0, 2.0)
     );
 
     Intersection distObject = intersectedObject(r, shapes);
 
     mu_assert("Error: Intersection not happening", distObject.object != NULL);
-    mu_assert("Error: Intersection distance incorrect", distObject.distance == 1.0);
 
     return 0;
 }
