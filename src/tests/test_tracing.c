@@ -24,7 +24,7 @@ static char * test_intersection() {
         sphere_create(vector3d(0.0, 0.0, 0.0), 2.0, colour(0, 0, 0))
     );
 
-    Intersection distObject = intersectedObject(r, shapes);
+    Intersection distObject = intersectedObject(r, shapes, 1000);
 
     mu_assert("Error: Intersection not happening", distObject.object != NULL);
 

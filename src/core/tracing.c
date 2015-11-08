@@ -71,7 +71,7 @@ void rays_calc(Scene scene) {
 
 Colour trace(Ray ray, Scene scene, int depth) {
 
-    Intersection distObject = intersectedObject(ray, scene->shapes);
+    Intersection distObject = intersectedObject(ray, scene->shapes, scene->config->max_distance);
 
     if (distObject.object == NULL) {
         return scene->config->background;
@@ -85,10 +85,10 @@ Colour trace(Ray ray, Scene scene, int depth) {
     return surface(ray, scene, distObject.object, intersectPoint, depth);
 }
 
-Intersection intersectedObject(Ray ray, ShapeList shapes) {
+Intersection intersectedObject(Ray ray, ShapeList shapes, double max_distance) {
     Intersection distObject;
     distObject.object = NULL;
-    distObject.distance = 100000;
+    distObject.distance = max_distance;
 
     ShapeList s = shapes;
 
@@ -134,7 +134,8 @@ bool light_is_visible(Vector3D intersection, Scene scene, Light light) {
         ray(intersection, vector3d_unit(
             vector3d_subtract(intersection, light.position)
         )),
-        scene->shapes
+        scene->shapes,
+        scene->config->max_distance
     );
     return (distObject.distance > -0.005);
 }

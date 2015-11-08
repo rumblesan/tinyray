@@ -7,7 +7,7 @@ static char * test_creation() {
 
     Colour background = colour(0, 100, 100);
 
-    Config config = config_create(640, 480, background);
+    Config config = config_create(640, 480, 1000, background);
 
     mu_assert("Error: Config object not created correctly", config->width == 640);
 

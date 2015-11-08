@@ -19,7 +19,7 @@ void rays_calc(Scene scene);
 
 Colour trace(Ray ray, Scene scene, int depth);
 
-Intersection intersectedObject(Ray ray, ShapeList shapes);
+Intersection intersectedObject(Ray ray, ShapeList shapes, double max_distance);
 
 Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int depth);
 

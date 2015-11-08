@@ -4,12 +4,19 @@
 
 #include "core/colours.h"
 
-Config config_create(int width, int height, Colour background) {
+Config config_create(
+    int width,
+    int height,
+    double max_distance,
+    Colour background
+) {
 
     Config config = (Config) malloc(sizeof(ConfigData));
 
     config->width = width;
     config->height = height;
+
+    config->max_distance = max_distance;
 
     config->background = background;
 

@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
 
     Config config = config_create(
         640, 480,
+        10000,
         colour(0, 0, 0)
     );
 

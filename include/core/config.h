@@ -9,11 +9,18 @@ typedef struct config {
     int width;
     int height;
 
+    double max_distance;
+
     Colour background;
 
 } ConfigData;
 
-Config config_create(int width, int height, Colour background);
+Config config_create(
+    int width,
+    int height,
+    double max_distance,
+    Colour background
+);
 
 void config_cleanup(Config config);
 
