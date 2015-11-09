@@ -62,28 +62,34 @@ int main(int argc, char *argv[]) {
         vector3d(0.0, 0.0, 0.0)
     );
     LightList lights = light_list_create(
-        2,
+        3,
         point_light_create(
-            vector3d(0.0, 3.0, 0.0), 0.3, colour(255, 255, 255)
+            vector3d(0.0, 3.0, 2.0), 0.4, colour(255, 255, 255)
+        ),
+        point_light_create(
+            vector3d(0.0, 3.0, -2.0), 0.4, colour(255, 255, 255)
         ),
         ambient_light_create(
-            0.4, colour(255, 255, 255)
+            0.6, colour(255, 255, 255)
         )
     );
     Shape sphereO = sphere_create(
         vector3d(0.0, 0.0, 0.0),
         0.3,
-        colour(255, 255, 255)
+        colour(255, 0, 255),
+        0
     );
     Shape sphere1 = sphere_create(
         vector3d(0.0, 1.0, 0.0),
         0.1,
-        colour(255, 255, 255)
+        colour(0, 255, 255),
+        0.5
     );
     Shape plane = plane_create(
         vector3d(0.0, -1.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
-        colour(100, 255, 255)
+        colour(100, 255, 255),
+        0.5
     );
 
     ShapeList shapes = shape_list_create(

@@ -29,7 +29,8 @@ static char * test_creation() {
     Shape shape = sphere_create(
         vector3d(1.0, 2.0, 3.0),
         1.0,
-        colour(0, 0, 0)
+        colour(0, 0, 0),
+        0.5
     );
     ShapeList shapes = shape_list_create(1, shape);
 

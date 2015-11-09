@@ -32,6 +32,8 @@ typedef struct shape {
 
     Colour colour;
 
+    double lambert;
+
     union {
         Sphere sphere;
         Plane plane;
@@ -46,7 +48,7 @@ void shape_cleanup(Shape shape);
 Vector3D shape_normal(Shape shape, Vector3D pos);
 
 /* Sphere functions */
-Shape sphere_create(Vector3D position, double radius, Colour colour);
+Shape sphere_create(Vector3D position, double radius, Colour colour, double lambert);
 
 double sphere_intersect(Sphere sphere, Ray ray);
 
@@ -55,7 +57,7 @@ Vector3D sphere_normal(Sphere sphere, Vector3D pos);
 void sphere_cleanup(Sphere shape);
 
 /* Plane functions */
-Shape plane_create(Vector3D position, Vector3D normal, Colour colour);
+Shape plane_create(Vector3D position, Vector3D normal, Colour colour, double lambert);
 
 double plane_intersect(Plane plane, Ray ray);
 

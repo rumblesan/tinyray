@@ -111,33 +111,39 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
     Light light;
     double contribution;
     double lambertAmount = 0;
+    double ambientAmount = 0;
 
     while(!light_list_is_empty(lights)) {
         light = light_list_head(lights);
         switch(light.type) {
             case POINT:
-                if (light_is_visible(intersection, scene, light)) {
-                    contribution = vector3d_dot(
-                        vector3d_unit(
-                            vector3d_subtract(
-                                light.point.position, intersection
-                            )
-                        ),
-                        normal
-                    );
-                    if (contribution > 0) {
-                        lambertAmount += (contribution * light.intensity);
+                if (object->lambert > 0) {
+                    if (light_is_visible(intersection, scene, light)) {
+                        contribution = vector3d_dot(
+                            vector3d_unit(
+                                vector3d_subtract(
+                                    light.point.position, intersection
+                                )
+                            ),
+                            normal
+                        );
+                        if (contribution > 0) {
+                            lambertAmount += (
+                                contribution * light.intensity * object->lambert
+                            );
+                        }
                     }
                 }
                 break;
             case AMBIENT:
-                lambertAmount += light.intensity;
+                ambientAmount += light.intensity;
                 break;
         }
         lights = light_list_tail(lights);
     }
 
-    return colour_mult(object->colour, fmin(1, lambertAmount));
+    double light_value = fmin(1, lambertAmount) + ambientAmount;
+    return colour_mult(object->colour, light_value);
 }
 
 bool light_is_visible(Vector3D intersection, Scene scene, Light light) {

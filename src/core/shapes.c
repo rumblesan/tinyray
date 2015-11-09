@@ -30,7 +30,7 @@ void shape_cleanup(Shape shape) {
 }
 
 /* Sphere functions */
-Shape sphere_create(Vector3D position, double radius, Colour colour) {
+Shape sphere_create(Vector3D position, double radius, Colour colour, double lambert) {
 
     Shape shape = (Shape) malloc(sizeof(ShapeData));
 
@@ -42,6 +42,7 @@ Shape sphere_create(Vector3D position, double radius, Colour colour) {
     shape->type = SPHERE;
     shape->sphere = sphere;
     shape->colour = colour;
+    shape->lambert = lambert;
 
     return shape;
 }
@@ -82,7 +83,7 @@ void sphere_cleanup(Sphere sphere) {
 }
 
 /* Plane functions */
-Shape plane_create(Vector3D position, Vector3D normal, Colour colour) {
+Shape plane_create(Vector3D position, Vector3D normal, Colour colour, double lambert) {
 
     Shape shape = (Shape) malloc(sizeof(ShapeData));
 
@@ -94,6 +95,7 @@ Shape plane_create(Vector3D position, Vector3D normal, Colour colour) {
     shape->type = PLANE;
     shape->plane = plane;
     shape->colour = colour;
+    shape->lambert = lambert;
 
     return shape;
 }
