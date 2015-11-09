@@ -21,7 +21,7 @@ static char * test_creation() {
     );
     Config config = config_create(640, 480, 1000, background);
     Light light = light_create(vector3d(1.0, 2.0, 3.0), 1.0);
-    LightList lights = light_list_add(light_list_create(), light);
+    LightList lights = light_list_create(1, light);
     Shape shape = sphere_create(
         vector3d(1.0, 2.0, 3.0),
         1.0,

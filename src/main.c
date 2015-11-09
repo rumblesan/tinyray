@@ -61,8 +61,8 @@ int main(int argc, char *argv[]) {
         vector3d(-5.0, 5.0, 0.0),
         vector3d(0.0, 0.0, 0.0)
     );
-    LightList lights = light_list_add(
-        light_list_create(),
+    LightList lights = light_list_create(
+        1,
         light_create(vector3d(0.0, 3.0, 0.0), 0.3)
     );
     Shape sphereO = sphere_create(

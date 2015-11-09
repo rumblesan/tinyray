@@ -14,18 +14,22 @@ typedef struct light_list_el {
 
 } LightListEl;
 
-LightList light_list_create();
+LightList light_list_element();
+
+LightList light_list_empty();
+
+LightList light_list_create(int count, ...);
 
 void light_list_cleanup(LightList list);
 
-LightList light_list_add(LightList list, Light light);
+LightList light_list_add(LightList list, int count, ...);
 
-Light light_list_head(LightList list); 
+Light light_list_head(LightList list);
 
-LightList light_list_tail(LightList list); 
+LightList light_list_tail(LightList list);
 
-bool light_list_empty(LightList list); 
+bool light_list_is_empty(LightList list);
 
-int light_list_length(LightList list); 
+int light_list_length(LightList list);
 
 #endif

@@ -112,8 +112,8 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
     double contribution;
     double lambertAmount = 0;
 
-    while(!light_list_empty(lights)) {
-        light = lights->head;
+    while(!light_list_is_empty(lights)) {
+        light = light_list_head(lights);
         if (light_is_visible(intersection, scene, light)) {
             contribution = vector3d_dot(
                 vector3d_unit(vector3d_subtract(light.position, intersection)),
