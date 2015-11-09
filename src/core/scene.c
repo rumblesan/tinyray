@@ -9,7 +9,6 @@
 #include "core/collections/shape_list.h"
 
 Scene scene_create(
-    Canvas canvas,
     Camera camera,
     Config config,
     LightList lights,
@@ -18,7 +17,7 @@ Scene scene_create(
 
     Scene scene = (Scene) malloc(sizeof(SceneData));
 
-    scene->canvas = canvas;
+    scene->canvas = canvas_create(config->width, config->height);
     scene->camera = camera;
     scene->config = config;
     scene->lights = lights;

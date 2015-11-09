@@ -21,7 +21,6 @@ typedef struct scene {
 } SceneData;
 
 Scene scene_create(
-    Canvas canvas,
     Camera camera,
     Config config,
     LightList lights,

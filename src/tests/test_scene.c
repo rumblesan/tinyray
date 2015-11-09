@@ -14,7 +14,6 @@ static char * test_creation() {
 
     Colour background = colour(0, 100, 100);
 
-    Canvas canvas = canvas_create(640, 480);
     Camera camera = camera_create(
         45,
         vector3d(1.0, 0.0, 2.0),
@@ -31,7 +30,6 @@ static char * test_creation() {
     ShapeList shapes = shape_list_add(shape_list_create(), 1, shape);
 
     Scene scene = scene_create(
-        canvas,
         camera,
         config,
         lights,

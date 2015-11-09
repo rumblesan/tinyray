@@ -56,7 +56,6 @@ int main(int argc, char *argv[]) {
         colour(0, 0, 0)
     );
 
-    Canvas canvas = canvas_create(config->width, config->height);
     Camera camera = camera_create(
         45,
         vector3d(-5.0, 5.0, 0.0),
@@ -87,7 +86,6 @@ int main(int argc, char *argv[]) {
     );
 
     Scene scene = scene_create(
-        canvas,
         camera,
         config,
         lights,
