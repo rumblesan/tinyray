@@ -19,8 +19,8 @@ static char * test_intersection() {
     Vector3D looking_at = vector3d(0.0, 0.0, 0.0);
     Vector3D direction = vector3d_unit(vector3d_subtract(looking_at, origin));
     Ray r = ray(origin, direction);
-    ShapeList shapes = shape_list_add(
-        shape_list_create(), 1,
+    ShapeList shapes = shape_list_create(
+        1,
         sphere_create(vector3d(0.0, 0.0, 0.0), 2.0, colour(0, 0, 0))
     );
 

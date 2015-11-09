@@ -81,8 +81,8 @@ int main(int argc, char *argv[]) {
         colour(100, 255, 255)
     );
 
-    ShapeList shapes = shape_list_add(
-        shape_list_create(), 3, sphereO, sphere1, plane
+    ShapeList shapes = shape_list_create(
+        3, sphereO, sphere1, plane
     );
 
     Scene scene = scene_create(

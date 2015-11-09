@@ -93,10 +93,10 @@ Intersection intersectedObject(Ray ray, ShapeList shapes, double max_distance) {
     ShapeList s = shapes;
 
     double d;
-    while (!shape_list_empty(s)) {
-        d = shape_intersect(s->head, ray);
+    while (!shape_list_is_empty(s)) {
+        d = shape_intersect(shape_list_head(s), ray);
         if (d > 0 && d < distObject.distance) {
-            distObject.object = s->head;
+            distObject.object = shape_list_head(s);
             distObject.distance = d;
         }
         s = shape_list_tail(s);

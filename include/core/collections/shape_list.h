@@ -14,7 +14,11 @@ typedef struct shape_list_el {
 
 } ShapeListEl;
 
-ShapeList shape_list_create();
+ShapeList shape_list_element();
+
+ShapeList shape_list_empty();
+
+ShapeList shape_list_create(int count, ...);
 
 void shape_list_cleanup(ShapeList list);
 
@@ -24,7 +28,7 @@ Shape shape_list_head(ShapeList list);
 
 ShapeList shape_list_tail(ShapeList list); 
 
-bool shape_list_empty(ShapeList list); 
+bool shape_list_is_empty(ShapeList list);
 
 int shape_list_length(ShapeList list); 
 
