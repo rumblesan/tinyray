@@ -7,6 +7,7 @@
 #include "core/lights.h"
 #include "core/scene.h"
 #include "core/shapes.h"
+#include "core/textures.h"
 #include "core/collections/light_list.h"
 #include "core/collections/shape_list.h"
 
@@ -26,11 +27,11 @@ static char * test_creation() {
         colour(255, 255, 255)
     );
     LightList lights = light_list_create(1, light);
+    Texture t = texture_flat(0.5, colour(0, 0, 0));
     Shape shape = sphere_create(
         vector3d(1.0, 2.0, 3.0),
         1.0,
-        colour(0, 0, 0),
-        0.5
+        t
     );
     ShapeList shapes = shape_list_create(1, shape);
 

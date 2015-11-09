@@ -7,6 +7,7 @@
 #include "core/lights.h"
 #include "core/scene.h"
 #include "core/shapes.h"
+#include "core/textures.h"
 #include "core/collections/light_list.h"
 #include "core/collections/shape_list.h"
 
@@ -70,26 +71,23 @@ int main(int argc, char *argv[]) {
             vector3d(0.0, 3.0, -2.0), 0.4, colour(255, 255, 255)
         ),
         ambient_light_create(
-            0.6, colour(255, 255, 255)
+            0.5, colour(255, 255, 255)
         )
     );
     Shape sphereO = sphere_create(
         vector3d(0.0, 0.0, 0.0),
         0.3,
-        colour(255, 0, 255),
-        0
+        texture_flat(0, colour(255, 0, 255))
     );
     Shape sphere1 = sphere_create(
         vector3d(0.0, 1.0, 0.0),
         0.1,
-        colour(0, 255, 255),
-        0.5
+        texture_flat(1, colour(0, 0, 255))
     );
     Shape plane = plane_create(
         vector3d(0.0, -1.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
-        colour(100, 255, 255),
-        0.5
+        texture_flat(0.8, colour(255, 255, 255))
     );
 
     ShapeList shapes = shape_list_create(

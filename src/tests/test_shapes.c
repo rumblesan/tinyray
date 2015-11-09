@@ -3,10 +3,11 @@
 #include "tests/min_unit.h"
 
 #include "core/shapes.h"
+#include "core/textures.h"
 
 static char * test_creation() {
-
-    Shape shape = sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, colour(0, 0, 0), 0.5);
+    Texture t = texture_flat(0.5, colour(0, 0, 0));
+    Shape shape = sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, t);
 
     mu_assert("Error: Shape object not created correctly", shape->type == SPHERE);
 
@@ -16,10 +17,11 @@ static char * test_creation() {
 
 static char * test_sphere_intersect() {
 
+    Texture t = texture_flat(0.5, colour(0, 0, 0));
     Ray r = ray(
         vector3d(0.0, 0.0, 0.0), vector3d_unit(vector3d(1.0, 0.0, 0.0))
     );
-    Shape shape = sphere_create(vector3d(4.0, 0.0, 0.0), 2.0, colour(0, 0, 0), 0.5);
+    Shape shape = sphere_create(vector3d(4.0, 0.0, 0.0), 2.0, t);
 
     double distance = shape_intersect(shape, r);
 
@@ -31,14 +33,14 @@ static char * test_sphere_intersect() {
 
 static char * test_plane_intersect() {
 
+    Texture t = texture_flat(0.5, colour(0, 0, 0));
     Ray r = ray(
         vector3d(0.0, 4.0, 0.0), vector3d_unit(vector3d(0.0, -1.0, 0.0))
     );
     Shape shape = plane_create(
         vector3d(0.0, 0.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
-        colour(100, 200, 200),
-        0.5
+        t
     );
 
     double distance = shape_intersect(shape, r);

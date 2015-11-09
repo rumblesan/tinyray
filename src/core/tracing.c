@@ -6,6 +6,7 @@
 #include "core/colours.h"
 #include "core/scene.h"
 #include "core/shapes.h"
+#include "core/textures.h"
 #include "core/ray.h"
 #include "core/vector.h"
 #include "core/camera.h"
@@ -117,7 +118,7 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
         light = light_list_head(lights);
         switch(light.type) {
             case POINT:
-                if (object->lambert > 0) {
+                if (object->texture.lambert > 0) {
                     if (light_is_visible(intersection, scene, light)) {
                         contribution = vector3d_dot(
                             vector3d_unit(
@@ -129,7 +130,7 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
                         );
                         if (contribution > 0) {
                             lambertAmount += (
-                                contribution * light.intensity * object->lambert
+                                contribution * light.intensity * object->texture.lambert
                             );
                         }
                     }
@@ -143,7 +144,9 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
     }
 
     double light_value = fmin(1, lambertAmount) + ambientAmount;
-    return colour_mult(object->colour, light_value);
+    return colour_mult(
+        texture_get_colour(object->texture), light_value
+    );
 }
 
 bool light_is_visible(Vector3D intersection, Scene scene, Light light) {
