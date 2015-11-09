@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-typedef uint8_t Component;
+typedef double Component;
 
 typedef struct colour_data {
 

@@ -35,10 +35,10 @@ void render_png(Scene scene, char* output_file)
             // Logepng goes topleft to bottom right
             int yc = (height - 1) - y;
             colour = data[x][y];
-            image[4 * width * yc + 4 * x + 0] = colour.red;
-            image[4 * width * yc + 4 * x + 1] = colour.green;
-            image[4 * width * yc + 4 * x + 2] = colour.blue;
-            image[4 * width * yc + 4 * x + 3] = colour.alpha;
+            image[4 * width * yc + 4 * x + 0] = (uint8_t)colour.red;
+            image[4 * width * yc + 4 * x + 1] = (uint8_t)colour.green;
+            image[4 * width * yc + 4 * x + 2] = (uint8_t)colour.blue;
+            image[4 * width * yc + 4 * x + 3] = (uint8_t)colour.alpha;
         }
     }
 
@@ -63,31 +63,28 @@ int main(int argc, char *argv[]) {
         vector3d(0.0, 0.0, 0.0)
     );
     LightList lights = light_list_create(
-        3,
+        2,
         point_light_create(
-            vector3d(0.0, 3.0, 2.0), 0.4, colour(255, 255, 255)
-        ),
-        point_light_create(
-            vector3d(0.0, 3.0, -2.0), 0.4, colour(255, 255, 255)
+            vector3d(0.0, 2.1, 0), 0.4, colour(255, 255, 255)
         ),
         ambient_light_create(
-            0.5, colour(255, 255, 255)
+            0.3, colour(255, 255, 255)
         )
     );
     Shape sphereO = sphere_create(
         vector3d(0.0, 0.0, 0.0),
         0.3,
-        texture_flat(0, colour(255, 0, 255))
+        texture_flat(1, colour(255, 0, 255))
     );
     Shape sphere1 = sphere_create(
         vector3d(0.0, 1.0, 0.0),
-        0.1,
+        1,
         texture_flat(1, colour(0, 0, 255))
     );
     Shape plane = plane_create(
         vector3d(0.0, -1.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
-        texture_flat(0.8, colour(255, 255, 255))
+        texture_flat(1, colour(100, 100, 100))
     );
 
     ShapeList shapes = shape_list_create(
