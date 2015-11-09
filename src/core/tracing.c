@@ -114,14 +114,25 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
 
     while(!light_list_is_empty(lights)) {
         light = light_list_head(lights);
-        if (light_is_visible(intersection, scene, light)) {
-            contribution = vector3d_dot(
-                vector3d_unit(vector3d_subtract(light.position, intersection)),
-                normal
-            );
-            if (contribution > 0) {
-                lambertAmount += (contribution * light.intensity);
-            }
+        switch(light.type) {
+            case POINT:
+                if (light_is_visible(intersection, scene, light)) {
+                    contribution = vector3d_dot(
+                        vector3d_unit(
+                            vector3d_subtract(
+                                light.point.position, intersection
+                            )
+                        ),
+                        normal
+                    );
+                    if (contribution > 0) {
+                        lambertAmount += (contribution * light.intensity);
+                    }
+                }
+                break;
+            case AMBIENT:
+                lambertAmount += light.intensity;
+                break;
         }
         lights = light_list_tail(lights);
     }
@@ -130,13 +141,23 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
 }
 
 bool light_is_visible(Vector3D intersection, Scene scene, Light light) {
-    Intersection distObject = intersectedObject(
-        ray(intersection, vector3d_unit(
-            vector3d_subtract(intersection, light.position)
-        )),
-        scene->shapes,
-        scene->config->max_distance
-    );
-    return (distObject.distance > -0.005);
+
+    Intersection distObject;
+
+    switch(light.type) {
+        case AMBIENT:
+            return false;
+            break;
+        case POINT:
+            distObject = intersectedObject(
+                ray(intersection, vector3d_unit(
+                    vector3d_subtract(intersection, light.point.position)
+                )),
+                scene->shapes,
+                scene->config->max_distance
+            );
+            return (distObject.distance > -0.005);
+            break;
+    }
 }
 

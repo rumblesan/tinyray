@@ -4,27 +4,30 @@
 
 #include "core/lights.h"
 #include "core/collections/light_list.h"
+#include "core/colours.h"
 
 static char * test_creation() {
 
-    Light light = light_create(vector3d(1.0, 2.0, 3.0), 1.0);
+    Colour c = colour(255, 255, 255);
+    Light light = point_light_create(vector3d(1.0, 2.0, 3.0), 1.0, c);
     LightList list = light_list_create(1, light);
 
-    mu_assert("Error: LightList not created correctly", list->head.position.x == 1.0);
+    mu_assert("Error: LightList not created correctly", list->head.point.position.x == 1.0);
 
     light_list_cleanup(list);
     return 0;
 }
 
 static char * test_length() {
+    Colour c = colour(255, 255, 255);
     LightList empty = light_list_empty();
     mu_assert("Error: LightList should be empty", light_list_is_empty(empty) == true);
     LightList lights = light_list_add(
         empty, 4,
-        light_create(vector3d(1.0, 2.0, 3.0), 1.0),
-        light_create(vector3d(1.0, 2.0, 3.0), 1.0),
-        light_create(vector3d(1.0, 2.0, 3.0), 1.0),
-        light_create(vector3d(1.0, 2.0, 3.0), 1.0)
+        point_light_create(vector3d(1.0, 2.0, 3.0), 1.0, c),
+        point_light_create(vector3d(1.0, 2.0, 3.0), 1.0, c),
+        point_light_create(vector3d(1.0, 2.0, 3.0), 1.0, c),
+        point_light_create(vector3d(1.0, 2.0, 3.0), 1.0, c)
     );
 
     int len = light_list_length(lights);
