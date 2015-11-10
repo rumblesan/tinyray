@@ -54,41 +54,36 @@ int main(int argc, char *argv[]) {
     Config config = config_create(
         640, 480,
         10000,
-        colour(0, 0, 0)
+        colour(255, 255, 255)
     );
 
     Camera camera = camera_create(
         45,
-        vector3d(-5.0, 5.0, 0.0),
-        vector3d(0.0, 0.0, 0.0)
+        vector3d(-15.0, 5.0, 15.0),
+        vector3d(0.0, 3.0, 0.0)
     );
     LightList lights = light_list_create(
         2,
         point_light_create(
-            vector3d(0.0, 2.1, 0), 0.4, colour(255, 255, 255)
+            vector3d(-8.0, 9.0, 3), 1, colour(255, 255, 255)
         ),
         ambient_light_create(
             0.3, colour(255, 255, 255)
         )
     );
-    Shape sphereO = sphere_create(
-        vector3d(0.0, 0.0, 0.0),
-        0.3,
+    Shape sphere = sphere_create(
+        vector3d(0.0, 3.0, 0.0),
+        3,
         texture_flat(1, colour(255, 0, 255))
     );
-    Shape sphere1 = sphere_create(
-        vector3d(0.0, 1.0, 0.0),
-        1,
-        texture_flat(1, colour(0, 0, 255))
-    );
     Shape plane = plane_create(
-        vector3d(0.0, -1.0, 0.0),
+        vector3d(0.0, 0.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
-        texture_flat(1, colour(100, 100, 100))
+        texture_flat(1, colour(100, 100, 200))
     );
 
     ShapeList shapes = shape_list_create(
-        3, sphereO, sphere1, plane
+        2, sphere, plane
     );
 
     Scene scene = scene_create(
