@@ -62,13 +62,13 @@ int main(int argc, char *argv[]) {
         vector3d(-15.0, 5.0, 15.0),
         vector3d(0.0, 3.0, 0.0)
     );
+    Light ambient = ambient_light_create(
+        0.3, colour(255, 255, 255)
+    );
     LightList lights = light_list_create(
-        2,
+        1,
         point_light_create(
             vector3d(-8.0, 9.0, 3), 1, colour(255, 255, 255)
-        ),
-        ambient_light_create(
-            0.3, colour(255, 255, 255)
         )
     );
     Shape sphere = sphere_create(

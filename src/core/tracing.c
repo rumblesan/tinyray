@@ -119,7 +119,7 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
         switch(light.type) {
             case POINT:
                 if (object->texture.lambert > 0) {
-                    if (light_is_visible(intersection, scene, light)) {
+                    if (light_is_visible(intersection, light, scene->shapes, scene->config->max_distance)) {
                         contribution = vector3d_dot(
                             vector3d_unit(
                                 vector3d_subtract(
@@ -149,7 +149,7 @@ Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int de
     );
 }
 
-bool light_is_visible(Vector3D intersection, Scene scene, Light light) {
+bool light_is_visible(Vector3D intersection, Light light, ShapeList shapes, double max_distance) {
 
     Intersection distObject;
 
@@ -160,12 +160,12 @@ bool light_is_visible(Vector3D intersection, Scene scene, Light light) {
         case POINT:
             distObject = intersectedObject(
                 ray(intersection, vector3d_unit(
-                    vector3d_subtract(intersection, light.point.position)
+                    vector3d_subtract(light.point.position, intersection)
                 )),
-                scene->shapes,
-                scene->config->max_distance
+                shapes,
+                max_distance
             );
-            return (distObject.distance > -0.005);
+            return (distObject.object == NULL);
             break;
     }
 }

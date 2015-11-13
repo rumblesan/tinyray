@@ -23,6 +23,11 @@ Intersection intersectedObject(Ray ray, ShapeList shapes, double max_distance);
 
 Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int depth);
 
-bool light_is_visible(Vector3D intersection, Scene scene, Light light);
+bool light_is_visible(
+    Vector3D intersection,
+    Light light,
+    ShapeList shapes,
+    double max_distance
+);
 
 #endif
