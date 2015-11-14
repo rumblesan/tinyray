@@ -25,4 +25,6 @@ Vector3D vector3d_cross(Vector3D vectA, Vector3D vectB);
 
 double vector3d_dot(Vector3D vectA, Vector3D vectB);
 
+Vector3D vector3d_reflection(Vector3D normal, Vector3D direction);
+
 #endif

@@ -80,3 +80,13 @@ double vector3d_dot(Vector3D vectA, Vector3D vectB) {
     return ((vectA.x * vectB.x) + (vectA.y * vectB.y) + (vectA.z * vectB.z));
 }
 
+Vector3D vector3d_reflection(Vector3D normal, Vector3D direction) {
+    return vector3d_subtract(
+        direction,
+        vector3d_scale(
+            2 * vector3d_dot(direction, normal),
+            normal
+        )
+    );
+}
+
