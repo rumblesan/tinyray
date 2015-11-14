@@ -52,38 +52,44 @@ void render_png(Scene scene, char* output_file)
 int main(int argc, char *argv[]) {
 
     Config config = config_create(
-        640, 480,
+        1024, 768,
         10000,
         colour(255, 255, 255)
     );
 
     Camera camera = camera_create(
         45,
-        vector3d(-15.0, 5.0, 15.0),
-        vector3d(0.0, 3.0, 0.0)
+        vector3d(13, 5, 10),
+        vector3d(0, 3, 0)
     );
     Light ambient = ambient_light_create(
         0.3, colour(255, 255, 255)
     );
     LightList lights = light_list_create(
-        1,
+        2,
         point_light_create(
-            vector3d(-8.0, 9.0, 3), 1, colour(255, 255, 255)
-        )
+            vector3d(0, 8, 7), 1, colour(255, 255, 255)
+        ),
+        ambient
     );
+
     Shape sphere = sphere_create(
-        vector3d(0.0, 3.0, 0.0),
+        vector3d(0, 4, 0),
         3,
         texture_flat(1, colour(255, 0, 255))
+    );
+    Shape small_sphere = sphere_create(
+        vector3d(0, 5, 3.7),
+        0.3,
+        texture_flat(1, colour(0, 100, 150))
     );
     Shape plane = plane_create(
         vector3d(0.0, 0.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
         texture_flat(1, colour(100, 100, 200))
     );
-
     ShapeList shapes = shape_list_create(
-        2, sphere, plane
+        3, sphere, small_sphere, plane
     );
 
     Scene scene = scene_create(
