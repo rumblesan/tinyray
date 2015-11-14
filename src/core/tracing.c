@@ -71,23 +71,23 @@ void rays_calc(Scene scene) {
 
 }
 
-Colour trace(Ray ray, Scene scene, int depth) {
+Colour trace(Ray trace_ray, Scene scene, int depth) {
 
-    Intersection distObject = intersectedObject(ray, scene->shapes, scene->config->max_distance);
+    Intersection distObject = intersectedObject(trace_ray, scene->shapes, scene->config->max_distance);
 
     if (distObject.object == NULL) {
         return scene->config->background;
     }
 
     Vector3D intersectPoint = vector3d_add(
-        ray.origin,
-        vector3d_scale(distObject.distance, ray.direction)
+        trace_ray.origin,
+        vector3d_scale(distObject.distance, trace_ray.direction)
     );
 
-    return surface(ray, scene, distObject.object, intersectPoint, depth);
+    return surface(trace_ray, scene, distObject.object, intersectPoint, depth);
 }
 
-Intersection intersectedObject(Ray ray, ShapeList shapes, double max_distance) {
+Intersection intersectedObject(Ray trace_ray, ShapeList shapes, double max_distance) {
     Intersection distObject;
     distObject.object = NULL;
     distObject.distance = max_distance;
@@ -96,7 +96,7 @@ Intersection intersectedObject(Ray ray, ShapeList shapes, double max_distance) {
 
     double d;
     while (!shape_list_is_empty(s)) {
-        d = shape_intersect(shape_list_head(s), ray);
+        d = shape_intersect(shape_list_head(s), trace_ray);
         if (d > LIMINALITY && d < distObject.distance) {
             distObject.object = shape_list_head(s);
             distObject.distance = d;
@@ -107,7 +107,7 @@ Intersection intersectedObject(Ray ray, ShapeList shapes, double max_distance) {
     return distObject;
 }
 
-Colour surface(Ray ray, Scene scene, Shape object, Vector3D intersection, int depth) {
+Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, int depth) {
     Vector3D normal = shape_normal(object, intersection);
     LightList lights = scene->lights;
     Light light;
