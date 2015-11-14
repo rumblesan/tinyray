@@ -12,6 +12,7 @@
 #include "core/camera.h"
 #include "core/config.h"
 
+#include "core/constants.h"
 
 void rays_calc(Scene scene) {
 
@@ -96,7 +97,7 @@ Intersection intersectedObject(Ray ray, ShapeList shapes, double max_distance) {
     double d;
     while (!shape_list_is_empty(s)) {
         d = shape_intersect(shape_list_head(s), ray);
-        if (d > 0 && d < distObject.distance) {
+        if (d > LIMINALITY && d < distObject.distance) {
             distObject.object = shape_list_head(s);
             distObject.distance = d;
         }
