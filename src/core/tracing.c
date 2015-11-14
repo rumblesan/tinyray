@@ -145,9 +145,9 @@ Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, 
     }
 
     double light_value = fmin(1, lambertAmount) + ambientAmount;
-    return colour_mult(
+    return colour_ceil(colour_scale(
         texture_get_colour(object->texture), light_value
-    );
+    ));
 }
 
 bool light_is_visible(Vector3D intersection, Light light, ShapeList shapes, double max_distance) {
