@@ -76,17 +76,17 @@ int main(int argc, char *argv[]) {
     Shape sphere = shape_sphere(
         vector3d(0, 4, 0),
         3,
-        texture_flat(1, colour(255, 0, 255))
+        texture_flat(1, 0, colour(255, 0, 255))
     );
     Shape small_sphere = shape_sphere(
         vector3d(0, 5, 3.7),
         0.3,
-        texture_flat(1, colour(0, 100, 150))
+        texture_flat(1, 0, colour(0, 100, 150))
     );
     Shape plane = shape_plane(
         vector3d(0.0, 0.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
-        texture_flat(1, colour(100, 100, 200))
+        texture_flat(1, 0, colour(100, 100, 200))
     );
     ShapeList shapes = shape_list_create(
         3, sphere, small_sphere, plane

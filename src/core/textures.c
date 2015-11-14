@@ -2,7 +2,7 @@
 
 #include "core/colours.h"
 
-Texture texture_flat(double lambert, Colour colour) {
+Texture texture_flat(double lambert, double reflection, Colour colour) {
 
     Texture texture;
 
@@ -12,6 +12,7 @@ Texture texture_flat(double lambert, Colour colour) {
     texture.type = FLAT;
     texture.flat = flat;
     texture.lambert = lambert;
+    texture.reflection = reflection;
 
     return texture;
 }

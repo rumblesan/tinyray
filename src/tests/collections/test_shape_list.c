@@ -9,7 +9,7 @@
 
 static char * test_creation() {
 
-    Texture t = texture_flat(0.5, colour(0, 0, 0));
+    Texture t = texture_flat(0.5, 0, colour(0, 0, 0));
     Shape shape = shape_sphere(vector3d(1.0, 2.0, 3.0), 1.0, t);
     ShapeList list = shape_list_create(1, shape);
 
@@ -21,7 +21,7 @@ static char * test_creation() {
 
 static char * test_length() {
 
-    Texture t = texture_flat(0.5, colour(0, 0, 0));
+    Texture t = texture_flat(0.5, 0, colour(0, 0, 0));
     ShapeList empty = shape_list_empty();
     mu_assert("Error: ShapeList should be empty", shape_list_is_empty(empty) == true);
     ShapeList shapes = shape_list_add(

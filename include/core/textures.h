@@ -17,13 +17,15 @@ typedef struct texture {
 
     double lambert;
 
+    double reflection;
+
     union {
         FlatTexture flat;
     };
 
 } Texture;
 
-Texture texture_flat(double lambert, Colour colour);
+Texture texture_flat(double lambert, double reflection, Colour colour);
 
 Colour texture_get_colour(Texture texture);
 
