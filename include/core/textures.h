@@ -17,7 +17,7 @@ typedef struct texture {
 
     double lambert;
 
-    double reflection;
+    double specular;
 
     union {
         FlatTexture flat;
@@ -25,7 +25,7 @@ typedef struct texture {
 
 } Texture;
 
-Texture texture_flat(double lambert, double reflection, Colour colour);
+Texture texture_flat(double lambert, double specular, Colour colour);
 
 Colour texture_get_colour(Texture texture);
 

@@ -153,11 +153,11 @@ Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, 
         lights = light_list_tail(lights);
     }
 
-    if (object->texture.reflection > 0) {
+    if (object->texture.specular > 0) {
         Vector3D reflection_direction = vector3d_reflection(normal, trace_ray.direction);
         Ray reflection_ray = ray(intersection, reflection_direction);
         Colour reflection_colour = trace(reflection_ray, scene, depth+1);
-        reflection_light = colour_add(reflection_light, colour_scale(reflection_colour, object->texture.reflection));
+        reflection_light = colour_add(reflection_light, colour_scale(reflection_colour, object->texture.specular));
     }
 
     Colour light_value = colour_add(colour_ceil(lambert_light), ambient_light);
