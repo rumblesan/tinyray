@@ -51,11 +51,11 @@ Shape sphere_create(Vector3D position, double radius, Texture texture) {
 double sphere_intersect(Sphere sphere, Ray ray) {
 
     Vector3D origin_to_centre = vector3d_subtract(sphere->centre, ray.origin);
-
     // calculate length of vector from origin to a point perpendicular with
     // the centre of the circle. works because ray.direction is a unit vector
     double v = vector3d_dot(origin_to_centre, ray.direction);
     if (v < 0) {
+        // sphere is behind ray
         return -1;
     }
 
@@ -66,7 +66,7 @@ double sphere_intersect(Sphere sphere, Ray ray) {
         return -1;
     }
 
-    double diff = sqrt(pow(d, 2) + pow(sphere->radius, 2));
+    double diff = sqrt(pow(sphere->radius, 2) - pow(d, 2));
 
     return v - diff;
 }

@@ -33,7 +33,7 @@ static char * test_intersection() {
     return 0;
 }
 
-static char * test_light_visibility() {
+static char * test_simple_light_visibility() {
 
     Vector3D intersection = vector3d(0.0, 0.0, 0.0);
     Vector3D light_pos = vector3d(0.0, 0.0, 20.0);
@@ -61,9 +61,26 @@ static char * test_light_visibility() {
     return 0;
 }
 
+static char * test_complex_light_visibility() {
+    Vector3D intersection = vector3d(3, 0, 0);
+    Vector3D light_pos = vector3d(10, 10, 0);
+
+    Texture t = texture_flat(0, colour(0, 255, 255));
+    ShapeList shapes = shape_list_create(1,
+        sphere_create(vector3d(3, 4, 0), 3, t)
+    );
+    Light light = point_light_create(light_pos, 1, colour(0, 255, 255));
+
+    bool not_visible = light_is_visible(intersection, light, shapes, 100);
+    mu_assert("Error: Light should not be visible through sphere", not_visible == false);
+
+    return 0;
+}
+
 char * test_tracing() {
     mu_run_test(test_intersection);
-    mu_run_test(test_light_visibility);
+    mu_run_test(test_simple_light_visibility);
+    mu_run_test(test_complex_light_visibility);
     return 0;
 }
 
