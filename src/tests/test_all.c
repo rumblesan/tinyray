@@ -6,6 +6,7 @@
 #include "tests/test_shapes.h"
 #include "tests/test_camera.h"
 #include "tests/test_config.h"
+#include "tests/test_colours.h"
 #include "tests/test_canvas.h"
 #include "tests/test_lights.h"
 #include "tests/collections/test_shape_list.h"
@@ -44,6 +45,7 @@ int main(int argc, char *argv[]) {
     int lights_result = run_test("Lights", test_lights);
     int light_list_result = run_test("LightList", test_light_list);
     int tracing_result    = run_test("Tracing", test_tracing);
+    int colour_result     = run_test("Colours", test_colours);
 
     return (
         vector_result       ||
@@ -55,7 +57,8 @@ int main(int argc, char *argv[]) {
         canvas_result       ||
         lights_result       ||
         light_list_result   ||
-        tracing_result
+        tracing_result      ||
+        colour_result
     );
 }
 
