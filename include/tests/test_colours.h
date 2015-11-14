@@ -1,7 +1,7 @@
-#ifndef TEST_LIGHTS_H
-#define TEST_LIGHTS_H
+#ifndef TEST_COLOURS_H
+#define TEST_COLOURS_H
 
-char * test_lights();
+char * test_colours();
 
 #endif
 
