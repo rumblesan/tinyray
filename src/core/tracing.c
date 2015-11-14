@@ -112,8 +112,8 @@ Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, 
     LightList lights = scene->lights;
     Light light;
     double contribution;
-    double lambertAmount = 0;
-    double ambientAmount = 0;
+    Colour lambert_light = colour(0, 0, 0);
+    Colour ambient_light = colour(0, 0, 0);
 
     while(!light_list_is_empty(lights)) {
         light = light_list_head(lights);
@@ -130,24 +130,30 @@ Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, 
                             normal
                         );
                         if (contribution > 0) {
-                            lambertAmount += (
-                                contribution * light.intensity * object->texture.lambert
+                            lambert_light = colour_add(
+                                lambert_light,
+                                colour_scale(
+                                    light.colour,
+                                    contribution * light.intensity * object->texture.lambert
+                                )
                             );
                         }
                     }
                 }
                 break;
             case AMBIENT:
-                ambientAmount += light.intensity;
+                ambient_light = colour_add(ambient_light, colour_scale(light.colour, light.intensity));
                 break;
         }
         lights = light_list_tail(lights);
     }
 
-    double light_value = fmin(1, lambertAmount) + ambientAmount;
-    return colour_ceil(colour_scale(
-        texture_get_colour(object->texture), light_value
-    ));
+    Colour light_value = colour_add(colour_ceil(lambert_light), ambient_light);
+    return colour_ceil(
+        colour_filter(
+            texture_get_colour(object->texture), light_value
+        )
+    );
 }
 
 bool light_is_visible(Vector3D intersection, Light light, ShapeList shapes, double max_distance) {
