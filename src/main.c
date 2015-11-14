@@ -55,12 +55,12 @@ int main(int argc, char *argv[]) {
         1024, 768,
         10000,
         100,
-        colour(255, 255, 255)
+        colour(210, 230, 255)
     );
 
     Camera camera = camera_create(
         45,
-        vector3d(13, 5, 13),
+        vector3d(13, 7, 13),
         vector3d(0, 3, 0)
     );
     Light ambient = ambient_light_create(
