@@ -28,7 +28,7 @@ static char * test_creation() {
     );
     LightList lights = light_list_create(1, light);
     Texture t = texture_flat(0.5, colour(0, 0, 0));
-    Shape shape = sphere_create(
+    Shape shape = shape_sphere(
         vector3d(1.0, 2.0, 3.0),
         1.0,
         t

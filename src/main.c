@@ -73,17 +73,17 @@ int main(int argc, char *argv[]) {
         ambient
     );
 
-    Shape sphere = sphere_create(
+    Shape sphere = shape_sphere(
         vector3d(0, 4, 0),
         3,
         texture_flat(1, colour(255, 0, 255))
     );
-    Shape small_sphere = sphere_create(
+    Shape small_sphere = shape_sphere(
         vector3d(0, 5, 3.7),
         0.3,
         texture_flat(1, colour(0, 100, 150))
     );
-    Shape plane = plane_create(
+    Shape plane = shape_plane(
         vector3d(0.0, 0.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
         texture_flat(1, colour(100, 100, 200))

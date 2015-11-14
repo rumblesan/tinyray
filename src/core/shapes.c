@@ -2,10 +2,37 @@
 #include <math.h>
 
 #include "core/shapes.h"
+#include "core/shapes/sphere.h"
+#include "core/shapes/plane.h"
 
 #include "core/vector.h"
 #include "core/ray.h"
 #include "core/textures.h"
+
+Shape shape_sphere(Vector3D position, double radius, Texture texture) {
+    Sphere sphere = sphere_create(position, radius);
+
+    Shape shape = (Shape) malloc(sizeof(ShapeData));
+
+    shape->type = SPHERE;
+    shape->sphere = sphere;
+    shape->texture = texture;
+
+    return shape;
+}
+
+Shape shape_plane(Vector3D position, Vector3D normal, Texture texture) {
+
+    Plane plane = plane_create(position, normal);
+
+    Shape shape = (Shape) malloc(sizeof(ShapeData));
+
+    shape->type = PLANE;
+    shape->plane = plane;
+    shape->texture = texture;
+
+    return shape;
+}
 
 double shape_intersect(Shape shape, Ray ray) {
     switch(shape->type) {
@@ -27,93 +54,5 @@ void shape_cleanup(Shape shape) {
         case PLANE: plane_cleanup(shape->plane); break;
     }
     free(shape);
-}
-
-/* Sphere functions */
-Shape sphere_create(Vector3D position, double radius, Texture texture) {
-
-    Shape shape = (Shape) malloc(sizeof(ShapeData));
-
-    Sphere sphere = (Sphere) malloc(sizeof(SphereData));
-
-    sphere->centre = position;
-    sphere->radius = radius;
-
-    shape->type = SPHERE;
-    shape->sphere = sphere;
-    shape->texture = texture;
-
-    return shape;
-}
-
-// TODO
-// This could certainly be made more efficient
-double sphere_intersect(Sphere sphere, Ray ray) {
-
-    Vector3D origin_to_centre = vector3d_subtract(sphere->centre, ray.origin);
-    // calculate length of vector from origin to a point perpendicular with
-    // the centre of the circle. works because ray.direction is a unit vector
-    double v = vector3d_dot(origin_to_centre, ray.direction);
-    if (v < 0) {
-        // sphere is behind ray
-        return -1;
-    }
-
-    double ol = vector3d_length(origin_to_centre);
-
-    double d = sqrt(pow(ol, 2) - pow(v, 2));
-    if (d > sphere->radius) {
-        return -1;
-    }
-
-    double diff = sqrt(pow(sphere->radius, 2) - pow(d, 2));
-
-    return v - diff;
-}
-
-Vector3D sphere_normal(Sphere sphere, Vector3D pos) {
-    return vector3d_unit(
-        vector3d_subtract(pos, sphere->centre)
-    );
-}
-
-void sphere_cleanup(Sphere sphere) {
-    free(sphere);
-}
-
-/* Plane functions */
-Shape plane_create(Vector3D position, Vector3D normal, Texture texture) {
-
-    Shape shape = (Shape) malloc(sizeof(ShapeData));
-
-    Plane plane = (Plane) malloc(sizeof(PlaneData));
-
-    plane->position = position;
-    plane->normal = normal;
-
-    shape->type = PLANE;
-    shape->plane = plane;
-    shape->texture = texture;
-
-    return shape;
-}
-
-double plane_intersect(Plane plane, Ray ray) {
-    double vd = vector3d_dot(ray.direction, plane->normal);
-    double v0 = -(vector3d_dot(plane->normal, ray.origin));
-    double t = v0/vd;
-    if (t < 0) {
-        return -1;
-    } else {
-        return t;
-    }
-}
-
-Vector3D plane_normal(Plane plane, Vector3D pos) {
-    return plane->normal;
-}
-
-void plane_cleanup(Plane plane) {
-    free(plane);
 }
 

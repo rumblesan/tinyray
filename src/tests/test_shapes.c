@@ -7,7 +7,7 @@
 
 static char * test_creation() {
     Texture t = texture_flat(0.5, colour(0, 0, 0));
-    Shape shape = sphere_create(vector3d(1.0, 2.0, 3.0), 1.0, t);
+    Shape shape = shape_sphere(vector3d(1.0, 2.0, 3.0), 1.0, t);
 
     mu_assert("Error: Shape object not created correctly", shape->type == SPHERE);
 
@@ -21,7 +21,7 @@ static char * test_sphere_intersect() {
     Ray r = ray(
         vector3d(0.0, 0.0, 0.0), vector3d_unit(vector3d(1.0, 0.0, 0.0))
     );
-    Shape shape = sphere_create(vector3d(4.0, 0.0, 0.0), 2.0, t);
+    Shape shape = shape_sphere(vector3d(4.0, 0.0, 0.0), 2.0, t);
 
     double distance = shape_intersect(shape, r);
 
@@ -37,7 +37,7 @@ static char * test_plane_intersect() {
     Ray r = ray(
         vector3d(0.0, 4.0, 0.0), vector3d_unit(vector3d(0.0, -1.0, 0.0))
     );
-    Shape shape = plane_create(
+    Shape shape = shape_plane(
         vector3d(0.0, 0.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
         t
