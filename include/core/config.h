@@ -11,6 +11,8 @@ typedef struct config {
 
     double max_distance;
 
+    int reflection_depth;
+
     Colour background;
 
 } ConfigData;
@@ -19,6 +21,7 @@ Config config_create(
     int width,
     int height,
     double max_distance,
+    int reflection_depth,
     Colour background
 );
 

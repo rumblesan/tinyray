@@ -54,21 +54,22 @@ int main(int argc, char *argv[]) {
     Config config = config_create(
         1024, 768,
         10000,
+        100,
         colour(255, 255, 255)
     );
 
     Camera camera = camera_create(
         45,
-        vector3d(13, 5, 10),
+        vector3d(13, 5, 13),
         vector3d(0, 3, 0)
     );
     Light ambient = ambient_light_create(
-        0.6, colour(0, 0, 255)
+        0.6, colour(255, 255, 255)
     );
     LightList lights = light_list_create(
         2,
         point_light_create(
-            vector3d(0, 8, 7), 1, colour(100, 255, 100)
+            vector3d(0, 8, 7), 0.7, colour(255, 255, 255)
         ),
         ambient
     );
@@ -76,17 +77,17 @@ int main(int argc, char *argv[]) {
     Shape sphere = shape_sphere(
         vector3d(0, 4, 0),
         3,
-        texture_flat(1, 0, colour(255, 0, 255))
+        texture_flat(1, 0.5, colour(155, 155, 155))
     );
     Shape small_sphere = shape_sphere(
         vector3d(0, 5, 3.7),
         0.3,
-        texture_flat(1, 0, colour(0, 100, 150))
+        texture_flat(1, 0.1, colour(0, 100, 150))
     );
     Shape plane = shape_plane(
         vector3d(0.0, 0.0, 0.0),
         vector3d(0.0, 1.0, 0.0),
-        texture_flat(1, 0, colour(100, 100, 100))
+        texture_flat(1, 0.2, colour(100, 100, 100))
     );
     ShapeList shapes = shape_list_create(
         3, sphere, small_sphere, plane

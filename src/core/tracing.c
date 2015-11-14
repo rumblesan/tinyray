@@ -73,6 +73,10 @@ void rays_calc(Scene scene) {
 
 Colour trace(Ray trace_ray, Scene scene, int depth) {
 
+    if (depth > scene->config->reflection_depth) {
+        return colour(0, 0, 0);
+    }
+
     Intersection distObject = intersectedObject(trace_ray, scene->shapes, scene->config->max_distance);
 
     if (distObject.object == NULL) {
@@ -114,6 +118,7 @@ Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, 
     double contribution;
     Colour lambert_light = colour(0, 0, 0);
     Colour ambient_light = colour(0, 0, 0);
+    Colour reflection_light = colour(0, 0, 0);
 
     while(!light_list_is_empty(lights)) {
         light = light_list_head(lights);
@@ -148,10 +153,22 @@ Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, 
         lights = light_list_tail(lights);
     }
 
+    if (object->texture.reflection > 0) {
+        Vector3D reflection_direction = vector3d_reflection(normal, trace_ray.direction);
+        Ray reflection_ray = ray(intersection, reflection_direction);
+        Colour reflection_colour = trace(reflection_ray, scene, depth+1);
+        reflection_light = colour_add(reflection_light, colour_scale(reflection_colour, object->texture.reflection));
+    }
+
     Colour light_value = colour_add(colour_ceil(lambert_light), ambient_light);
     return colour_ceil(
-        colour_filter(
-            texture_get_colour(object->texture), light_value
+        colour_add(
+            colour_ceil(
+                colour_filter(
+                    texture_get_colour(object->texture), light_value
+                )
+            ),
+            reflection_light
         )
     );
 }

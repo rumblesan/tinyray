@@ -8,6 +8,7 @@ Config config_create(
     int width,
     int height,
     double max_distance,
+    int reflection_depth,
     Colour background
 ) {
 
@@ -17,6 +18,7 @@ Config config_create(
     config->height = height;
 
     config->max_distance = max_distance;
+    config->reflection_depth = reflection_depth;
 
     config->background = background;
 
