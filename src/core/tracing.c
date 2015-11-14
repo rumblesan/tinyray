@@ -159,9 +159,7 @@ bool light_is_visible(Vector3D intersection, Light light, ShapeList shapes, doub
             break;
         case POINT:
             distObject = intersectedObject(
-                ray(intersection, vector3d_unit(
-                    vector3d_subtract(light.point.position, intersection)
-                )),
+                ray_from_to(intersection, light.point.position),
                 shapes,
                 max_distance
             );

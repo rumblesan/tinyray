@@ -13,4 +13,6 @@ typedef struct ray {
 
 Ray ray(Vector3D origin, Vector3D direction);
 
+Ray ray_from_to(Vector3D origin, Vector3D target);
+
 #endif
