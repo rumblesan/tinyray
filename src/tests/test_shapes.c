@@ -1,5 +1,3 @@
-#include <stdio.h>
-
 #include "tests/min_unit.h"
 
 #include "core/shapes.h"
@@ -52,7 +50,6 @@ static char * test_plane_intersect() {
 }
 
 char * test_shapes() {
-    printf("Running shape tests\n");
     mu_run_test(test_creation);
     mu_run_test(test_sphere_intersect);
     mu_run_test(test_plane_intersect);

@@ -1,27 +1,29 @@
 #include <stdio.h>
+#include <stdbool.h>
 
 #include "tests/min_unit.h"
-#include "tests/test_vector.h"
-#include "tests/test_scene.h"
-#include "tests/test_shapes.h"
-#include "tests/test_camera.h"
-#include "tests/test_config.h"
-#include "tests/test_colours.h"
-#include "tests/test_canvas.h"
-#include "tests/test_lights.h"
 #include "tests/collections/test_shape_list.h"
 #include "tests/collections/test_light_list.h"
+#include "tests/test_camera.h"
+#include "tests/test_canvas.h"
+#include "tests/test_colours.h"
+#include "tests/test_config.h"
+#include "tests/test_lights.h"
+#include "tests/test_scene.h"
+#include "tests/test_shapes.h"
 #include "tests/test_tracing.h"
+#include "tests/test_vector.h"
 
 int tests_run = 0;
 
-int run_test(char *test_name, char *(*test_runner)()) {
+bool run_test(char *test_name, char *(*test_runner)()) {
     tests_run = 0;
+    printf("Running %s tests\n", test_name);
     char *test_results = test_runner();
     if (test_results != 0) {
         printf("%s\n", test_results);
     } else {
-        printf("%s tests passed\n", test_name);
+        printf("all tests passed\n");
     }
     printf("    Tests run: %d\n", tests_run);
     printf("\n");
@@ -35,30 +37,30 @@ int main(int argc, char *argv[]) {
     printf("* Running tests *\n");
     printf("*****************\n\n");
 
-    int vector_result  = run_test("Vector", test_vector);
-    int scene_result  = run_test("Scene", test_scene);
-    int shape_result  = run_test("Shape", test_shapes);
-    int shape_list_result  = run_test("ShapeList", test_shape_list);
-    int camera_result = run_test("Camera", test_camera);
-    int config_result = run_test("Config", test_config);
-    int canvas_result = run_test("Canvas", test_canvas);
-    int lights_result = run_test("Lights", test_lights);
-    int light_list_result = run_test("LightList", test_light_list);
-    int tracing_result    = run_test("Tracing", test_tracing);
-    int colour_result     = run_test("Colours", test_colours);
+    bool light_list_result = run_test("LightList", test_light_list);
+    bool shape_list_result = run_test("ShapeList", test_shape_list);
+    bool camera_result     = run_test("Camera", test_camera);
+    bool canvas_result     = run_test("Canvas", test_canvas);
+    bool colour_result     = run_test("Colours", test_colours);
+    bool config_result     = run_test("Config", test_config);
+    bool lights_result     = run_test("Lights", test_lights);
+    bool scene_result      = run_test("Scene", test_scene);
+    bool shape_result      = run_test("Shape", test_shapes);
+    bool tracing_result    = run_test("Tracing", test_tracing);
+    bool vector_result     = run_test("Vector", test_vector);
 
     return (
-        vector_result       ||
-        scene_result        ||
-        shape_result        ||
+        light_list_result   ||
         shape_list_result   ||
         camera_result       ||
-        config_result       ||
         canvas_result       ||
+        colour_result       ||
+        config_result       ||
         lights_result       ||
-        light_list_result   ||
+        scene_result        ||
+        shape_result        ||
         tracing_result      ||
-        colour_result
+        vector_result
     );
 }
 
