@@ -4,7 +4,7 @@ LDFLAGS           = -c
 VPATH             = src src/core src/tests
 LIBS              = 
 
-TEST_CFLAGS       = $(CFLAGS) -fprofile-instr-generate -fcoverage-mapping
+TEST_CFLAGS       = $(CFLAGS) -fprofile-instr-generate -fcoverage-mapping -g
 TEST_LIBS         =
 
 LCOV_FLAGS        = -c -b ./ -d ./
