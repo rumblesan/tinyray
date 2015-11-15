@@ -104,6 +104,8 @@ int main(int argc, char *argv[]) {
 
     render_png(scene, "output.png");
 
+    scene_cleanup(scene);
+
     return 0;
 }
 
