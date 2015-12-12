@@ -11,3 +11,6 @@ file(GLOB_RECURSE TEST_SOURCES "src/core/*.c" "src/tests/*.c")
 add_executable(tinyray ${SOURCES})
 add_executable(tinyray-tests ${TEST_SOURCES})
 
+enable_testing()
+add_test(tests tinyray-tests)
+
