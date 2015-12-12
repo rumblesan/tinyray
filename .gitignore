@@ -1,6 +1,10 @@
-build/
-cproject
-fray
-coverage/
-default.profraw
+tinyray
+tinyray-tests
 output.png
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Makefile
+cmake_install.cmake
+install_manifest.txt
+
