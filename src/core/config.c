@@ -12,7 +12,7 @@ Config config_create(
     Colour background
 ) {
 
-    Config config = (Config) malloc(sizeof(ConfigData));
+    Config config = malloc(sizeof(ConfigData));
 
     config->width = width;
     config->height = height;

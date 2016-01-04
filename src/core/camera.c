@@ -6,7 +6,7 @@
 
 Camera camera_create(double fov, Vector3D position, Vector3D looking_at) {
 
-    Camera camera = (Camera) malloc(sizeof(CameraData));
+    Camera camera = malloc(sizeof(CameraData));
 
     camera->fov = fov;
     camera->position = position;

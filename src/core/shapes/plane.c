@@ -8,7 +8,7 @@
 
 /* Plane functions */
 Plane plane_create(Vector3D position, Vector3D normal) {
-    Plane plane = (Plane) malloc(sizeof(PlaneData));
+    Plane plane = malloc(sizeof(PlaneData));
 
     plane->position = position;
     plane->normal = normal;

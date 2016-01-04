@@ -12,7 +12,7 @@
 Shape shape_sphere(Vector3D position, double radius, Texture texture) {
     Sphere sphere = sphere_create(position, radius);
 
-    Shape shape = (Shape) malloc(sizeof(ShapeData));
+    Shape shape = malloc(sizeof(ShapeData));
 
     shape->type = SPHERE;
     shape->sphere = sphere;
@@ -25,7 +25,7 @@ Shape shape_plane(Vector3D position, Vector3D normal, Texture texture) {
 
     Plane plane = plane_create(position, normal);
 
-    Shape shape = (Shape) malloc(sizeof(ShapeData));
+    Shape shape = malloc(sizeof(ShapeData));
 
     shape->type = PLANE;
     shape->plane = plane;

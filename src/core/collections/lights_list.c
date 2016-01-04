@@ -8,7 +8,7 @@
 
 LightList light_list_element() {
 
-    LightList list = (LightList) malloc(sizeof(LightListEl));
+    LightList list = malloc(sizeof(LightListEl));
 
     list->tail = NULL;
 

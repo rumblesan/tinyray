@@ -8,7 +8,7 @@
 
 ShapeList shape_list_element() {
 
-    ShapeList list = (ShapeList) malloc(sizeof(ShapeListEl));
+    ShapeList list = malloc(sizeof(ShapeListEl));
 
     list->head = NULL;
     list->tail = NULL;

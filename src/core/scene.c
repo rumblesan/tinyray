@@ -15,7 +15,7 @@ Scene scene_create(
     ShapeList shapes
 ) {
 
-    Scene scene = (Scene) malloc(sizeof(SceneData));
+    Scene scene = malloc(sizeof(SceneData));
 
     scene->canvas = canvas_create(config->width, config->height);
     scene->camera = camera;

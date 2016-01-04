@@ -8,7 +8,7 @@
 
 /* Sphere functions */
 Sphere sphere_create(Vector3D position, double radius) {
-    Sphere sphere = (Sphere) malloc(sizeof(SphereData));
+    Sphere sphere = malloc(sizeof(SphereData));
 
     sphere->centre = position;
     sphere->radius = radius;

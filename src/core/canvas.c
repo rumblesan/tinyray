@@ -6,7 +6,7 @@
 
 Canvas canvas_create(int width, int height) {
 
-    Canvas canvas = (Canvas) malloc(sizeof(CanvasData));
+    Canvas canvas = malloc(sizeof(CanvasData));
 
     canvas->width = width;
     canvas->height = height;
