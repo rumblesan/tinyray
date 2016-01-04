@@ -9,6 +9,8 @@ file(GLOB_RECURSE SOURCES "src/core/*.c" "src/libs/*.c")
 
 add_executable(tinyray "src/main.c" ${SOURCES})
 
+set_property(TARGET tinyray PROPERTY C_STANDARD 99)
+
 enable_testing()
 file(GLOB_RECURSE TEST_SOURCES "tests/src/*.c")
 add_executable(tinyray-tests ${SOURCES} ${TEST_SOURCES})
