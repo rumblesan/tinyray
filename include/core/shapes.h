@@ -7,8 +7,9 @@
 
 #include "core/shapes/sphere.h"
 #include "core/shapes/plane.h"
+#include "core/shapes/triangle.h"
 
-typedef enum {SPHERE, PLANE} ShapeType;
+typedef enum {SPHERE, PLANE, TRIANGLE} ShapeType;
 
 typedef struct shape *Shape;
 typedef struct shape {
@@ -20,6 +21,7 @@ typedef struct shape {
     union {
         Sphere sphere;
         Plane plane;
+        Triangle triangle;
     };
 
 } ShapeData;
@@ -27,6 +29,13 @@ typedef struct shape {
 Shape shape_sphere(Vector3D position, double radius, Texture texture);
 
 Shape shape_plane(Vector3D position, Vector3D normal, Texture texture);
+
+Shape shape_triangle(
+    Vector3D point1,
+    Vector3D point2,
+    Vector3D point3,
+    Texture texture
+);
 
 double shape_intersect(Shape shape, Ray ray);
 
