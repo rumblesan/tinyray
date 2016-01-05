@@ -11,8 +11,9 @@ add_executable(tinyray "src/main.c" ${SOURCES})
 
 set_property(TARGET tinyray PROPERTY C_STANDARD 99)
 
-enable_testing()
-file(GLOB_RECURSE TEST_SOURCES "tests/src/*.c")
-add_executable(tinyray-tests ${SOURCES} ${TEST_SOURCES})
-add_test(tests tinyray-tests)
+option (WITH_TESTS "build tests" ON)
 
+if (WITH_TESTS)
+    enable_testing()
+    add_subdirectory(tests)
+endif()
