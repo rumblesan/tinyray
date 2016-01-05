@@ -74,10 +74,16 @@ int main(int argc, char *argv[]) {
         ambient
     );
 
+    Shape triangle = shape_triangle(
+        vector3d(1.0,  2.0,  1.0),
+        vector3d(1.0,  0.0,  6.0),
+        vector3d(-3.0, 3.0,  6.0),
+        texture_flat(1, 0.5, colour(255, 55, 55))
+    );
     Shape sphere = shape_sphere(
         vector3d(0, 4, 0),
         3,
-        texture_flat(1, 0.5, colour(155, 155, 155))
+        texture_flat(0.2, 0.5, colour(155, 155, 155))
     );
     Shape small_sphere = shape_sphere(
         vector3d(0, 5, 3.7),
@@ -90,7 +96,7 @@ int main(int argc, char *argv[]) {
         texture_flat(1, 0.2, colour(100, 100, 100))
     );
     ShapeList shapes = shape_list_create(
-        3, sphere, small_sphere, plane
+        4, sphere, small_sphere, plane, triangle
     );
 
     Scene scene = scene_create(
