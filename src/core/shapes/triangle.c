@@ -10,7 +10,7 @@
 
 /* Triangle functions */
 Triangle triangle_create(Vector3D point1, Vector3D point2, Vector3D point3) {
-    Triangle triangle = malloc(sizeof(Triangle));
+    Triangle triangle = malloc(sizeof(TriangleData));
 
     triangle->point1 = point1;
     triangle->point2 = point2;
