@@ -49,10 +49,34 @@ static char * test_plane_intersect() {
     return 0;
 }
 
+static char * test_triangle_intersect() {
+
+    Texture t = texture_flat(0.5, 0, colour(0, 0, 0));
+    Ray r = ray(
+        vector3d(0.0, 4.0, 0.0), vector3d_unit(vector3d(0.0, -1.0, 0.0))
+    );
+    Shape shape = shape_triangle(
+        vector3d(0.0,  0.0, -1.0),
+        vector3d(1.0,  0.0,  1.0),
+        vector3d(-1.0, 0.0,  1.0),
+        t
+    );
+
+    double distance = shape_intersect(shape, r);
+
+    mu_assert("Error: Triangle intersection not happening", distance > 0);
+    mu_assert("Error: Triangle intersection distance incorrect", distance == 4.0);
+
+    shape_cleanup(shape);
+
+    return 0;
+}
+
 char * test_shapes() {
     mu_run_test(test_creation);
     mu_run_test(test_sphere_intersect);
     mu_run_test(test_plane_intersect);
+    mu_run_test(test_triangle_intersect);
     return 0;
 }
 
