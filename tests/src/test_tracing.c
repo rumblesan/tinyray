@@ -1,18 +1,18 @@
 #include <stdio.h>
 
-#include "tests/min_unit.h"
+#include "min_unit.h"
 
-#include "tests/test_tracing.h"
-#include "core/tracing.h"
+#include "test_tracing.h"
+#include "tracing.h"
 
-#include "core/colours.h"
-#include "core/scene.h"
-#include "core/shapes.h"
-#include "core/textures.h"
-#include "core/ray.h"
-#include "core/vector.h"
-#include "core/camera.h"
-#include "core/config.h"
+#include "colours.h"
+#include "scene.h"
+#include "shapes.h"
+#include "textures.h"
+#include "ray.h"
+#include "vector.h"
+#include "camera.h"
+#include "config.h"
 
 static char * test_intersection() {
 

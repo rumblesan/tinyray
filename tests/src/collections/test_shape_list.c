@@ -1,11 +1,11 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "tests/min_unit.h"
+#include "min_unit.h"
 
-#include "core/shapes.h"
-#include "core/collections/shape_list.h"
-#include "core/textures.h"
+#include "shapes.h"
+#include "collections/shape_list.h"
+#include "textures.h"
 
 static char * test_creation() {
 

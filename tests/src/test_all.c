@@ -1,18 +1,18 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#include "tests/min_unit.h"
-#include "tests/collections/test_shape_list.h"
-#include "tests/collections/test_light_list.h"
-#include "tests/test_camera.h"
-#include "tests/test_canvas.h"
-#include "tests/test_colours.h"
-#include "tests/test_config.h"
-#include "tests/test_lights.h"
-#include "tests/test_scene.h"
-#include "tests/test_shapes.h"
-#include "tests/test_tracing.h"
-#include "tests/test_vector.h"
+#include "min_unit.h"
+#include "collections/test_shape_list.h"
+#include "collections/test_light_list.h"
+#include "test_camera.h"
+#include "test_canvas.h"
+#include "test_colours.h"
+#include "test_config.h"
+#include "test_lights.h"
+#include "test_scene.h"
+#include "test_shapes.h"
+#include "test_tracing.h"
+#include "test_vector.h"
 
 int tests_run = 0;
 

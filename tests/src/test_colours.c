@@ -1,6 +1,6 @@
-#include "tests/min_unit.h"
+#include "min_unit.h"
 
-#include "core/colours.h"
+#include "colours.h"
 
 static char * test_normalise() {
 

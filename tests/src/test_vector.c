@@ -1,7 +1,7 @@
-#include "tests/min_unit.h"
+#include "min_unit.h"
 
-#include "core/vector.h"
-#include "tests/test_vector.h"
+#include "vector.h"
+#include "test_vector.h"
 
 static char * test_creation() {
 

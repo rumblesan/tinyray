@@ -1,7 +1,7 @@
-#include "tests/min_unit.h"
+#include "min_unit.h"
 
-#include "core/lights.h"
-#include "core/colours.h"
+#include "lights.h"
+#include "colours.h"
 
 static char * test_creation() {
 

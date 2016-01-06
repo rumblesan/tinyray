@@ -1,7 +1,7 @@
-#include "tests/min_unit.h"
+#include "min_unit.h"
 
-#include "core/shapes.h"
-#include "core/textures.h"
+#include "shapes.h"
+#include "textures.h"
 
 static char * test_creation() {
     Texture t = texture_flat(0.5, 0, colour(0, 0, 0));

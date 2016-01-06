@@ -1,10 +1,10 @@
 #include <stdio.h>
 
-#include "tests/min_unit.h"
+#include "min_unit.h"
 
-#include "core/lights.h"
-#include "core/collections/light_list.h"
-#include "core/colours.h"
+#include "lights.h"
+#include "collections/light_list.h"
+#include "colours.h"
 
 static char * test_creation() {
 

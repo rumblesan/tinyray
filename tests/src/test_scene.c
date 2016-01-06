@@ -1,15 +1,15 @@
-#include "tests/min_unit.h"
-#include "tests/test_scene.h"
+#include "min_unit.h"
+#include "test_scene.h"
 
-#include "core/canvas.h"
-#include "core/camera.h"
-#include "core/config.h"
-#include "core/lights.h"
-#include "core/scene.h"
-#include "core/shapes.h"
-#include "core/textures.h"
-#include "core/collections/light_list.h"
-#include "core/collections/shape_list.h"
+#include "canvas.h"
+#include "camera.h"
+#include "config.h"
+#include "lights.h"
+#include "scene.h"
+#include "shapes.h"
+#include "textures.h"
+#include "collections/light_list.h"
+#include "collections/shape_list.h"
 
 static char * test_creation() {
 
