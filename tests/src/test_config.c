@@ -1,4 +1,4 @@
-#include "min_unit.h"
+#include "minunit.h"
 
 #include "config.h"
 #include "colours.h"
@@ -9,14 +9,18 @@ static char * test_creation() {
 
     Config *config = config_create(640, 480, 1000, 7, background);
 
-    mu_assert("Error: Config object not created correctly", config->width == 640);
+    mu_assert(config->width == 640, "Error: Config object not created correctly");
 
     config_cleanup(config);
     return 0;
 }
 
-char * test_config() {
+char *all_tests() {
+    mu_suite_start();
+
     mu_run_test(test_creation);
-    return 0;
+
+    return NULL;
 }
 
+RUN_TESTS(all_tests);

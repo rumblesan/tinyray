@@ -1,6 +1,21 @@
 include_directories(include)
 
-file(GLOB_RECURSE SOURCES "src/*.c")
+set(SOURCES
+    "src/shapes/sphere.c"
+    "src/shapes/triangle.c"
+    "src/shapes/plane.c"
+    "src/camera.c"
+    "src/canvas.c"
+    "src/colours.c"
+    "src/config.c"
+    "src/lights.c"
+    "src/ray.c"
+    "src/scene.c"
+    "src/shapes.c"
+    "src/textures.c"
+    "src/tracing.c"
+    "src/vector.c"
+    )
 add_library(tinyray-lib SHARED ${SOURCES})
 
 find_package(BCLib REQUIRED)

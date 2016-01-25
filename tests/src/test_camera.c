@@ -1,4 +1,4 @@
-#include "min_unit.h"
+#include "minunit.h"
 
 #include "camera.h"
 #include "vector.h"
@@ -11,15 +11,18 @@ static char * test_creation() {
         vector3d(0.0, 2.0, 0.0)
     );
 
-    mu_assert("Error: Camera object not created correctly", camera->position.x == 1);
+    mu_assert(camera->position.x == 1, "Error: Camera object not created correctly");
 
     camera_cleanup(camera);
     return 0;
 }
 
-char * test_camera() {
+char *all_tests() {
+    mu_suite_start();
+
     mu_run_test(test_creation);
-    return 0;
+
+    return NULL;
 }
 
-
+RUN_TESTS(all_tests);

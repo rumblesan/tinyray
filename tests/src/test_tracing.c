@@ -1,8 +1,7 @@
 #include <stdio.h>
 
-#include "min_unit.h"
+#include "minunit.h"
 
-#include "test_tracing.h"
 #include "tracing.h"
 
 #include "colours.h"
@@ -28,7 +27,7 @@ static char * test_intersection() {
 
     Intersection distObject = intersectedObject(r, shapes, 1000);
 
-    mu_assert("Error: Intersection not happening", distObject.object != NULL);
+    mu_assert(distObject.object != NULL, "Error: Intersection not happening");
 
     return 0;
 }
@@ -46,10 +45,10 @@ static char * test_simple_light_visibility() {
     Light *light = point_light_create(light_pos, 1, colour(0, 255, 255));
 
     bool not_visible = light_is_visible(intersection, light, shapes, 100);
-    mu_assert("Error: Light should not be visible", not_visible == false);
+    mu_assert(not_visible == false, "Error: Light should not be visible");
 
     bool visible = light_is_visible(intersection, light, list_create(), 100);
-    mu_assert("Error: Light should be visible", visible == true);
+    mu_assert(visible == true, "Error: Light should be visible");
 
     bool visible_with_shape = light_is_visible(
         intersection,
@@ -57,7 +56,7 @@ static char * test_simple_light_visibility() {
         list_unshift(list_create(), shape_sphere(vector3d(0, 10, 10), 2.0, t)),
         100
     );
-    mu_assert("Error: Light should be visible", visible_with_shape == true);
+    mu_assert(visible_with_shape == true, "Error: Light should be visible");
 
     return 0;
 }
@@ -74,15 +73,20 @@ static char * test_complex_light_visibility() {
     Light *light = point_light_create(light_pos, 1, colour(0, 255, 255));
 
     bool not_visible = light_is_visible(intersection, light, shapes, 100);
-    mu_assert("Error: Light should not be visible through sphere", not_visible == false);
+    mu_assert(not_visible == false, "Error: Light should not be visible through sphere");
 
     return 0;
 }
 
-char * test_tracing() {
+char *all_tests() {
+    mu_suite_start();
+
     mu_run_test(test_intersection);
     mu_run_test(test_simple_light_visibility);
     mu_run_test(test_complex_light_visibility);
-    return 0;
+
+    return NULL;
 }
+
+RUN_TESTS(all_tests);
 

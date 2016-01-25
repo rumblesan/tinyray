@@ -1,4 +1,4 @@
-#include "min_unit.h"
+#include "minunit.h"
 
 #include "shapes.h"
 #include "textures.h"
@@ -7,7 +7,7 @@ static char * test_creation() {
     Texture t = texture_flat(0.5, 0, colour(0, 0, 0));
     Shape *shape = shape_sphere(vector3d(1.0, 2.0, 3.0), 1.0, t);
 
-    mu_assert("Error: Shape object not created correctly", shape->type == SPHERE);
+    mu_assert(shape->type == SPHERE, "Error: Shape object not created correctly");
 
     shape_cleanup(shape);
     return 0;
@@ -23,8 +23,8 @@ static char * test_sphere_intersect() {
 
     double distance = shape_intersect(shape, r);
 
-    mu_assert("Error: Sphere intersection not happening", distance > 0);
-    mu_assert("Error: Sphere intersection distance incorrect", distance == 2.0);
+    mu_assert(distance > 0,  "Error: Sphere intersection not happening");
+    mu_assert(distance == 2.0, "Error: Sphere intersection distance incorrect");
 
     return 0;
 }
@@ -43,8 +43,8 @@ static char * test_plane_intersect() {
 
     double distance = shape_intersect(shape, r);
 
-    mu_assert("Error: Plane intersection not happening", distance > 0);
-    mu_assert("Error: Plane intersection distance incorrect", distance == 4.0);
+    mu_assert(distance > 0, "Error: Plane intersection not happening");
+    mu_assert(distance == 4.0, "Error: Plane intersection distance incorrect");
 
     return 0;
 }
@@ -64,20 +64,23 @@ static char * test_triangle_intersect() {
 
     double distance = shape_intersect(shape, r);
 
-    mu_assert("Error: Triangle intersection not happening", distance > 0);
-    mu_assert("Error: Triangle intersection distance incorrect", distance == 4.0);
+    mu_assert(distance > 0, "Error: Triangle intersection not happening");
+    mu_assert(distance == 4.0, "Error: Triangle intersection distance incorrect");
 
     shape_cleanup(shape);
 
     return 0;
 }
 
-char * test_shapes() {
+char *all_tests() {
+    mu_suite_start();
+
     mu_run_test(test_creation);
     mu_run_test(test_sphere_intersect);
     mu_run_test(test_plane_intersect);
     mu_run_test(test_triangle_intersect);
-    return 0;
+
+    return NULL;
 }
 
-
+RUN_TESTS(all_tests);

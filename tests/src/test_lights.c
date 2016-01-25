@@ -1,4 +1,4 @@
-#include "min_unit.h"
+#include "minunit.h"
 
 #include "lights.h"
 #include "colours.h"
@@ -11,16 +11,19 @@ static char * test_creation() {
         colour(255, 255, 255)
     );
 
-    mu_assert("Error: Light object not created correctly", light->point.position.x == 1);
+    mu_assert(light->point.position.x == 1, "Error: Light object not created correctly");
 
     light_destroy(light);
 
     return 0;
 }
 
-char * test_lights() {
+char *all_tests() {
+    mu_suite_start();
+
     mu_run_test(test_creation);
-    return 0;
+
+    return NULL;
 }
 
-
+RUN_TESTS(all_tests);

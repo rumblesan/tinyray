@@ -1,5 +1,4 @@
-#include "min_unit.h"
-#include "test_scene.h"
+#include "minunit.h"
 
 #include "canvas.h"
 #include "camera.h"
@@ -43,14 +42,18 @@ static char * test_creation() {
         shapes
     );
 
-    mu_assert("Error: Scene object not created correctly", scene->config->width == 640);
+    mu_assert(scene->config->width == 640, "Error: Scene object not created correctly");
 
     scene_cleanup(scene);
     return 0;
 }
 
-char * test_scene() {
+char *all_tests() {
+    mu_suite_start();
+
     mu_run_test(test_creation);
-    return 0;
+
+    return NULL;
 }
 
+RUN_TESTS(all_tests);
