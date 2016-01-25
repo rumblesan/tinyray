@@ -7,27 +7,26 @@
 #include "collections/light_list.h"
 #include "collections/shape_list.h"
 
-typedef struct scene *Scene;
-typedef struct scene {
+typedef struct Scene {
 
-    Canvas canvas;
-    Camera camera;
-    Config config;
+    Canvas *canvas;
+    Camera *camera;
+    Config *config;
 
-    LightList lights;
+    LightList *lights;
 
-    ShapeList shapes;
+    ShapeList *shapes;
 
-} SceneData;
+} Scene;
 
-Scene scene_create(
-    Camera camera,
-    Config config,
-    LightList lights,
-    ShapeList shapes
+Scene *scene_create(
+    Camera *camera,
+    Config *config,
+    LightList *lights,
+    ShapeList *shapes
 );
 
-void scene_cleanup(Scene scene);
+void scene_cleanup(Scene *scene);
 
 #endif
 

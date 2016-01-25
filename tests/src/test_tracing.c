@@ -21,7 +21,7 @@ static char * test_intersection() {
     Vector3D direction = vector3d_unit(vector3d_subtract(looking_at, origin));
     Ray r = ray(origin, direction);
     Texture t = texture_flat(0, 0, colour(0, 255, 255));
-    ShapeList shapes = shape_list_create(
+    ShapeList *shapes = shape_list_create(
         1,
         shape_sphere(vector3d(0.0, 0.0, 0.0), 2.0, t)
     );
@@ -39,7 +39,7 @@ static char * test_simple_light_visibility() {
     Vector3D light_pos = vector3d(0.0, 0.0, 20.0);
 
     Texture t = texture_flat(0, 0, colour(0, 255, 255));
-    ShapeList shapes = shape_list_create(1,
+    ShapeList *shapes = shape_list_create(1,
         shape_sphere(vector3d(0, 0, 10), 2.0, t)
     );
     Light light = point_light_create(light_pos, 1, colour(0, 255, 255));
@@ -66,7 +66,7 @@ static char * test_complex_light_visibility() {
     Vector3D light_pos = vector3d(10, 10, 0);
 
     Texture t = texture_flat(0, 0, colour(0, 255, 255));
-    ShapeList shapes = shape_list_create(1,
+    ShapeList *shapes = shape_list_create(1,
         shape_sphere(vector3d(3, 4, 0), 3, t)
     );
     Light light = point_light_create(light_pos, 1, colour(0, 255, 255));

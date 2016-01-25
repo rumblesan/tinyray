@@ -4,8 +4,7 @@
 #include "vector.h"
 #include "ray.h"
 
-typedef struct triangle *Triangle;
-typedef struct triangle {
+typedef struct Triangle {
 
     Vector3D point1;
     Vector3D point2;
@@ -13,15 +12,15 @@ typedef struct triangle {
 
     Vector3D normal;
 
-} TriangleData;
+} Triangle;
 
-Triangle triangle_create(Vector3D point1, Vector3D point2, Vector3D point3);
+Triangle *triangle_create(Vector3D point1, Vector3D point2, Vector3D point3);
 
-double triangle_intersect(Triangle triangle, Ray ray);
+double triangle_intersect(Triangle *triangle, Ray ray);
 
-Vector3D triangle_normal(Triangle triangle, Vector3D pos);
+Vector3D triangle_normal(Triangle *triangle, Vector3D pos);
 
-void triangle_cleanup(Triangle triangle);
+void triangle_cleanup(Triangle *triangle);
 
 #endif
 

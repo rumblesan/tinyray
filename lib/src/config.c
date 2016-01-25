@@ -4,7 +4,7 @@
 
 #include "colours.h"
 
-Config config_create(
+Config *config_create(
     int width,
     int height,
     double max_distance,
@@ -12,7 +12,7 @@ Config config_create(
     Colour background
 ) {
 
-    Config config = malloc(sizeof(ConfigData));
+    Config *config = malloc(sizeof(Config));
 
     config->width = width;
     config->height = height;
@@ -25,7 +25,7 @@ Config config_create(
     return config;
 }
 
-void config_cleanup(Config config) {
+void config_cleanup(Config *config) {
     free(config);
 }
 

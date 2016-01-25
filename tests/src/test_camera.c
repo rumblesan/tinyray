@@ -5,7 +5,7 @@
 
 static char * test_creation() {
 
-    Camera camera = camera_create(
+    Camera *camera = camera_create(
         45,
         vector3d(1.0, 2.0, 3.0),
         vector3d(0.0, 2.0, 0.0)

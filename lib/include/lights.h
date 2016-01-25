@@ -6,17 +6,17 @@
 
 typedef enum {POINT, AMBIENT} LightType;
 
-typedef struct point_light {
+typedef struct PointLight {
 
     Vector3D position;
 
 } PointLight;
 
-typedef struct ambient_light {
+typedef struct AmbientLight {
 
 } AmbientLight;
 
-typedef struct light {
+typedef struct Light {
 
     LightType type;
 

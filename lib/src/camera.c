@@ -4,9 +4,9 @@
 
 #include "vector.h"
 
-Camera camera_create(double fov, Vector3D position, Vector3D looking_at) {
+Camera *camera_create(double fov, Vector3D position, Vector3D looking_at) {
 
-    Camera camera = malloc(sizeof(CameraData));
+    Camera *camera = malloc(sizeof(Camera));
 
     camera->fov = fov;
     camera->position = position;
@@ -15,7 +15,7 @@ Camera camera_create(double fov, Vector3D position, Vector3D looking_at) {
     return camera;
 }
 
-void camera_cleanup(Camera camera) {
+void camera_cleanup(Camera *camera) {
     free(camera);
 }
 

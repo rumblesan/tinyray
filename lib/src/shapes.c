@@ -10,10 +10,10 @@
 #include "ray.h"
 #include "textures.h"
 
-Shape shape_sphere(Vector3D position, double radius, Texture texture) {
-    Sphere sphere = sphere_create(position, radius);
+Shape *shape_sphere(Vector3D position, double radius, Texture texture) {
+    Sphere *sphere = sphere_create(position, radius);
 
-    Shape shape = malloc(sizeof(ShapeData));
+    Shape *shape = malloc(sizeof(Shape));
 
     shape->type = SPHERE;
     shape->sphere = sphere;
@@ -22,11 +22,11 @@ Shape shape_sphere(Vector3D position, double radius, Texture texture) {
     return shape;
 }
 
-Shape shape_plane(Vector3D position, Vector3D normal, Texture texture) {
+Shape *shape_plane(Vector3D position, Vector3D normal, Texture texture) {
 
-    Plane plane = plane_create(position, normal);
+    Plane *plane = plane_create(position, normal);
 
-    Shape shape = malloc(sizeof(ShapeData));
+    Shape *shape = malloc(sizeof(Shape));
 
     shape->type = PLANE;
     shape->plane = plane;
@@ -35,16 +35,16 @@ Shape shape_plane(Vector3D position, Vector3D normal, Texture texture) {
     return shape;
 }
 
-Shape shape_triangle(
+Shape *shape_triangle(
     Vector3D point1,
     Vector3D point2,
     Vector3D point3,
     Texture texture
 ) {
 
-    Triangle triangle = triangle_create(point1, point2, point3);
+    Triangle *triangle = triangle_create(point1, point2, point3);
 
-    Shape shape = malloc(sizeof(ShapeData));
+    Shape *shape = malloc(sizeof(Shape));
 
     shape->type = TRIANGLE;
     shape->triangle = triangle;
@@ -53,7 +53,7 @@ Shape shape_triangle(
     return shape;
 }
 
-double shape_intersect(Shape shape, Ray ray) {
+double shape_intersect(Shape *shape, Ray ray) {
     switch(shape->type) {
         case SPHERE: return sphere_intersect(shape->sphere, ray); break;
         case PLANE: return plane_intersect(shape->plane, ray); break;
@@ -61,7 +61,7 @@ double shape_intersect(Shape shape, Ray ray) {
     }
 }
 
-Vector3D shape_normal(Shape shape, Vector3D pos) {
+Vector3D shape_normal(Shape *shape, Vector3D pos) {
     switch(shape->type) {
         case SPHERE: return sphere_normal(shape->sphere, pos); break;
         case PLANE: return plane_normal(shape->plane, pos); break;
@@ -69,7 +69,7 @@ Vector3D shape_normal(Shape shape, Vector3D pos) {
     }
 }
 
-void shape_cleanup(Shape shape) {
+void shape_cleanup(Shape *shape) {
     switch(shape->type) {
         case SPHERE: sphere_cleanup(shape->sphere); break;
         case PLANE: plane_cleanup(shape->plane); break;

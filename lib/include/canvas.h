@@ -3,23 +3,22 @@
 
 #include "colours.h"
 
-typedef struct canvas *Canvas;
-typedef struct canvas {
+typedef struct Canvas {
 
     int width;
     int height;
 
     Colour **data;
 
-} CanvasData;
+} Canvas;
 
-Canvas canvas_create(int width, int height);
+Canvas *canvas_create(int width, int height);
 
-void canvas_set(Canvas canvas, int x, int y, Colour colour);
+void canvas_set(Canvas *canvas, int x, int y, Colour colour);
 
-Colour canvas_get(Canvas canvas, int x, int y);
+Colour canvas_get(Canvas *canvas, int x, int y);
 
-void canvas_cleanup(Canvas canvas);
+void canvas_cleanup(Canvas *canvas);
 
 #endif
 

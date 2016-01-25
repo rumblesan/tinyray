@@ -3,8 +3,7 @@
 
 #include "colours.h"
 
-typedef struct config *Config;
-typedef struct config {
+typedef struct Config {
 
     int width;
     int height;
@@ -15,9 +14,9 @@ typedef struct config {
 
     Colour background;
 
-} ConfigData;
+} Config;
 
-Config config_create(
+Config *config_create(
     int width,
     int height,
     double max_distance,
@@ -25,7 +24,7 @@ Config config_create(
     Colour background
 );
 
-void config_cleanup(Config config);
+void config_cleanup(Config *config);
 
 #endif
 

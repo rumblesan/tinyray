@@ -10,7 +10,7 @@ static char * test_creation() {
 
     Colour c = colour(255, 255, 255);
     Light light = point_light_create(vector3d(1.0, 2.0, 3.0), 1.0, c);
-    LightList list = light_list_create(1, light);
+    LightList *list = light_list_create(1, light);
 
     mu_assert("Error: LightList not created correctly", list->head.point.position.x == 1.0);
 
@@ -20,9 +20,9 @@ static char * test_creation() {
 
 static char * test_length() {
     Colour c = colour(255, 255, 255);
-    LightList empty = light_list_empty();
+    LightList *empty = light_list_empty();
     mu_assert("Error: LightList should be empty", light_list_is_empty(empty) == true);
-    LightList lights = light_list_add(
+    LightList *lights = light_list_add(
         empty, 4,
         point_light_create(vector3d(1.0, 2.0, 3.0), 1.0, c),
         point_light_create(vector3d(1.0, 2.0, 3.0), 1.0, c),

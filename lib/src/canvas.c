@@ -4,9 +4,9 @@
 
 #include "colours.h"
 
-Canvas canvas_create(int width, int height) {
+Canvas *canvas_create(int width, int height) {
 
-    Canvas canvas = malloc(sizeof(CanvasData));
+    Canvas *canvas = malloc(sizeof(Canvas));
 
     canvas->width = width;
     canvas->height = height;
@@ -20,15 +20,15 @@ Canvas canvas_create(int width, int height) {
     return canvas;
 }
 
-void canvas_set(Canvas canvas, int x, int y, Colour colour) {
+void canvas_set(Canvas *canvas, int x, int y, Colour colour) {
     canvas->data[x][y] = colour;
 }
 
-Colour canvas_get(Canvas canvas, int x, int y) {
+Colour canvas_get(Canvas *canvas, int x, int y) {
     return canvas->data[x][y];
 }
 
-void canvas_cleanup(Canvas canvas) {
+void canvas_cleanup(Canvas *canvas) {
     int i;
     for (i = 0; i < canvas->width; i += 1) {
         free(canvas->data[i]);

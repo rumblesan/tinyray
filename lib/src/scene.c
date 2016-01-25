@@ -8,14 +8,14 @@
 #include "collections/light_list.h"
 #include "collections/shape_list.h"
 
-Scene scene_create(
-    Camera camera,
-    Config config,
-    LightList lights,
-    ShapeList shapes
+Scene *scene_create(
+    Camera *camera,
+    Config *config,
+    LightList *lights,
+    ShapeList *shapes
 ) {
 
-    Scene scene = malloc(sizeof(SceneData));
+    Scene *scene = malloc(sizeof(Scene));
 
     scene->canvas = canvas_create(config->width, config->height);
     scene->camera = camera;
@@ -26,7 +26,7 @@ Scene scene_create(
     return scene;
 }
 
-void scene_cleanup(Scene scene) {
+void scene_cleanup(Scene *scene) {
     canvas_cleanup(scene->canvas);
     camera_cleanup(scene->camera);
     config_cleanup(scene->config);

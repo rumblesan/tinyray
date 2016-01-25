@@ -5,13 +5,13 @@
 
 typedef enum {FLAT} TextureType;
 
-typedef struct flat_texture {
+typedef struct FlatTexture {
 
     Colour colour;
 
 } FlatTexture;
 
-typedef struct texture {
+typedef struct Texture {
 
     TextureType type;
 

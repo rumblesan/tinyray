@@ -6,28 +6,28 @@
 
 #include "lights.h"
 
-LightList light_list_element() {
+LightList *light_list_element() {
 
-    LightList list = malloc(sizeof(LightListEl));
+    LightList *list = malloc(sizeof(LightList));
 
     list->tail = NULL;
 
     return list;
 }
 
-LightList light_list_empty() {
+LightList *light_list_empty() {
     return light_list_element();
 }
 
-LightList light_list_create(int count, ...) {
+LightList *light_list_create(int count, ...) {
 
     va_list args;
     va_start (args, count);
     int i;
 
     Light add_light;
-    LightList head;
-    LightList tail = light_list_empty();
+    LightList *head;
+    LightList *tail = light_list_empty();
 
     for (i = 0; i < count; i++) {
         head = light_list_element();
@@ -40,22 +40,22 @@ LightList light_list_create(int count, ...) {
     return head;
 }
 
-void light_list_cleanup(LightList list) {
+void light_list_cleanup(LightList *list) {
     if (list->tail != NULL) {
         light_list_cleanup(list->tail);
     }
     free(list);
 }
 
-LightList light_list_add(LightList list, int count, ...) {
+LightList *light_list_add(LightList *list, int count, ...) {
 
     va_list args;
     va_start (args, count);
     int i;
 
     Light add_light;
-    LightList head;
-    LightList tail = list;
+    LightList *head;
+    LightList *tail = list;
 
     for (i = 0; i < count; i++) {
         head = light_list_element();
@@ -68,15 +68,15 @@ LightList light_list_add(LightList list, int count, ...) {
     return head;
 }
 
-Light light_list_head(LightList list) {
+Light light_list_head(LightList *list) {
     return list->head;
 }
 
-LightList light_list_tail(LightList list) {
+LightList *light_list_tail(LightList *list) {
     return list->tail;
 }
 
-bool light_list_is_empty(LightList list) {
+bool light_list_is_empty(LightList *list) {
     if (list->tail == NULL) {
         return true;
     } else {
@@ -84,8 +84,8 @@ bool light_list_is_empty(LightList list) {
     }
 }
 
-int light_list_length(LightList list) {
-    LightList l = list;
+int light_list_length(LightList *list) {
+    LightList *l = list;
     int i = 0;
     while(!light_list_is_empty(l)) {
         i += 1;

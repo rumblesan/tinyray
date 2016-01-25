@@ -5,7 +5,7 @@
 
 typedef double Component;
 
-typedef struct colour_data {
+typedef struct Colour {
 
     Component red;
     Component green;

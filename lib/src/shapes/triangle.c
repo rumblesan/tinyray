@@ -9,8 +9,8 @@
 #include "ray.h"
 
 /* Triangle functions */
-Triangle triangle_create(Vector3D point1, Vector3D point2, Vector3D point3) {
-    Triangle triangle = malloc(sizeof(TriangleData));
+Triangle *triangle_create(Vector3D point1, Vector3D point2, Vector3D point3) {
+    Triangle *triangle = malloc(sizeof(Triangle));
 
     triangle->point1 = point1;
     triangle->point2 = point2;
@@ -23,7 +23,7 @@ Triangle triangle_create(Vector3D point1, Vector3D point2, Vector3D point3) {
     return triangle;
 }
 
-double triangle_intersect(Triangle triangle, Ray ray) {
+double triangle_intersect(Triangle *triangle, Ray ray) {
 
     Vector3D e1, e2, P, Q, T;
     double det, inv_det, u, v, t;
@@ -57,11 +57,11 @@ double triangle_intersect(Triangle triangle, Ray ray) {
 
 }
 
-Vector3D triangle_normal(Triangle triangle, Vector3D pos) {
+Vector3D triangle_normal(Triangle *triangle, Vector3D pos) {
     return triangle->normal;
 }
 
-void triangle_cleanup(Triangle triangle) {
+void triangle_cleanup(Triangle *triangle) {
     free(triangle);
 }
 

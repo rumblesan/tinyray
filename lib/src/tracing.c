@@ -14,11 +14,11 @@
 
 #include "constants.h"
 
-void rays_calc(Scene scene) {
+void rays_calc(Scene *scene) {
 
     int x, y;
-    Config config = scene->config;
-    Camera camera = scene->camera;
+    Config *config = scene->config;
+    Camera *camera = scene->camera;
 
     double fovRadians   = (M_PI / 180) * (camera->fov / 2);
     double heightWidthRatio = (double)config->height / config->width;
@@ -71,7 +71,7 @@ void rays_calc(Scene scene) {
 
 }
 
-Colour trace(Ray trace_ray, Scene scene, int depth) {
+Colour trace(Ray trace_ray, Scene *scene, int depth) {
 
     if (depth > scene->config->reflection_depth) {
         return colour(0, 0, 0);
@@ -91,12 +91,12 @@ Colour trace(Ray trace_ray, Scene scene, int depth) {
     return surface(trace_ray, scene, distObject.object, intersectPoint, depth);
 }
 
-Intersection intersectedObject(Ray trace_ray, ShapeList shapes, double max_distance) {
+Intersection intersectedObject(Ray trace_ray, ShapeList *shapes, double max_distance) {
     Intersection distObject;
     distObject.object = NULL;
     distObject.distance = max_distance;
 
-    ShapeList s = shapes;
+    ShapeList *s = shapes;
 
     double d;
     while (!shape_list_is_empty(s)) {
@@ -111,9 +111,9 @@ Intersection intersectedObject(Ray trace_ray, ShapeList shapes, double max_dista
     return distObject;
 }
 
-Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, int depth) {
+Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection, int depth) {
     Vector3D normal = shape_normal(object, intersection);
-    LightList lights = scene->lights;
+    LightList *lights = scene->lights;
     Light light;
     double contribution;
     Colour lambert_light = colour(0, 0, 0);
@@ -173,7 +173,7 @@ Colour surface(Ray trace_ray, Scene scene, Shape object, Vector3D intersection, 
     );
 }
 
-bool light_is_visible(Vector3D intersection, Light light, ShapeList shapes, double max_distance) {
+bool light_is_visible(Vector3D intersection, Light light, ShapeList *shapes, double max_distance) {
 
     Intersection distObject;
 

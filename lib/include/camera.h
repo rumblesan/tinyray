@@ -3,8 +3,7 @@
 
 #include "vector.h"
 
-typedef struct camera *Camera;
-typedef struct camera {
+typedef struct Camera {
 
     double fov;
 
@@ -12,11 +11,11 @@ typedef struct camera {
 
     Vector3D looking_at;
 
-} CameraData;
+} Camera;
 
-Camera camera_create(double fov, Vector3D position, Vector3D looking_at);
+Camera *camera_create(double fov, Vector3D position, Vector3D looking_at);
 
-void camera_cleanup(Camera camera);
+void camera_cleanup(Camera *camera);
 
 #endif
 

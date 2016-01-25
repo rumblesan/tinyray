@@ -4,21 +4,20 @@
 #include "vector.h"
 #include "ray.h"
 
-typedef struct sphere *Sphere;
-typedef struct sphere {
+typedef struct Sphere {
 
     Vector3D centre;
 
     double radius;
 
-} SphereData;
+} Sphere;
 
-Sphere sphere_create(Vector3D position, double radius);
+Sphere *sphere_create(Vector3D position, double radius);
 
-double sphere_intersect(Sphere sphere, Ray ray);
+double sphere_intersect(Sphere *sphere, Ray ray);
 
-Vector3D sphere_normal(Sphere sphere, Vector3D pos);
+Vector3D sphere_normal(Sphere *sphere, Vector3D pos);
 
-void sphere_cleanup(Sphere shape);
+void sphere_cleanup(Sphere *shape);
 
 #endif

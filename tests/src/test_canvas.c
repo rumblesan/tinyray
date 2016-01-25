@@ -5,7 +5,7 @@
 
 static char * test_creation() {
 
-    Canvas canvas = canvas_create(640, 480);
+    Canvas *canvas = canvas_create(640, 480);
 
     mu_assert("Error: Canvas object not created correctly", canvas->width == 640);
 
@@ -15,7 +15,7 @@ static char * test_creation() {
 
 static char * test_get_set() {
 
-    Canvas canvas = canvas_create(640, 480);
+    Canvas *canvas = canvas_create(640, 480);
     Colour c = colour(0, 0, 100);
     canvas_set(canvas, 4, 5, c);
 

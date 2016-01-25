@@ -5,31 +5,32 @@
 
 #include "lights.h"
 
-typedef struct light_list_el *LightList;
-typedef struct light_list_el {
+struct LightList;
+
+typedef struct LightList {
 
     Light head;
 
-    LightList tail;
+    struct LightList *tail;
 
-} LightListEl;
+} LightList;
 
-LightList light_list_element();
+LightList *light_list_element();
 
-LightList light_list_empty();
+LightList *light_list_empty();
 
-LightList light_list_create(int count, ...);
+LightList *light_list_create(int count, ...);
 
-void light_list_cleanup(LightList list);
+void light_list_cleanup(LightList *list);
 
-LightList light_list_add(LightList list, int count, ...);
+LightList *light_list_add(LightList *list, int count, ...);
 
-Light light_list_head(LightList list);
+Light light_list_head(LightList *list);
 
-LightList light_list_tail(LightList list);
+LightList *light_list_tail(LightList *list);
 
-bool light_list_is_empty(LightList list);
+bool light_list_is_empty(LightList *list);
 
-int light_list_length(LightList list);
+int light_list_length(LightList *list);
 
 #endif
