@@ -2,7 +2,6 @@
 #include <stdbool.h>
 
 #include "min_unit.h"
-#include "collections/test_light_list.h"
 #include "test_camera.h"
 #include "test_canvas.h"
 #include "test_colours.h"
@@ -36,7 +35,6 @@ int main(int argc, char *argv[]) {
     printf("* Running tests *\n");
     printf("*****************\n\n");
 
-    bool light_list_result = run_test("LightList", test_light_list);
     bool camera_result     = run_test("Camera", test_camera);
     bool canvas_result     = run_test("Canvas", test_canvas);
     bool colour_result     = run_test("Colours", test_colours);
@@ -48,7 +46,6 @@ int main(int argc, char *argv[]) {
     bool vector_result     = run_test("Vector", test_vector);
 
     return (
-        light_list_result   ||
         camera_result       ||
         canvas_result       ||
         colour_result       ||

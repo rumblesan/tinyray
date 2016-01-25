@@ -1,9 +1,12 @@
 #ifndef TRACING_H
 #define TRACING_H
 
+#include <stdbool.h>
+
 #include "colours.h"
 #include "scene.h"
 #include "shapes.h"
+#include "lights.h"
 #include "bclib/list.h"
 #include "ray.h"
 
@@ -25,7 +28,7 @@ Colour surface(Ray ray, Scene *scene, Shape *object, Vector3D intersection, int 
 
 bool light_is_visible(
     Vector3D intersection,
-    Light light,
+    Light *light,
     List *shapes,
     double max_distance
 );

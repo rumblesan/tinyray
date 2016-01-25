@@ -8,7 +8,6 @@
 #include "scene.h"
 #include "shapes.h"
 #include "textures.h"
-#include "collections/light_list.h"
 #include "bclib/list.h"
 
 #include "tracing.h"
@@ -63,15 +62,16 @@ int main(int argc, char *argv[]) {
         vector3d(13, 7, 13),
         vector3d(0, 3, 0)
     );
-    Light ambient = ambient_light_create(
-        0.6, colour(255, 255, 255)
-    );
-    LightList *lights = light_list_create(
-        2,
+    List *lights = list_create();
+    list_unshift(lights, 
         point_light_create(
             vector3d(0, 8, 7), 0.7, colour(255, 255, 255)
-        ),
-        ambient
+        )
+    );
+    list_unshift(lights, 
+        ambient_light_create(
+            0.6, colour(255, 255, 255)
+        )
     );
 
     Shape *triangle = shape_triangle(

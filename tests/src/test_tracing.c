@@ -43,7 +43,7 @@ static char * test_simple_light_visibility() {
     list_unshift(shapes,
         shape_sphere(vector3d(0, 0, 10), 2.0, t)
     );
-    Light light = point_light_create(light_pos, 1, colour(0, 255, 255));
+    Light *light = point_light_create(light_pos, 1, colour(0, 255, 255));
 
     bool not_visible = light_is_visible(intersection, light, shapes, 100);
     mu_assert("Error: Light should not be visible", not_visible == false);
@@ -71,7 +71,7 @@ static char * test_complex_light_visibility() {
     list_unshift(shapes,
         shape_sphere(vector3d(3, 4, 0), 3, t)
     );
-    Light light = point_light_create(light_pos, 1, colour(0, 255, 255));
+    Light *light = point_light_create(light_pos, 1, colour(0, 255, 255));
 
     bool not_visible = light_is_visible(intersection, light, shapes, 100);
     mu_assert("Error: Light should not be visible through sphere", not_visible == false);

@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdbool.h>
 #include <math.h>
 
 #include "tracing.h"
@@ -6,6 +7,7 @@
 #include "colours.h"
 #include "scene.h"
 #include "shapes.h"
+#include "lights.h"
 #include "textures.h"
 #include "ray.h"
 #include "vector.h"
@@ -114,23 +116,23 @@ Intersection intersectedObject(Ray trace_ray, List *shapes, double max_distance)
 
 Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection, int depth) {
     Vector3D normal = shape_normal(object, intersection);
-    LightList *lights = scene->lights;
-    Light light;
+    List *lights = scene->lights;
+    Light *light;
     double contribution;
     Colour lambert_light = colour(0, 0, 0);
     Colour ambient_light = colour(0, 0, 0);
     Colour reflection_light = colour(0, 0, 0);
 
-    while(!light_list_is_empty(lights)) {
-        light = light_list_head(lights);
-        switch(light.type) {
+    LIST_FOREACH(lights, first, next, el) {
+        light = el->value;
+        switch(light->type) {
             case POINT:
                 if (object->texture.lambert > 0) {
                     if (light_is_visible(intersection, light, scene->shapes, scene->config->max_distance)) {
                         contribution = vector3d_dot(
                             vector3d_unit(
                                 vector3d_subtract(
-                                    light.point.position, intersection
+                                    light->point.position, intersection
                                 )
                             ),
                             normal
@@ -139,8 +141,8 @@ Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection
                             lambert_light = colour_add(
                                 lambert_light,
                                 colour_scale(
-                                    light.colour,
-                                    contribution * light.intensity * object->texture.lambert
+                                    light->colour,
+                                    contribution * light->intensity * object->texture.lambert
                                 )
                             );
                         }
@@ -148,10 +150,9 @@ Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection
                 }
                 break;
             case AMBIENT:
-                ambient_light = colour_add(ambient_light, colour_scale(light.colour, light.intensity));
+                ambient_light = colour_add(ambient_light, colour_scale(light->colour, light->intensity));
                 break;
         }
-        lights = light_list_tail(lights);
     }
 
     if (object->texture.specular > 0) {
@@ -174,17 +175,17 @@ Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection
     );
 }
 
-bool light_is_visible(Vector3D intersection, Light light, List *shapes, double max_distance) {
+bool light_is_visible(Vector3D intersection, Light *light, List *shapes, double max_distance) {
 
     Intersection distObject;
 
-    switch(light.type) {
+    switch(light->type) {
         case AMBIENT:
             return false;
             break;
         case POINT:
             distObject = intersectedObject(
-                ray_from_to(intersection, light.point.position),
+                ray_from_to(intersection, light->point.position),
                 shapes,
                 max_distance
             );

@@ -4,7 +4,6 @@
 #include "canvas.h"
 #include "camera.h"
 #include "config.h"
-#include "collections/light_list.h"
 #include "bclib/list.h"
 
 typedef struct Scene {
@@ -13,7 +12,7 @@ typedef struct Scene {
     Camera *camera;
     Config *config;
 
-    LightList *lights;
+    List *lights;
 
     List *shapes;
 
@@ -22,7 +21,7 @@ typedef struct Scene {
 Scene *scene_create(
     Camera *camera,
     Config *config,
-    LightList *lights,
+    List *lights,
     List *shapes
 );
 
