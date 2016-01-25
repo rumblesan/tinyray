@@ -4,7 +4,7 @@
 #include "colours.h"
 #include "scene.h"
 #include "shapes.h"
-#include "collections/shape_list.h"
+#include "bclib/list.h"
 #include "ray.h"
 
 typedef struct Intersection {
@@ -19,14 +19,14 @@ void rays_calc(Scene *scene);
 
 Colour trace(Ray ray, Scene *scene, int depth);
 
-Intersection intersectedObject(Ray ray, ShapeList *shapes, double max_distance);
+Intersection intersectedObject(Ray ray, List *shapes, double max_distance);
 
 Colour surface(Ray ray, Scene *scene, Shape *object, Vector3D intersection, int depth);
 
 bool light_is_visible(
     Vector3D intersection,
     Light light,
-    ShapeList *shapes,
+    List *shapes,
     double max_distance
 );
 

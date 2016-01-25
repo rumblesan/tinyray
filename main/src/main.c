@@ -9,7 +9,7 @@
 #include "shapes.h"
 #include "textures.h"
 #include "collections/light_list.h"
-#include "collections/shape_list.h"
+#include "bclib/list.h"
 
 #include "tracing.h"
 
@@ -95,9 +95,11 @@ int main(int argc, char *argv[]) {
         vector3d(0.0, 1.0, 0.0),
         texture_flat(1, 0.2, colour(100, 100, 100))
     );
-    ShapeList *shapes = shape_list_create(
-        4, sphere, small_sphere, plane, triangle
-    );
+    List *shapes = list_create();
+    list_unshift(shapes, sphere);
+    list_unshift(shapes, small_sphere);
+    list_unshift(shapes, plane);
+    list_unshift(shapes, triangle);
 
     Scene *scene = scene_create(
         camera,

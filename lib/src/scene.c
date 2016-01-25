@@ -6,13 +6,13 @@
 #include "camera.h"
 #include "config.h"
 #include "collections/light_list.h"
-#include "collections/shape_list.h"
+#include "bclib/list.h"
 
 Scene *scene_create(
     Camera *camera,
     Config *config,
     LightList *lights,
-    ShapeList *shapes
+    List *shapes
 ) {
 
     Scene *scene = malloc(sizeof(Scene));
@@ -31,7 +31,7 @@ void scene_cleanup(Scene *scene) {
     camera_cleanup(scene->camera);
     config_cleanup(scene->config);
     light_list_cleanup(scene->lights);
-    shape_list_cleanup(scene->shapes);
+    list_destroy(scene->shapes);
     free(scene);
 }
 

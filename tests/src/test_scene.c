@@ -9,7 +9,7 @@
 #include "shapes.h"
 #include "textures.h"
 #include "collections/light_list.h"
-#include "collections/shape_list.h"
+#include "bclib/list.h"
 
 static char * test_creation() {
 
@@ -33,7 +33,8 @@ static char * test_creation() {
         1.0,
         t
     );
-    ShapeList *shapes = shape_list_create(1, shape);
+    List *shapes = list_create();
+    list_unshift(shapes, shape);
 
     Scene *scene = scene_create(
         camera,

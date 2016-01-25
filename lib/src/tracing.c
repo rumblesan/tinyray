@@ -14,6 +14,8 @@
 
 #include "constants.h"
 
+#include "bclib/list.h"
+
 void rays_calc(Scene *scene) {
 
     int x, y;
@@ -91,21 +93,20 @@ Colour trace(Ray trace_ray, Scene *scene, int depth) {
     return surface(trace_ray, scene, distObject.object, intersectPoint, depth);
 }
 
-Intersection intersectedObject(Ray trace_ray, ShapeList *shapes, double max_distance) {
+Intersection intersectedObject(Ray trace_ray, List *shapes, double max_distance) {
     Intersection distObject;
     distObject.object = NULL;
     distObject.distance = max_distance;
-
-    ShapeList *s = shapes;
+    Shape *s = NULL;
 
     double d;
-    while (!shape_list_is_empty(s)) {
-        d = shape_intersect(shape_list_head(s), trace_ray);
+    LIST_FOREACH(shapes, first, next, el) {
+        s = el->value;
+        d = shape_intersect(s, trace_ray);
         if (d > LIMINALITY && d < distObject.distance) {
-            distObject.object = shape_list_head(s);
+            distObject.object = s;
             distObject.distance = d;
         }
-        s = shape_list_tail(s);
     }
 
     return distObject;
@@ -173,7 +174,7 @@ Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection
     );
 }
 
-bool light_is_visible(Vector3D intersection, Light light, ShapeList *shapes, double max_distance) {
+bool light_is_visible(Vector3D intersection, Light light, List *shapes, double max_distance) {
 
     Intersection distObject;
 
