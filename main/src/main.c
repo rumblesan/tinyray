@@ -54,9 +54,24 @@ void render_png(Scene *scene, char* output_file)
 
 int main(int argc, char *argv[]) {
 
+    if (argc != 2) {
+        printf("Need to have 1 argument\nHave %d\n", (argc - 1));
+        return 0;
+    }
+
+    char *input_file = argv[1];
+
+    FILE *fp = fopen(input_file, "r");
+    if (fp == NULL) {
+        printf("Could not open file %s\n", input_file);
+        return 0;
+    }
+
     Block *ast;
 
-    int parseResult = parse(&ast);
+    int parseResult = parse(&ast, fp);
+
+    fclose(fp);
 
     if (parseResult) {
         printf("Error during parsing");

@@ -16,12 +16,12 @@ void yyerror(yyscan_t scanner, Block **ast, const char *str) {
     fprintf(stderr, "error: %s\n", str);
 }
 
-int parse(Block **ast) {
+int parse(Block **ast, FILE *fp) {
 
     yyscan_t scanner;
 
     yylex_init(&scanner);
-    yyset_in(stdin, scanner);
+    yyset_in(fp, scanner);
 
     int parseResult = yyparse(scanner, ast);
 
