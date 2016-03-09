@@ -10,6 +10,10 @@
 #include "textures.h"
 #include "bclib/list.h"
 
+#include "language/parser.h"
+#include "language/ast.h"
+#include "language/ast-print.h"
+
 #include "tracing.h"
 
 #include "libs/lodepng.h"
@@ -50,6 +54,17 @@ void render_png(Scene *scene, char* output_file)
 
 int main(int argc, char *argv[]) {
 
+    Block *ast;
+
+    int parseResult = parse(&ast);
+
+    if (parseResult) {
+        printf("Error during parsing");
+    } else {
+        printf("Parsed");
+        ast_print(ast);
+    }
+
     Config *config = config_create(
         1024, 768,
         10000,
@@ -63,12 +78,12 @@ int main(int argc, char *argv[]) {
         vector3d(0, 3, 0)
     );
     List *lights = list_create();
-    list_unshift(lights, 
+    list_unshift(lights,
         point_light_create(
             vector3d(0, 8, 7), 0.7, colour(255, 255, 255)
         )
     );
-    list_unshift(lights, 
+    list_unshift(lights,
         ambient_light_create(
             0.6, colour(255, 255, 255)
         )
