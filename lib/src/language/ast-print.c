@@ -37,13 +37,13 @@ void ast_element_print(Element *element, int indentation) {
 
 void ast_vardef_print(VarDefinition *vardef, int indentation) {
     indent(indentation);
-    printf("Var Definition: %s\n", vardef->name);
+    printf("Var Definition: %s\n", vardef->name->data);
     ast_expression_print(vardef->expression, indentation + DEPTH);
 }
 
 void ast_application_print(Application *application, int indentation) {
     indent(indentation);
-    printf("Application: %s\n", application->name);
+    printf("Application: %s\n", application->name->data);
     ast_arg_list_print(application->args, indentation + DEPTH);
 }
 
@@ -79,7 +79,7 @@ void ast_number_print(Number *number, int indentation) {
 
 void ast_variable_print(Variable *variable, int indentation) {
     indent(indentation);
-    printf("Variable: %s\n", variable->name);
+    printf("Variable: %s\n", variable->name->data);
 }
 
 

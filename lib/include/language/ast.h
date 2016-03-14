@@ -2,8 +2,9 @@
 #define AST_H
 
 #include "bclib/list.h"
+#include "bclib/bstrlib.h"
 
-typedef char Identifier;
+typedef struct tagbstring Identifier;
 
 /* Number Literal AST Node */
 typedef struct Number {
@@ -19,24 +20,24 @@ void ast_number_cleanup(Number *number);
 /* Variable AST Node */
 typedef struct Variable {
 
-    char *name;
+    bstring name;
 
 } Variable;
 
-Variable *ast_variable_create(char *name);
+Variable *ast_variable_create(bstring name);
 
 void ast_variable_cleanup(Variable *variable);
 
 /* Application AST Node */
 typedef struct Application {
 
-    char *name;
+    bstring name;
 
     List *args;
 
 } Application;
 
-Application *ast_application_create(char *name, List *args);
+Application *ast_application_create(bstring name, List *args);
 
 void ast_application_cleanup(Application *application);
 
@@ -69,13 +70,13 @@ Expression *ast_variable_expression(Variable *variable);
 /* Variable Definition AST Node */
 typedef struct VarDefinition {
 
-    char *name;
+    bstring name;
 
     Expression *expression;
 
 } VarDefinition;
 
-VarDefinition *ast_vardef_create(char *name, Expression *expression);
+VarDefinition *ast_vardef_create(bstring name, Expression *expression);
 
 void ast_vardef_cleanup(VarDefinition *vardef);
 

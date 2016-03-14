@@ -1,5 +1,6 @@
 %{
 #include "y.tab.h"
+#include "bclib/bstrlib.h"
 %}
 
 %option 8bit reentrant bison-bridge
@@ -16,11 +17,11 @@
 "]"                           return CPAREN;
 
 [0-9]+('.'[0-9]+)?            yylval->number = atof(yytext); return NUMBER;
-"+"                           yylval->identifier = strdup(yytext); return IDENTIFIER;
-"-"                           yylval->identifier = strdup(yytext); return IDENTIFIER;
-"*"                           yylval->identifier = strdup(yytext); return IDENTIFIER;
-"/"                           yylval->identifier = strdup(yytext); return IDENTIFIER;
-[a-zA-Z]+[a-zA-Z0-9]*         yylval->identifier = strdup(yytext); return IDENTIFIER;
+"+"                           yylval->identifier = bfromcstr(yytext); return IDENTIFIER;
+"-"                           yylval->identifier = bfromcstr(yytext); return IDENTIFIER;
+"*"                           yylval->identifier = bfromcstr(yytext); return IDENTIFIER;
+"/"                           yylval->identifier = bfromcstr(yytext); return IDENTIFIER;
+[a-zA-Z]+[a-zA-Z0-9]*         yylval->identifier = bfromcstr(yytext); return IDENTIFIER;
 
 [ \t\n]+                      /* ignore whitespace */;
 %%

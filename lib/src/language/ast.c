@@ -2,6 +2,7 @@
 
 #include "language/ast.h"
 #include "bclib/list.h"
+#include "bclib/bstrlib.h"
 
 /* Block AST Node */
 Block *ast_block_create(List *elements) {
@@ -43,7 +44,7 @@ Element *ast_vardefinition_element(VarDefinition *varDefinition) {
 }
 
 /* Application AST Node */
-Application *ast_application_create(char *name, List *args) {
+Application *ast_application_create(bstring name, List *args) {
     Application *application = malloc(sizeof(Application));
     application->name = name;
     application->args = args;
@@ -57,7 +58,7 @@ void ast_application_cleanup(Application *application) {
 }
 
 /* Variable Definition AST Node */
-VarDefinition *ast_vardef_create(char *name, Expression *expression) {
+VarDefinition *ast_vardef_create(bstring name, Expression *expression) {
     VarDefinition *varDef = malloc(sizeof(VarDefinition));
     varDef->name = name;
     varDef->expression = expression;
@@ -115,7 +116,7 @@ void ast_number_cleanup(Number *number) {
 }
 
 /* Variable AST Node */
-Variable *ast_variable_create(char *name) {
+Variable *ast_variable_create(bstring name) {
     Variable *variable = malloc(sizeof(Variable));
     variable->name = name;
 
