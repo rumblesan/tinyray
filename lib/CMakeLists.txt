@@ -25,8 +25,11 @@ set(SOURCES
     "src/textures.c"
     "src/tracing.c"
     "src/vector.c"
+    "src/language/interpreter.c"
     "src/language/ast.c"
     "src/language/ast-print.c"
+    "src/language/stdlib/misc.c"
+    "src/language/stdlib/math.c"
     )
 add_library(tinyray-lib SHARED
     ${SOURCES}

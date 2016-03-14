@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "dbg.h"
+
 #include "canvas.h"
 #include "camera.h"
 #include "config.h"
@@ -9,10 +11,15 @@
 #include "shapes.h"
 #include "textures.h"
 #include "bclib/list.h"
+#include "bclib/bstrlib.h"
 
 #include "language/parser.h"
 #include "language/ast.h"
+#include "language/interpreter.h"
 #include "language/ast-print.h"
+
+#include "language/stdlib/misc.h"
+#include "language/stdlib/math.h"
 
 #include "tracing.h"
 
@@ -75,10 +82,22 @@ int main(int argc, char *argv[]) {
 
     if (parseResult) {
         printf("Error during parsing");
+        return 1;
     } else {
-        printf("Parsed");
-        ast_print(ast);
+        printf("Parsed\n");
     }
+
+    Interpreter *interpreter = interpreter_create();
+    if (interpreter == NULL) {
+        return 1;
+    }
+    interpreter_set_variable(interpreter, bfromcstr("print"), datavalue_create(FUNCTION, print));
+    interpreter_set_variable(interpreter, bfromcstr("add"), datavalue_create(FUNCTION, add));
+    interpreter_set_variable(interpreter, bfromcstr("sub"), datavalue_create(FUNCTION, sub));
+
+    interpret(interpreter, ast);
+
+    return 0;
 
     Config *config = config_create(
         1024, 768,
