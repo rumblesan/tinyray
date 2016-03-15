@@ -16,7 +16,7 @@
 "["                           return OPAREN;
 "]"                           return CPAREN;
 
-[0-9]+('.'[0-9]+)?            yylval->number = atof(yytext); return NUMBER;
+(-)?[0-9]+('.'[0-9]+)?        yylval->number = atof(yytext); return NUMBER;
 "+"                           yylval->identifier = bfromcstr(yytext); return IDENTIFIER;
 "-"                           yylval->identifier = bfromcstr(yytext); return IDENTIFIER;
 "*"                           yylval->identifier = bfromcstr(yytext); return IDENTIFIER;
