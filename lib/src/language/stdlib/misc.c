@@ -6,7 +6,7 @@
 
 DataValue *print(List *args) {
     debug("Printing DataValue");
-    DataValue *arg1 = list_shift(args);
+    DataValue *arg1 = list_get(args, 0);
     double *v;
     switch(arg1->type) {
         case NUMBER:
