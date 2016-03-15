@@ -8,6 +8,12 @@ DataValue *config(List *args);
 
 DataValue *camera(List *args);
 
+DataValue *col(List *args);
+
+DataValue *vec(List *args);
+
+DataValue *texture(List *args);
+
 DataValue *pointlight(List *args);
 
 DataValue *ambientlight(List *args);
@@ -18,8 +24,6 @@ DataValue *sphere(List *args);
 
 DataValue *plane(List *args);
 
-DataValue *scene(List *args);
-
-DataValue *trace(List *args);
+DataValue *rayscene(List *args);
 
 #endif

@@ -3,14 +3,7 @@
 
 #include "dbg.h"
 
-#include "canvas.h"
-#include "camera.h"
-#include "config.h"
-#include "lights.h"
-#include "scene.h"
-#include "shapes.h"
-#include "textures.h"
-#include "bclib/list.h"
+
 #include "bclib/bstrlib.h"
 
 #include "language/parser.h"
@@ -20,7 +13,11 @@
 
 #include "language/stdlib/misc.h"
 #include "language/stdlib/math.h"
+#include "language/stdlib/tracescene.h"
+#include "language/stdlib/list.h"
 
+#include "scene.h"
+#include "colours.h"
 #include "tracing.h"
 
 #include "libs/lodepng.h"
@@ -95,73 +92,31 @@ int main(int argc, char *argv[]) {
     interpreter_set_variable(interpreter, bfromcstr("add"), datavalue_create(FUNCTION, add));
     interpreter_set_variable(interpreter, bfromcstr("sub"), datavalue_create(FUNCTION, sub));
 
-    interpret(interpreter, ast);
+    interpreter_set_variable(interpreter, bfromcstr("config"), datavalue_create(FUNCTION, config));
+    interpreter_set_variable(interpreter, bfromcstr("camera"), datavalue_create(FUNCTION, camera));
+    interpreter_set_variable(interpreter, bfromcstr("col"), datavalue_create(FUNCTION, col));
+    interpreter_set_variable(interpreter, bfromcstr("vec"), datavalue_create(FUNCTION, vec));
+    interpreter_set_variable(interpreter, bfromcstr("texture"), datavalue_create(FUNCTION, texture));
+    interpreter_set_variable(interpreter, bfromcstr("pointlight"), datavalue_create(FUNCTION, pointlight));
+    interpreter_set_variable(interpreter, bfromcstr("ambientlight"), datavalue_create(FUNCTION, ambientlight));
+    interpreter_set_variable(interpreter, bfromcstr("triangle"), datavalue_create(FUNCTION, triangle));
+    interpreter_set_variable(interpreter, bfromcstr("sphere"), datavalue_create(FUNCTION, sphere));
+    interpreter_set_variable(interpreter, bfromcstr("plane"), datavalue_create(FUNCTION, plane));
+    interpreter_set_variable(interpreter, bfromcstr("rayscene"), datavalue_create(FUNCTION, rayscene));
 
-    return 0;
+    interpreter_set_variable(interpreter, bfromcstr("list"), datavalue_create(FUNCTION, list));
+    interpreter_set_variable(interpreter, bfromcstr("append"), datavalue_create(FUNCTION, append));
 
-    Config *config = config_create(
-        1024, 768,
-        10000,
-        100,
-        colour(210, 230, 255)
-    );
+    DataValue *output = interpret(interpreter, ast);
 
-    Camera *camera = camera_create(
-        45,
-        vector3d(13, 7, 13),
-        vector3d(0, 3, 0)
-    );
-    List *lights = list_create();
-    list_unshift(lights,
-        point_light_create(
-            vector3d(0, 8, 7), 0.7, colour(255, 255, 255)
-        )
-    );
-    list_unshift(lights,
-        ambient_light_create(
-            0.6, colour(255, 255, 255)
-        )
-    );
-
-    Shape *triangle = shape_triangle(
-        vector3d(1.0,  2.0,  1.0),
-        vector3d(1.0,  0.0,  6.0),
-        vector3d(-3.0, 3.0,  6.0),
-        texture_flat(1, 0.5, colour(255, 55, 55))
-    );
-    Shape *sphere = shape_sphere(
-        vector3d(0, 4, 0),
-        3,
-        texture_flat(0.2, 0.5, colour(155, 155, 155))
-    );
-    Shape *small_sphere = shape_sphere(
-        vector3d(0, 5, 3.7),
-        0.3,
-        texture_flat(1, 0.1, colour(0, 100, 150))
-    );
-    Shape *plane = shape_plane(
-        vector3d(0.0, 0.0, 0.0),
-        vector3d(0.0, 1.0, 0.0),
-        texture_flat(1, 0.2, colour(100, 100, 100))
-    );
-    List *shapes = list_create();
-    list_unshift(shapes, sphere);
-    list_unshift(shapes, small_sphere);
-    list_unshift(shapes, plane);
-    list_unshift(shapes, triangle);
-
-    Scene *scene = scene_create(
-        camera,
-        config,
-        lights,
-        shapes
-    );
-
-    rays_calc(scene);
-
-    render_png(scene, "output.png");
-
-    scene_cleanup(scene);
+    if (output->type == SCENE) {
+        printf("Rendering\n");
+        rays_calc(output->value);
+        render_png(output->value, "output.png");
+        scene_cleanup(output->value);
+    } else {
+        printf("No scene output so not rendering\n");
+    }
 
     return 0;
 }

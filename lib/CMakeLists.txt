@@ -30,6 +30,8 @@ set(SOURCES
     "src/language/ast-print.c"
     "src/language/stdlib/misc.c"
     "src/language/stdlib/math.c"
+    "src/language/stdlib/tracescene.c"
+    "src/language/stdlib/list.c"
     )
 add_library(tinyray-lib SHARED
     ${SOURCES}

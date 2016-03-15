@@ -109,6 +109,11 @@ DataValue *interpret_call_function(Interpreter *interpreter, bstring name, List 
     return f(args);
 }
 
+void *get_arg(List *args, int idx) {
+    DataValue *dv = list_get(args, idx);
+    return dv != NULL ? dv->value : NULL;
+}
+
 DataValue *interpret_expression(Interpreter *interpreter, Expression *expression) {
     switch(expression->expressionType) {
         case APPLICATIONEXPR: return interpret_application(interpreter, expression->application); break;

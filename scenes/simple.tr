@@ -1,0 +1,26 @@
+(def conf
+  (config 1024 768 10000 100 (col 210 230 255))
+)
+
+(def cam
+  (camera 45 (vec 13 7 13) (vec 0 3 0))
+)
+
+(def lights
+  (list
+    (ambientlight 0.6 (col 255 255 255))
+    (pointlight (vec 0 8 7) 0.7 (col 255 255 255))
+  )
+)
+
+(def shapes
+  (list
+    (triangle (vec 1 2 1) (vec 1 0 6) (vec -3 3 6) (texture 1 0.5 (col 255 55 55)))
+    (sphere (vec 0 4 0) 3 (texture 0.2 0.5 (col 155 155 155)))
+    (sphere (vec 0 5 3.7) 0.3 (texture 1 0.1 (col 0 100 150)))
+    (plane (vec 0 0 0) (vec 0 1 0) (texture 1 0.2 (col 100 100 100)))
+  )
+)
+
+(rayscene cam conf lights shapes)
+

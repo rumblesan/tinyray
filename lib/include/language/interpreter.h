@@ -6,7 +6,7 @@
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
-typedef enum {CAMERA, CANVAS, COLOUR, CONFIG, LIGHT, RAY, SCENE, SHAPE, TEXTURE, VECTOR, NUMBER, FUNCTION, NOTHING} DataType;
+typedef enum {CAMERA, COLOUR, CONFIG, LIGHT, SCENE, SHAPE, TEXTURE, VECTOR, NUMBER, FUNCTION, LIST, NOTHING} DataType;
 
 typedef struct DataValue {
 
@@ -45,6 +45,8 @@ DataValue *interpret_vardef(Interpreter *interpreter, VarDefinition *vardef);
 DataValue *interpret_application(Interpreter *interpreter, Application *application);
 
 DataValue *interpret_call_function(Interpreter *interpreter, bstring name, List *args);
+
+void *get_arg(List *args, int idx);
 
 DataValue *interpret_expression(Interpreter *interpreter, Expression *expression);
 
