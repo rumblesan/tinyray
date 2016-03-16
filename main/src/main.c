@@ -6,15 +6,15 @@
 
 #include "bclib/bstrlib.h"
 
-#include "language/parser.h"
-#include "language/ast.h"
-#include "language/interpreter.h"
-#include "language/ast-print.h"
+#include "parser.h"
+#include "ast.h"
+#include "interpreter.h"
+#include "ast-print.h"
 
-#include "language/stdlib/misc.h"
-#include "language/stdlib/math.h"
-#include "language/stdlib/tracescene.h"
-#include "language/stdlib/list.h"
+#include "stdlib/misc.h"
+#include "stdlib/math.h"
+#include "tracescene.h"
+#include "stdlib/list.h"
 
 #include "scene.h"
 #include "colours.h"

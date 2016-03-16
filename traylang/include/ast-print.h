@@ -1,7 +1,7 @@
 #ifndef AST_DISPLAY_H
 #define AST_DISPLAY_H
 
-#include "language/ast.h"
+#include "ast.h"
 #include "bclib/list.h"
 
 void ast_print(Block *block);

@@ -2,9 +2,9 @@
 
 #include "dbg.h"
 
-#include "language/interpreter.h"
-#include "language/ast.h"
-#include "language/ast-print.h"
+#include "interpreter.h"
+#include "ast.h"
+#include "ast-print.h"
 
 #include "lights.h"
 #include "colours.h"

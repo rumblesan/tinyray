@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
-#include "language/interpreter.h"
-#include "language/stdlib/tracescene.h"
+#include "tracescene.h"
+#include "interpreter.h"
 #include "bclib/list.h"
 
 #include "tracing.h"

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
-#include "language/interpreter.h"
-#include "language/stdlib/misc.h"
+#include "interpreter.h"
+#include "stdlib/misc.h"
 #include "bclib/list.h"
 
 DataValue *add(List *args) {

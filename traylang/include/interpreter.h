@@ -1,7 +1,7 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
-#include "language/ast.h"
+#include "ast.h"
 #include "bclib/hashmap.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"

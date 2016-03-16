@@ -1,5 +1,5 @@
 %code requires {
-#include "language/ast.h"
+#include "ast.h"
 #include "bclib/list.h"
 }
 
@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "language/parser.h"
+#include "parser.h"
 #include "y.tab.h"
 #include "lex.yy.h"
 

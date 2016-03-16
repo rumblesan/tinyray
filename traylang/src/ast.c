@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "language/ast.h"
+#include "ast.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 

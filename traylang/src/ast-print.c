@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "language/ast-print.h"
-#include "language/ast.h"
+#include "ast-print.h"
+#include "ast.h"
 #include "bclib/list.h"
 
 #define DEPTH 2

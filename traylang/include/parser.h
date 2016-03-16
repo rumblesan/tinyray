@@ -3,7 +3,7 @@
 
 #include <stdio.h>
 
-#include "language/ast.h"
+#include "ast.h"
 
 int parse(Block **block, FILE *fp);
 
