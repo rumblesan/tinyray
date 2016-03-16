@@ -1,22 +1,11 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
+#include "datavalue.h"
 #include "ast.h"
 #include "bclib/hashmap.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
-
-typedef enum {CAMERA, COLOUR, CONFIG, FUNCTION, LIGHT, LIST, NOTHING, NUMBER, SCENE, SHAPE, TEXTURE, VECTOR } DataType;
-
-typedef struct DataValue {
-
-    DataType type;
-
-    void *value;
-
-} DataValue;
-
-DataValue *datavalue_create(DataType type, void *value);
 
 typedef DataValue *(*func_cb)(List *args);
 

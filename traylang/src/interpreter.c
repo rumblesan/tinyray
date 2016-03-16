@@ -3,8 +3,8 @@
 #include "dbg.h"
 
 #include "interpreter.h"
+#include "datavalue.h"
 #include "ast.h"
-#include "ast-print.h"
 
 #include "lights.h"
 #include "colours.h"
@@ -12,19 +12,6 @@
 #include "bclib/hashmap.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
-
-DataValue *datavalue_create(DataType type, void *value) {
-    DataValue *data_value = malloc(sizeof(DataValue));
-
-    check_mem(data_value);
-    data_value->type = type;
-    data_value->value = value;
-
-    return data_value;
-error:
-    return NULL;
-}
-
 
 Interpreter *interpreter_create() {
     Interpreter *interpreter = malloc(sizeof(Interpreter));
