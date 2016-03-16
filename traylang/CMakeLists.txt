@@ -14,9 +14,9 @@ set(SOURCES
     "src/interpreter.c"
     "src/ast.c"
     "src/ast-print.c"
-    "src/stdlib/misc.c"
     "src/stdlib/math.c"
     "src/stdlib/list.c"
+    "src/stdlib/print.c"
     )
 add_library(traylang-lib SHARED
     ${SOURCES}

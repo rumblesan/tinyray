@@ -6,7 +6,7 @@
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
-typedef enum {CAMERA, COLOUR, CONFIG, LIGHT, SCENE, SHAPE, TEXTURE, VECTOR, NUMBER, FUNCTION, LIST, NOTHING} DataType;
+typedef enum {CAMERA, COLOUR, CONFIG, FUNCTION, LIGHT, LIST, NOTHING, NUMBER, SCENE, SHAPE, TEXTURE, VECTOR } DataType;
 
 typedef struct DataValue {
 

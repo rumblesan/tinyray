@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "tracescene.h"
+#include "langfuncs/tracescene.h"
 #include "interpreter.h"
 #include "bclib/list.h"
 

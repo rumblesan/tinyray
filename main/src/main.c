@@ -11,9 +11,10 @@
 #include "interpreter.h"
 #include "ast-print.h"
 
-#include "stdlib/misc.h"
+#include "langfuncs/tracescene.h"
+
+#include "stdlib/print.h"
 #include "stdlib/math.h"
-#include "tracescene.h"
 #include "stdlib/list.h"
 
 #include "scene.h"
@@ -21,6 +22,19 @@
 #include "tracing.h"
 
 #include "libs/lodepng.h"
+
+DataValue *print_output(DataValue *value) {
+    if (value == NULL) {
+        printf("Could not print NULL output\n");
+        return NULL;
+    }
+    printf("Result: ");
+    List *list = list_create();
+    list_push(list, value);
+    print(list);
+    list_destroy(list);
+    return value;
+}
 
 void render_png(Scene *scene, char* output_file)
 {
@@ -120,6 +134,7 @@ int main(int argc, char *argv[]) {
         render_png(output->value, "output.png");
         scene_cleanup(output->value);
     } else {
+        print_output(output);
         printf("No scene output so not rendering\n");
     }
 

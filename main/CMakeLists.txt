@@ -2,7 +2,7 @@ include_directories(include)
 
 set(SOURCES
     "src/main.c"
-    "src/tracescene.c"
+    "src/langfuncs/tracescene.c"
     "src/libs/lodepng.c"
     )
 
