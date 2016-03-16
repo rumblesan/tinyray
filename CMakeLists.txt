@@ -3,6 +3,7 @@ project(tinyray)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
 
+include_directories(include)
 include_directories(tracer/include)
 include_directories(traylang/include)
 
