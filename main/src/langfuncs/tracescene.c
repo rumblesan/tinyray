@@ -19,7 +19,7 @@ DataValue *config(List *args) {
     Colour *colour  = get_arg(args, 4);
     check(colour, "config colour arg error");
     return datavalue_create(
-        CONFIG,
+        USERDATA,
         config_create(*width, *height, *maxdist, *reflect, *colour)
     );
 error:
@@ -34,7 +34,7 @@ DataValue *camera(List *args) {
     Vector3D *look = get_arg(args, 2);
     check(look, "camera look_at arg error");
     return datavalue_create(
-        CAMERA,
+        USERDATA,
         camera_create(*fov, *pos, *look)
     );
 error:
@@ -51,7 +51,7 @@ DataValue *col(List *args) {
     Colour *c = malloc(sizeof(Colour));
     check_mem(c);
     *c = colour(*r, *g, *b);
-    return datavalue_create(COLOUR, c);
+    return datavalue_create(USERDATA, c);
 error:
     return NULL;
 }
@@ -66,7 +66,7 @@ DataValue *vec(List *args) {
     Vector3D *v = malloc(sizeof(Vector3D));
     check_mem(v);
     *v = vector3d(*x, *y, *z);
-    return datavalue_create(VECTOR, v);
+    return datavalue_create(USERDATA, v);
 error:
     return NULL;
 }
@@ -81,7 +81,7 @@ DataValue *texture(List *args) {
     Texture *t = malloc(sizeof(Texture));
     check_mem(t);
     *t = texture_flat(*lambert, *specular, *col);
-    return datavalue_create(TEXTURE, t);
+    return datavalue_create(USERDATA, t);
 error:
     return NULL;
 }
@@ -94,7 +94,7 @@ DataValue *pointlight(List *args) {
     Colour   *colour    = get_arg(args, 2);
     check(colour, "pointlight colour arg error");
     return datavalue_create(
-        LIGHT,
+        USERDATA,
         point_light_create(*position, *intensity, *colour)
     );
 error:
@@ -107,7 +107,7 @@ DataValue *ambientlight(List *args) {
     Colour *colour    = get_arg(args, 2);
     check(colour, "ambientlight colour arg error");
     return datavalue_create(
-        LIGHT,
+        USERDATA,
         ambient_light_create(*intensity, *colour)
     );
 error:
@@ -124,7 +124,7 @@ DataValue *triangle(List *args) {
     Texture  *txt = get_arg(args, 3);
     check(txt, "triangle texture arg error");
     return datavalue_create(
-        SHAPE,
+        USERDATA,
         shape_triangle(*p1, *p2, *p3, *txt)
     );
 error:
@@ -139,7 +139,7 @@ DataValue *sphere(List *args) {
     Texture  *txt = get_arg(args, 2);
     check(txt, "sphere texture arg error");
     return datavalue_create(
-        SHAPE,
+        USERDATA,
         shape_sphere(*pos, *rad, *txt)
     );
 error:
@@ -154,7 +154,7 @@ DataValue *plane(List *args) {
     Texture  *txt = get_arg(args, 2);
     check(txt, "plane texture arg error");
     return datavalue_create(
-        SHAPE,
+        USERDATA,
         shape_plane(*pos, *nor, *txt)
     );
 error:
@@ -170,8 +170,9 @@ DataValue *rayscene(List *args) {
     check(lights, "scene lights arg error");
     List   *shapes = get_arg(args, 3);
     check(shapes, "scene shapes arg error");
+    log_info("Creating scene");
     Scene *scene = scene_create(camera, config, lights, shapes);
-    return datavalue_create(SCENE, scene);
+    return datavalue_create(USERDATA, scene);
 error:
     return NULL;
 }

@@ -7,20 +7,8 @@
 void print_value(DataValue *data) {
     double *v;
     switch(data->type) {
-        case CAMERA:
-            printf("Camera\n");
-            break;
-        case COLOUR:
-            printf("Colour\n");
-            break;
-        case CONFIG:
-            printf("Config\n");
-            break;
         case FUNCTION:
             printf("Function\n");
-            break;
-        case LIGHT:
-            printf("Light\n");
             break;
         case LIST:
             printf("List\n");
@@ -32,17 +20,8 @@ void print_value(DataValue *data) {
             v = data->value;
             printf("%f\n", *v);
             break;
-        case SCENE:
-            printf("Scene\n");
-            break;
-        case SHAPE:
-            printf("Shape\n");
-            break;
-        case TEXTURE:
-            printf("Texture\n");
-            break;
-        case VECTOR:
-            printf("Vector\n");
+        case USERDATA:
+            printf("Userdata\n");
             break;
         default:
             printf("Something else\n");

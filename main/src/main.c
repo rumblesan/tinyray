@@ -128,7 +128,7 @@ int main(int argc, char *argv[]) {
         printf("Error whilst interpreting: %s", interpreter->err_message->data);
         return 1;
     }
-    if (output->type == SCENE) {
+    if (output->type == USERDATA) {
         printf("Rendering\n");
         rays_calc(output->value);
         render_png(output->value, "output.png");
