@@ -22,6 +22,10 @@ typedef DataValue *(*func_cb)(List *args);
 
 typedef struct Interpreter {
 
+    int error;
+
+    bstring err_message;
+
     Hashmap *variables;
 
 } Interpreter;
@@ -30,7 +34,9 @@ Interpreter *interpreter_create();
 
 void interpreter_destroy(Interpreter *interpreter);
 
-void interpreter_set_variable(Interpreter *interpreter, bstring name, DataValue *value);
+void interpreter_error(Interpreter *interpreter, bstring err_message);
+
+DataValue *interpreter_set_variable(Interpreter *interpreter, bstring name, DataValue *value);
 
 DataValue *interpreter_get_variable(Interpreter *interpreter, bstring name);
 

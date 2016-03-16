@@ -86,6 +86,7 @@ int main(int argc, char *argv[]) {
 
     Interpreter *interpreter = interpreter_create();
     if (interpreter == NULL) {
+        log_err("Could not create interpreter");
         return 1;
     }
     interpreter_set_variable(interpreter, bfromcstr("print"), datavalue_create(FUNCTION, print));
@@ -109,6 +110,10 @@ int main(int argc, char *argv[]) {
 
     DataValue *output = interpret(interpreter, ast);
 
+    if (interpreter->error == 1) {
+        printf("Error whilst interpreting: %s", interpreter->err_message->data);
+        return 1;
+    }
     if (output->type == SCENE) {
         printf("Rendering\n");
         rays_calc(output->value);
