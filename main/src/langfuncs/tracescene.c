@@ -7,6 +7,15 @@
 #include "tracing.h"
 #include "dbg.h"
 
+void *tlist_to_clist(List *traylist) {
+    List *clist = list_create();
+    int len = list_count(traylist);
+    for (int i = 0; i < len; i += 1) {
+        list_push(clist, get_arg(traylist, i));
+    }
+    return clist;
+}
+
 DataValue *config(List *args) {
     double *width   = get_arg(args, 0);
     check(width, "config width arg error");
@@ -166,9 +175,9 @@ DataValue *rayscene(List *args) {
     check(camera, "scene camera arg error");
     Config *config = get_arg(args, 1);
     check(config, "scene config arg error");
-    List   *lights = get_arg(args, 2);
+    List   *lights = tlist_to_clist(get_arg(args, 2));
     check(lights, "scene lights arg error");
-    List   *shapes = get_arg(args, 3);
+    List   *shapes = tlist_to_clist(get_arg(args, 3));
     check(shapes, "scene shapes arg error");
     log_info("Creating scene");
     Scene *scene = scene_create(camera, config, lights, shapes);
