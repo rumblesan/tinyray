@@ -4,6 +4,12 @@
 #include "stdlib/print.h"
 #include "bclib/list.h"
 
+DataValue *print(List *args) {
+    DataValue *arg1 = list_get(args, 0);
+    print_value(arg1);
+    return datavalue_create(NOTHING, NULL);
+}
+
 void print_value(DataValue *data) {
     double *v;
     switch(data->type) {
@@ -11,7 +17,7 @@ void print_value(DataValue *data) {
             printf("Function\n");
             break;
         case LIST:
-            printf("List\n");
+            print_list(data->value);
             break;
         case NOTHING:
             printf("Nothing\n");
@@ -29,9 +35,10 @@ void print_value(DataValue *data) {
     }
 }
 
-DataValue *print(List *args) {
-    DataValue *arg1 = list_get(args, 0);
-    print_value(arg1);
-    return datavalue_create(NOTHING, NULL);
+void print_list(List *list) {
+    printf("List\n");
+    LIST_FOREACH(list, first, next, el) {
+        print_value(el->value);
+    }
 }
 
