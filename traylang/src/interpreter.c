@@ -114,7 +114,6 @@ List *create_arg_list(Interpreter *interpreter, Application *application) {
         val = interpret_expression(interpreter, cur->value);
         list_unshift(arg_values, val);
         check(interpreter->error != 1, "Error whilst interpreting");
-        print_value(val);
     }
     debug("arg num: %d", list_count(arg_values));
     return arg_values;
