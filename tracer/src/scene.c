@@ -15,7 +15,6 @@ Scene *scene_create(
     List *shapes
 ) {
 
-    printf("asdfasdf");
     Scene *scene = malloc(sizeof(Scene));
 
     scene->canvas = canvas_create(config->width, config->height);
