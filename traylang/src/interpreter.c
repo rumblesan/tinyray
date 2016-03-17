@@ -6,9 +6,6 @@
 #include "datavalue.h"
 #include "ast.h"
 
-#include "lights.h"
-#include "colours.h"
-
 #include "bclib/hashmap.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
