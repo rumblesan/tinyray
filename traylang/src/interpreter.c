@@ -107,19 +107,34 @@ error:
     return NULL;
 }
 
-DataValue *interpret_application(Interpreter *interpreter, Application *application) {
+List *create_arg_list(Interpreter *interpreter, Application *application) {
     List *arg_values = list_create();
     DataValue *val;
     LIST_FOREACH(application->args, first, next, cur) {
         val = interpret_expression(interpreter, cur->value);
-        check(interpreter->error != 1, "Error whilst interpreting");
         list_unshift(arg_values, val);
+        check(interpreter->error != 1, "Error whilst interpreting");
+        print_value(val);
     }
-    DataValue *result = interpret_call_function(interpreter, application->name, arg_values);
-    check(interpreter->error != 1, "Error whilst interpreting");
-    // TODO
-    // clearing up argument lists could probably be handled better...
+    debug("arg num: %d", list_count(arg_values));
+    return arg_values;
+error:
+    return NULL;
+}
+
+void destroy_arg_list(List *arg_values) {
+    LIST_FOREACH(arg_values, first, next, cur) {
+        datavalue_decr_ref(cur->value);
+    }
     list_destroy(arg_values);
+}
+
+DataValue *interpret_application(Interpreter *interpreter, Application *application) {
+    debug("Application: %s", application->name->data);
+    List *arg_values = create_arg_list(interpreter, application);
+    DataValue *result = interpret_call_function(interpreter, application->name, arg_values);
+    destroy_arg_list(arg_values);
+    check(interpreter->error != 1, "Error whilst interpreting");
     return result;
 error:
     return NULL;
@@ -140,11 +155,23 @@ void *get_arg(List *args, int idx) {
 }
 
 DataValue *interpret_expression(Interpreter *interpreter, Expression *expression) {
+    DataValue *v = NULL;
     switch(expression->expressionType) {
-        case APPLICATIONEXPR: return interpret_application(interpreter, expression->application); break;
-        case NUMBEREXPR:      return interpret_number(interpreter, expression->number); break;
-        case VARIABLEEXPR:    return interpreter_get_variable(interpreter, expression->variable->name); break;
+        case APPLICATIONEXPR:
+            debug("interpret application");
+            v = interpret_application(interpreter, expression->application);
+            break;
+        case NUMBEREXPR:
+            debug("interpret number");
+            v = interpret_number(interpreter, expression->number);
+            break;
+        case VARIABLEEXPR:
+            debug("interpret variable");
+            v = interpreter_get_variable(interpreter, expression->variable->name);
+            datavalue_incr_ref(v);
+            break;
     }
+    return v;
 }
 
 DataValue *interpret_number(Interpreter *interpreter, Number *number) {
