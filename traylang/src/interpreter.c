@@ -119,9 +119,6 @@ error:
 }
 
 void destroy_arg_list(List *arg_values) {
-    LIST_FOREACH(arg_values, first, next, cur) {
-        datavalue_decr_ref(cur->value);
-    }
     list_destroy(arg_values);
 }
 
@@ -164,7 +161,6 @@ DataValue *interpret_expression(Interpreter *interpreter, Expression *expression
         case VARIABLEEXPR:
             debug("interpret variable");
             v = interpreter_get_variable(interpreter, expression->variable->name);
-            datavalue_incr_ref(v);
             break;
     }
     return v;
