@@ -25,7 +25,7 @@ static char * test_creation() {
         colour(255, 255, 255)
     );
     List *lights = list_create();
-    list_unshift(lights, light);
+    list_push(lights, light);
     Texture t = texture_flat(0.5, 0, colour(0, 0, 0));
     Shape *shape = shape_sphere(
         vector3d(1.0, 2.0, 3.0),
@@ -33,7 +33,7 @@ static char * test_creation() {
         t
     );
     List *shapes = list_create();
-    list_unshift(shapes, shape);
+    list_push(shapes, shape);
 
     Scene *scene = scene_create(
         camera,

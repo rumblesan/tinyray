@@ -109,7 +109,7 @@ List *create_arg_list(Interpreter *interpreter, Application *application) {
     DataValue *val;
     LIST_FOREACH(application->args, first, next, cur) {
         val = interpret_expression(interpreter, cur->value);
-        list_unshift(arg_values, val);
+        list_push(arg_values, val);
         check(interpreter->error != 1, "Error whilst interpreting");
     }
     debug("arg num: %d", list_count(arg_values));

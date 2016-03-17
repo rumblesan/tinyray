@@ -21,7 +21,7 @@ static char * test_intersection() {
     Ray r = ray(origin, direction);
     Texture t = texture_flat(0, 0, colour(0, 255, 255));
     List *shapes = list_create();
-    list_unshift(shapes,
+    list_push(shapes,
         shape_sphere(vector3d(0.0, 0.0, 0.0), 2.0, t)
     );
 
@@ -39,7 +39,7 @@ static char * test_simple_light_visibility() {
 
     Texture t = texture_flat(0, 0, colour(0, 255, 255));
     List *shapes = list_create();
-    list_unshift(shapes,
+    list_push(shapes,
         shape_sphere(vector3d(0, 0, 10), 2.0, t)
     );
     Light *light = point_light_create(light_pos, 1, colour(0, 255, 255));
@@ -53,7 +53,7 @@ static char * test_simple_light_visibility() {
     bool visible_with_shape = light_is_visible(
         intersection,
         light,
-        list_unshift(list_create(), shape_sphere(vector3d(0, 10, 10), 2.0, t)),
+        list_push(list_create(), shape_sphere(vector3d(0, 10, 10), 2.0, t)),
         100
     );
     mu_assert(visible_with_shape == true, "Error: Light should be visible");
@@ -67,7 +67,7 @@ static char * test_complex_light_visibility() {
 
     Texture t = texture_flat(0, 0, colour(0, 255, 255));
     List *shapes = list_create();
-    list_unshift(shapes,
+    list_push(shapes,
         shape_sphere(vector3d(3, 4, 0), 3, t)
     );
     Light *light = point_light_create(light_pos, 1, colour(0, 255, 255));
