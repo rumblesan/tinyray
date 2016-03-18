@@ -2,24 +2,19 @@
 
 #include "datavalue.h"
 
-static DataValue *data = NULL;
-
-static char * test_create() {
-    DataValue *data = datavalue_create(NOTHING, NULL);
-    mu_assert(interpreter != NULL, "failed to create datavalue");
-    return 0;
-}
-
-static char *test_destroy() {
-    datavalue_destroy(data);
+static char * test_number() {
+    DataValue *data = datavalue_number(3);
+    mu_assert(data != NULL, "failed to create datavalue");
+    double num = datavalue_get_number(data);
+    mu_assert(num == 3, "incorrect number in datavalue");
+    datavalue_clear_destroy(data);
     return 0;
 }
 
 char *all_tests() {
     mu_suite_start();
 
-    mu_run_test(test_create);
-    mu_run_test(test_destroy);
+    mu_run_test(test_number);
 
     return NULL;
 }

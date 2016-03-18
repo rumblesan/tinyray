@@ -40,6 +40,27 @@ void datavalue_destroy(DataValue *data) {
     free(data);
 }
 
+void datavalue_clear_destroy(DataValue *data) {
+    switch(data->type) {
+        case FUNCTION:
+            debug("Not freeing up function pointer");
+            break;
+        case LIST:
+            list_clear_destroy(data->value);
+            break;
+        case NOTHING:
+            debug("Not freeing up Nothing");
+            break;
+        case NUMBER:
+            free(data->value);
+            break;
+        case CDATA:
+            debug("Not freeing up CData");
+            break;
+    }
+    free(data);
+}
+
 func_cb datavalue_get_function(DataValue *data) {
     return data->value;
 }
@@ -70,13 +91,10 @@ void *datavalue_decr_ref(DataValue *data) {
     check(data->ref_count >= 1, "DataValue ref count can't be less than 0");
     data->ref_count -= 1;
     if (data->ref_count == 0) {
-        free(data);
+        datavalue_clear_destroy(data);
     }
     return NULL;
 error:
-    if (data) {
-        free(data);
-    }
     return NULL;
 }
 

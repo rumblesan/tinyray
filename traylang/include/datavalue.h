@@ -29,6 +29,8 @@ DataValue *datavalue_cdata(void *cdata);
 
 void datavalue_destroy(DataValue *data);
 
+void datavalue_clear_destroy(DataValue *data);
+
 func_cb datavalue_get_function(DataValue *data);
 
 List *datavalue_get_list(DataValue *data);
