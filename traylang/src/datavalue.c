@@ -14,6 +14,11 @@ error:
     return NULL;
 }
 
+void datavalue_destroy(DataValue *data) {
+    if (data->value) free(data->value);
+    free(data);
+}
+
 DataValue *datavalue_incr_ref(DataValue *value) {
     check(value, "DataValue is null");
     value->ref_count += 1;
@@ -35,9 +40,5 @@ error:
         free(value);
     }
     return NULL;
-}
-
-void datavalue_destroy(DataValue *value) {
-    free(value);
 }
 

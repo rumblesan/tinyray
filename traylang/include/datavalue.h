@@ -15,10 +15,10 @@ typedef struct DataValue {
 
 DataValue *datavalue_create(DataType type, void *value);
 
+void datavalue_destroy(DataValue *value);
+
 DataValue *datavalue_incr_ref(DataValue *value);
 
 void *datavalue_decr_ref(DataValue *value);
-
-void datavalue_destroy(DataValue *value);
 
 #endif
