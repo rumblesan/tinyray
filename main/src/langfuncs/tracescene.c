@@ -111,9 +111,9 @@ error:
 }
 
 DataValue *ambientlight(List *args) {
-    double *intensity = get_arg(args, 1);
+    double *intensity = get_arg(args, 0);
     check(intensity, "ambientlight intensity arg error");
-    Colour *colour    = get_arg(args, 2);
+    Colour *colour    = get_arg(args, 1);
     check(colour, "ambientlight colour arg error");
     return datavalue_create(
         USERDATA,
