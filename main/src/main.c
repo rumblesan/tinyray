@@ -69,24 +69,24 @@ int main(int argc, char *argv[]) {
         log_err("Could not create interpreter");
         return 1;
     }
-    interpreter_set_variable(interpreter, bfromcstr("print"), datavalue_create(FUNCTION, print));
-    interpreter_set_variable(interpreter, bfromcstr("add"), datavalue_create(FUNCTION, add));
-    interpreter_set_variable(interpreter, bfromcstr("sub"), datavalue_create(FUNCTION, sub));
+    interpreter_set_variable(interpreter, bfromcstr("print"), datavalue_function(print));
+    interpreter_set_variable(interpreter, bfromcstr("add"), datavalue_function(add));
+    interpreter_set_variable(interpreter, bfromcstr("sub"), datavalue_function(sub));
 
-    interpreter_set_variable(interpreter, bfromcstr("config"), datavalue_create(FUNCTION, config));
-    interpreter_set_variable(interpreter, bfromcstr("camera"), datavalue_create(FUNCTION, camera));
-    interpreter_set_variable(interpreter, bfromcstr("col"), datavalue_create(FUNCTION, col));
-    interpreter_set_variable(interpreter, bfromcstr("vec"), datavalue_create(FUNCTION, vec));
-    interpreter_set_variable(interpreter, bfromcstr("texture"), datavalue_create(FUNCTION, texture));
-    interpreter_set_variable(interpreter, bfromcstr("pointlight"), datavalue_create(FUNCTION, pointlight));
-    interpreter_set_variable(interpreter, bfromcstr("ambientlight"), datavalue_create(FUNCTION, ambientlight));
-    interpreter_set_variable(interpreter, bfromcstr("triangle"), datavalue_create(FUNCTION, triangle));
-    interpreter_set_variable(interpreter, bfromcstr("sphere"), datavalue_create(FUNCTION, sphere));
-    interpreter_set_variable(interpreter, bfromcstr("plane"), datavalue_create(FUNCTION, plane));
-    interpreter_set_variable(interpreter, bfromcstr("rayscene"), datavalue_create(FUNCTION, rayscene));
+    interpreter_set_variable(interpreter, bfromcstr("config"), datavalue_function(config));
+    interpreter_set_variable(interpreter, bfromcstr("camera"), datavalue_function(camera));
+    interpreter_set_variable(interpreter, bfromcstr("col"), datavalue_function(col));
+    interpreter_set_variable(interpreter, bfromcstr("vec"), datavalue_function(vec));
+    interpreter_set_variable(interpreter, bfromcstr("texture"), datavalue_function(texture));
+    interpreter_set_variable(interpreter, bfromcstr("pointlight"), datavalue_function(pointlight));
+    interpreter_set_variable(interpreter, bfromcstr("ambientlight"), datavalue_function(ambientlight));
+    interpreter_set_variable(interpreter, bfromcstr("triangle"), datavalue_function(triangle));
+    interpreter_set_variable(interpreter, bfromcstr("sphere"), datavalue_function(sphere));
+    interpreter_set_variable(interpreter, bfromcstr("plane"), datavalue_function(plane));
+    interpreter_set_variable(interpreter, bfromcstr("rayscene"), datavalue_function(rayscene));
 
-    interpreter_set_variable(interpreter, bfromcstr("list"), datavalue_create(FUNCTION, list));
-    interpreter_set_variable(interpreter, bfromcstr("append"), datavalue_create(FUNCTION, append));
+    interpreter_set_variable(interpreter, bfromcstr("list"), datavalue_function(list));
+    interpreter_set_variable(interpreter, bfromcstr("append"), datavalue_function(append));
 
     DataValue *output = interpret(interpreter, ast);
 
@@ -94,7 +94,7 @@ int main(int argc, char *argv[]) {
         printf("Error whilst interpreting: %s", interpreter->err_message->data);
         return 1;
     }
-    if (output->type == USERDATA) {
+    if (output->type == CDATA) {
         printf("Rendering\n");
         rays_calc(output->value);
         render_png(output->value, bfromcstr("output.png"));

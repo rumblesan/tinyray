@@ -7,8 +7,6 @@
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
-typedef DataValue *(*func_cb)(List *args);
-
 typedef struct Interpreter {
 
     int error;

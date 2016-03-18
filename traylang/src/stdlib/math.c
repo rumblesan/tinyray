@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "interpreter.h"
+#include "datavalue.h"
 #include "bclib/list.h"
 
 DataValue *add(List *args) {
@@ -9,9 +9,7 @@ DataValue *add(List *args) {
     double *v1 = arg1->value;
     double *v2 = arg2->value;
     double result = *v1 + *v2;
-    double *val = malloc(sizeof(double));
-    *val = result;
-    return datavalue_create(NUMBER, val);
+    return datavalue_number(result);
 }
 
 DataValue *sub(List *args) {
@@ -20,8 +18,6 @@ DataValue *sub(List *args) {
     double *v1 = arg1->value;
     double *v2 = arg2->value;
     double result = *v1 - *v2;
-    double *val = malloc(sizeof(double));
-    *val = result;
-    return datavalue_create(NUMBER, val);
+    return datavalue_number(result);
 }
 

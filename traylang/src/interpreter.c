@@ -167,7 +167,7 @@ DataValue *interpret_expression(Interpreter *interpreter, Expression *expression
 }
 
 DataValue *interpret_number(Interpreter *interpreter, Number *number) {
-    DataValue *dv = datavalue_create(NUMBER, number);
+    DataValue *dv = datavalue_number(number->value);
     check(dv != NULL, "Could not create datavalue")
     return dv;
 error:

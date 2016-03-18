@@ -1,7 +1,9 @@
 #ifndef TRAYLANG_DATAVALUE_H
 #define TRAYLANG_DATAVALUE_H
 
-typedef enum {FUNCTION, LIST, NOTHING, NUMBER, USERDATA} DataType;
+#include "bclib/list.h"
+
+typedef enum {FUNCTION, LIST, NOTHING, NUMBER, CDATA} DataType;
 
 typedef struct DataValue {
 
@@ -13,12 +15,32 @@ typedef struct DataValue {
 
 } DataValue;
 
-DataValue *datavalue_create(DataType type, void *value);
+typedef DataValue *(*func_cb)(List *args);
 
-void datavalue_destroy(DataValue *value);
+DataValue *datavalue_function(func_cb func);
 
-DataValue *datavalue_incr_ref(DataValue *value);
+DataValue *datavalue_list(List *list);
 
-void *datavalue_decr_ref(DataValue *value);
+DataValue *datavalue_nothing();
+
+DataValue *datavalue_number(double number);
+
+DataValue *datavalue_cdata(void *cdata);
+
+void datavalue_destroy(DataValue *data);
+
+func_cb datavalue_get_function(DataValue *data);
+
+List *datavalue_get_list(DataValue *data);
+
+void *datavalue_get_nothing(DataValue *data);
+
+double datavalue_get_number(DataValue *data);
+
+void *datavalue_get_cdata(DataValue *data);
+
+DataValue *datavalue_incr_ref(DataValue *data);
+
+void *datavalue_decr_ref(DataValue *data);
 
 #endif

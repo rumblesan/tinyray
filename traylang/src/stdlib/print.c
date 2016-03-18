@@ -7,7 +7,7 @@
 DataValue *print(List *args) {
     DataValue *arg1 = list_get(args, 0);
     print_value(arg1);
-    return datavalue_create(NOTHING, NULL);
+    return datavalue_nothing();
 }
 
 void print_value(DataValue *data) {
@@ -26,8 +26,8 @@ void print_value(DataValue *data) {
             v = data->value;
             printf("%f\n", *v);
             break;
-        case USERDATA:
-            printf("Userdata\n");
+        case CDATA:
+            printf("C Data\n");
             break;
         default:
             printf("Something else\n");
