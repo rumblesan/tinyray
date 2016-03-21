@@ -18,6 +18,9 @@
 
 #include "bclib/list.h"
 
+/* Generate rays for each pixel in the canvas.
+ * These get shot out into the scene to see what objects they hit
+ */
 void rays_calc(Scene *scene) {
 
     int x, y;
@@ -75,14 +78,20 @@ void rays_calc(Scene *scene) {
 
 }
 
+/* Calculate if a ray intersects with any objects and if so, what
+ * colour pixel it gets
+ */
 Colour trace(Ray trace_ray, Scene *scene, int depth) {
 
     if (depth > scene->config->reflection_depth) {
         return colour(0, 0, 0);
     }
 
+    // find the distance to the object that the ray intersects with
     Intersection distObject = intersectedObject(trace_ray, scene->shapes, scene->config->max_distance);
 
+    // if it doesn't intersect with an object then return the background
+    // colour
     if (distObject.object == NULL) {
         return scene->config->background;
     }
@@ -95,6 +104,9 @@ Colour trace(Ray trace_ray, Scene *scene, int depth) {
     return surface(trace_ray, scene, distObject.object, intersectPoint, depth);
 }
 
+/* given a ray, itterate through all the objects and see if it intersects
+ * with any. return the distance to it, or NULL if there's no intersection
+ */
 Intersection intersectedObject(Ray trace_ray, List *shapes, double max_distance) {
     Intersection distObject;
     distObject.object = NULL;
@@ -114,6 +126,10 @@ Intersection intersectedObject(Ray trace_ray, List *shapes, double max_distance)
     return distObject;
 }
 
+/* given a shape, and a ray that intersects with it, calculate the colour
+ * of the pixel.
+ * This needs to account for the lambert, ambient and reflection.
+ */
 Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection, int depth) {
     Vector3D normal = shape_normal(object, intersection);
     List *lights = scene->lights;
@@ -175,6 +191,10 @@ Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection
     );
 }
 
+/* Given a point on the surface of a shape and a light, see if the light
+ * is visible. If there is another shape inbetween the point of intersection then it's not visible.
+ * Ambient lights are never visible here.
+ */
 bool light_is_visible(Vector3D intersection, Light *light, List *shapes, double max_distance) {
 
     Intersection distObject;
