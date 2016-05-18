@@ -24,7 +24,13 @@ Colour trace(Ray ray, Scene *scene, int depth);
 
 Intersection intersectedObject(Ray ray, List *shapes, double max_distance);
 
-Colour surface(Ray ray, Scene *scene, Shape *object, Vector3D intersection, int depth);
+Colour surface_colour(
+    Ray ray,
+    Scene *scene,
+    Shape *object,
+    Vector3D intersection,
+    int depth
+);
 
 bool light_is_visible(
     Vector3D intersection,

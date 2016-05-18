@@ -101,7 +101,7 @@ Colour trace(Ray trace_ray, Scene *scene, int depth) {
         vector3d_scale(distObject.distance, trace_ray.direction)
     );
 
-    return surface(trace_ray, scene, distObject.object, intersectPoint, depth);
+    return surface_colour(trace_ray, scene, distObject.object, intersectPoint, depth);
 }
 
 /* given a ray, itterate through all the objects and see if it intersects
@@ -130,7 +130,13 @@ Intersection intersectedObject(Ray trace_ray, List *shapes, double max_distance)
  * of the pixel.
  * This needs to account for the lambert, ambient and reflection.
  */
-Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection, int depth) {
+Colour surface_colour(
+    Ray trace_ray,
+    Scene *scene,
+    Shape *object,
+    Vector3D intersection,
+    int depth
+) {
     Vector3D normal = shape_normal(object, intersection);
     List *lights = scene->lights;
     List *shapes = scene->lights;
