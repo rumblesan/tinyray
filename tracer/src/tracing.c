@@ -134,7 +134,7 @@ Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection
     Vector3D normal = shape_normal(object, intersection);
     List *lights = scene->lights;
     Light *light;
-    double contribution;
+    double lambert_value;
     Colour lambert_light = colour(0, 0, 0);
     Colour ambient_light = colour(0, 0, 0);
     Colour reflection_light = colour(0, 0, 0);
@@ -143,26 +143,20 @@ Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection
         light = el->value;
         switch(light->type) {
             case POINT:
-                if (object->texture.lambert > 0) {
-                    if (light_is_visible(intersection, light, scene->shapes, scene->config->max_distance)) {
-                        contribution = vector3d_dot(
-                            vector3d_unit(
-                                vector3d_subtract(
-                                    light->point.position, intersection
-                                )
-                            ),
-                            normal
-                        );
-                        if (contribution > 0) {
-                            lambert_light = colour_add(
-                                lambert_light,
-                                colour_scale(
-                                    light->colour,
-                                    contribution * light->intensity * object->texture.lambert
-                                )
-                            );
-                        }
-                    }
+                if (light_is_visible(
+                        intersection,
+                        light,
+                        scene->shapes,
+                        scene->config->max_distance
+                    )) {
+                    lambert_value = calc_lambert_value(intersection, normal, light);
+                    colour_add(
+                        lambert_light,
+                        colour_scale(
+                            light->colour,
+                            lambert_value * object->texture.lambert
+                        )
+                    );
                 }
                 break;
             case AMBIENT:
@@ -213,4 +207,18 @@ bool light_is_visible(Vector3D intersection, Light *light, List *shapes, double 
             break;
     }
 }
+
+double calc_lambert_value(Vector3D intersection, Vector3D normal, Light *light) {
+    double lambertValue = vector3d_dot(
+        vector3d_unit(
+            vector3d_subtract(
+                light->point.position, intersection
+            )
+        ),
+        normal
+    );
+    return (lambertValue * light->intensity);
+}
+
+
 

@@ -33,4 +33,10 @@ bool light_is_visible(
     double max_distance
 );
 
+double calc_lambert_value(
+    Vector3D intersection,
+    Vector3D normal,
+    Light *light
+);
+
 #endif
