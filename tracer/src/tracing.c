@@ -139,7 +139,7 @@ Colour surface_colour(
 ) {
     Vector3D normal = shape_normal(object, intersection);
     List *lights = scene->lights;
-    List *shapes = scene->lights;
+    List *shapes = scene->shapes;
     Config *config = scene->config;
     Light *light;
     double lambert_value;
