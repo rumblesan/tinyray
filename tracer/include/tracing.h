@@ -39,4 +39,12 @@ double calc_lambert_value(
     Light *light
 );
 
+Colour calc_reflection_colour(
+    Vector3D Normal,
+    Ray trace_ray,
+    Vector3D intersection,
+    Scene *scene,
+    int depth
+);
+
 #endif
