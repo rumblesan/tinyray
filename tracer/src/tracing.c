@@ -133,6 +133,8 @@ Intersection intersectedObject(Ray trace_ray, List *shapes, double max_distance)
 Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection, int depth) {
     Vector3D normal = shape_normal(object, intersection);
     List *lights = scene->lights;
+    List *shapes = scene->lights;
+    Config *config = scene->config;
     Light *light;
     double lambert_value;
     Colour lambert_light = colour(0, 0, 0);
@@ -146,8 +148,8 @@ Colour surface(Ray trace_ray, Scene *scene, Shape *object, Vector3D intersection
                 if (light_is_visible(
                         intersection,
                         light,
-                        scene->shapes,
-                        scene->config->max_distance
+                        shapes,
+                        config->max_distance
                     )) {
                     lambert_value = calc_lambert_value(intersection, normal, light);
                     colour_add(
