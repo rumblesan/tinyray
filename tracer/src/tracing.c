@@ -158,7 +158,7 @@ Colour surface_colour(
                         config->max_distance
                     )) {
                     lambert_value = calc_lambert_value(intersection, normal, light);
-                    colour_add(
+                    lambert_light = colour_add(
                         lambert_light,
                         colour_scale(
                             light->colour,
