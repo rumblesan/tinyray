@@ -232,7 +232,7 @@ double calc_lambert_value(Vector3D intersection, Vector3D normal, Light *light) 
         ),
         normal
     );
-    return (lambertValue * light->intensity);
+    return fmax(lambertValue * light->intensity, 0);
 }
 
 Colour calc_reflection_colour(Vector3D normal, Ray trace_ray, Vector3D intersection, Scene *scene, int depth) {
