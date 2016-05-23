@@ -1,7 +1,7 @@
 #ifndef LANGUAGE_STDLIB_SCENE_H
 #define LANGUAGE_STDLIB_SCENE_H
 
-#include "interpreter.h"
+#include "datavalue.h"
 #include "bclib/list.h"
 
 DataValue *config(List *args);

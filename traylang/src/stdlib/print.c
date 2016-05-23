@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-#include "interpreter.h"
+#include "datavalue.h"
 #include "stdlib/print.h"
 #include "bclib/list.h"
 

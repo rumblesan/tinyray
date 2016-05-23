@@ -1,7 +1,9 @@
 #include <stdlib.h>
 
 #include "langfuncs/tracescene.h"
+#include "datavalue.h"
 #include "interpreter.h"
+#include "interpreter_funcs.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 

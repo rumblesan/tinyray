@@ -6,6 +6,7 @@
 
 #include "parser.h"
 #include "interpreter.h"
+#include "interpreter_funcs.h"
 
 #include "langfuncs/tracescene.h"
 
