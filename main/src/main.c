@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
         printf("Error during parsing");
         return 1;
     } else {
-        printf("Parsed\n");
+        printf("Parsed input scene file: %s\n", input_file);
     }
 
     Interpreter *interpreter = interpreter_create();
@@ -86,6 +86,8 @@ int main(int argc, char *argv[]) {
 
     interpreter_set_variable(interpreter, bfromcstr("list"), datavalue_function(list));
     interpreter_set_variable(interpreter, bfromcstr("append"), datavalue_function(append));
+
+    //interpreter_set_debug(interpreter, 1);
 
     interpret(interpreter, ast);
 

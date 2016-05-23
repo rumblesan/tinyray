@@ -17,6 +17,7 @@ Interpreter *interpreter_create() {
     Hashmap *variables = hashmap_create(NULL, NULL);
     check_mem(variables);
 
+    interpreter->debug_mode = 0;
     interpreter->error = 0;
     interpreter->variables = variables;
 
@@ -26,6 +27,10 @@ error:
         interpreter_destroy(interpreter);
     }
     return NULL;
+}
+
+void interpreter_set_debug(Interpreter *interpreter, int debug_value) {
+    interpreter->debug_mode = debug_value;
 }
 
 void interpreter_destroy(Interpreter *interpreter) {
@@ -45,7 +50,9 @@ void interpreter_error(Interpreter *interpreter, bstring err_message) {
 }
 
 DataValue *interpreter_set_variable(Interpreter *interpreter, bstring name, DataValue *value) {
-    debug("Set variable: %s", name->data);
+    if (interpreter->debug_mode) {
+        debug("Set variable: %s", name->data);
+    }
     check(name, "NULL key passed for variable name");
     check(value, "NULL value passed for variable value: %s", name->data);
     int result = hashmap_set(interpreter->variables, name, value);
@@ -57,7 +64,9 @@ error:
 }
 
 DataValue *interpreter_get_variable(Interpreter *interpreter, bstring name) {
-    debug("Get variable: %s", name->data);
+    if (interpreter->debug_mode) {
+        debug("Get variable: %s", name->data);
+    }
     check(name, "NULL key passed for variable name");
     DataValue *value = hashmap_get(interpreter->variables, name);
     check(value, "Could not get variable: %s", name->data);
@@ -112,7 +121,9 @@ List *create_arg_list(Interpreter *interpreter, Application *application) {
         list_push(arg_values, val);
         check(interpreter->error != 1, "Error whilst interpreting");
     }
-    debug("arg num: %d", list_count(arg_values));
+    if (interpreter->debug_mode) {
+        debug("arg num: %d", list_count(arg_values));
+    }
     return arg_values;
 error:
     return NULL;
@@ -123,7 +134,9 @@ void destroy_arg_list(List *arg_values) {
 }
 
 DataValue *interpret_application(Interpreter *interpreter, Application *application) {
-    debug("Application: %s", application->name->data);
+    if (interpreter->debug_mode) {
+        debug("Application: %s", application->name->data);
+    }
     List *arg_values = create_arg_list(interpreter, application);
     DataValue *result = interpret_call_function(interpreter, application->name, arg_values);
     destroy_arg_list(arg_values);
@@ -151,19 +164,27 @@ DataValue *interpret_expression(Interpreter *interpreter, Expression *expression
     DataValue *v = NULL;
     switch(expression->expressionType) {
         case APPLICATIONEXPR:
-            debug("interpret application");
+            if (interpreter->debug_mode) {
+                debug("interpret application");
+            }
             v = interpret_application(interpreter, expression->application);
             break;
         case NUMBEREXPR:
-            debug("interpret number");
+            if (interpreter->debug_mode) {
+                debug("interpret number");
+            }
             v = interpret_number(interpreter, expression->number);
             break;
         case STRINGEXPR:
-            debug("interpret string");
+            if (interpreter->debug_mode) {
+                debug("interpret string");
+            }
             v = interpret_string(interpreter, expression->string);
             break;
         case VARIABLEEXPR:
-            debug("interpret variable");
+            if (interpreter->debug_mode) {
+                debug("interpret variable");
+            }
             v = interpreter_get_variable(interpreter, expression->variable->name);
             break;
     }
@@ -191,5 +212,4 @@ error:
     }
     return NULL;
 }
-
 

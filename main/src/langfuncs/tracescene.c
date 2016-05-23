@@ -164,7 +164,6 @@ DataValue *rayscene(List *args) {
     check(lights, "scene lights arg error");
     List   *shapes = tlist_to_clist(get_arg(args, 3));
     check(shapes, "scene shapes arg error");
-    log_info("Creating scene");
     return datavalue_cdata(scene_create(camera, config, lights, shapes));
 error:
     return NULL;
@@ -175,10 +174,10 @@ DataValue *trace_scene(List *args) {
     check(scene, "trace scene arg error");
     bstring name = get_arg(args, 1);
     check(scene, "output name arg error");
-    log_info("Tracing scene");
     rays_calc(scene);
     render_png(scene, name);
     scene_cleanup(scene);
+    printf("output scene to file: %s\n", bdata(name));
     return datavalue_cdata(datavalue_nothing());
 error:
     return NULL;
