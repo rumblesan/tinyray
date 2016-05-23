@@ -30,15 +30,10 @@ int main(int argc, char *argv[]) {
         }
     }
 
-    if (input_file == NULL) {
-        printf("Need to supply input scene file\n");
-    }
+    check(input_file, "Need to supply input scene file path");
 
     FILE *fp = fopen(input_file, "r");
-    if (fp == NULL) {
-        printf("Could not open file %s\n", input_file);
-        return 0;
-    }
+    check(fp, "Could not open file %s", input_file);
 
     Block *ast;
 
@@ -46,18 +41,13 @@ int main(int argc, char *argv[]) {
 
     fclose(fp);
 
-    if (parseResult) {
-        printf("Error during parsing");
-        return 1;
-    } else {
-        printf("Parsed input scene file: %s\n", input_file);
-    }
+    check(parseResult == 0, "Error during parsing");
+
+    printf("Parsed input scene file: %s\n", input_file);
 
     Interpreter *interpreter = interpreter_create();
-    if (interpreter == NULL) {
-        log_err("Could not create interpreter");
-        return 1;
-    }
+    check(interpreter, "Could not create interpreter");
+
     interpreter_set_variable(interpreter, bfromcstr("print"), datavalue_function(print));
     interpreter_set_variable(interpreter, bfromcstr("add"), datavalue_function(add));
     interpreter_set_variable(interpreter, bfromcstr("sub"), datavalue_function(sub));
@@ -82,10 +72,13 @@ int main(int argc, char *argv[]) {
 
     interpret(interpreter, ast);
 
-    if (interpreter->error == 1) {
-        printf("Error whilst interpreting: %s", interpreter->err_message->data);
-        return 1;
-    }
+    check(
+        interpreter->error == 0,
+        "Error whilst interpreting: %s", interpreter->err_message->data
+    );
+
     return 0;
+error:
+    return 1;
 }
 
