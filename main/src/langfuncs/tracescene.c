@@ -3,6 +3,7 @@
 #include "langfuncs/tracescene.h"
 #include "interpreter.h"
 #include "bclib/list.h"
+#include "bclib/bstrlib.h"
 
 #include "scene.h"
 #include "tracing.h"
@@ -172,9 +173,11 @@ error:
 DataValue *trace_scene(List *args) {
     Scene *scene = get_arg(args, 0);
     check(scene, "trace scene arg error");
+    bstring name = get_arg(args, 1);
+    check(scene, "output name arg error");
     log_info("Tracing scene");
     rays_calc(scene);
-    render_png(scene, bfromcstr("output.png"));
+    render_png(scene, name);
     scene_cleanup(scene);
     return datavalue_cdata(datavalue_nothing());
 error:

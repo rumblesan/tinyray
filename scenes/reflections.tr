@@ -23,5 +23,5 @@
 
 (def scene (rayscene cam conf lights shapes))
 
-(trace scene)
+(trace scene "output.png")
 
