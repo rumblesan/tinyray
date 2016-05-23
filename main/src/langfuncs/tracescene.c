@@ -4,6 +4,11 @@
 #include "interpreter.h"
 #include "bclib/list.h"
 
+#include "scene.h"
+#include "tracing.h"
+
+#include "img_export.h"
+
 #include "tracing.h"
 #include "dbg.h"
 
@@ -160,6 +165,18 @@ DataValue *rayscene(List *args) {
     check(shapes, "scene shapes arg error");
     log_info("Creating scene");
     return datavalue_cdata(scene_create(camera, config, lights, shapes));
+error:
+    return NULL;
+}
+
+DataValue *trace_scene(List *args) {
+    Scene *scene = get_arg(args, 0);
+    check(scene, "trace scene arg error");
+    log_info("Tracing scene");
+    rays_calc(scene);
+    render_png(scene, bfromcstr("output.png"));
+    scene_cleanup(scene);
+    return datavalue_cdata(datavalue_nothing());
 error:
     return NULL;
 }

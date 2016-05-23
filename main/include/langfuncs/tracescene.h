@@ -26,4 +26,6 @@ DataValue *plane(List *args);
 
 DataValue *rayscene(List *args);
 
+DataValue *trace_scene(List *args);
+
 #endif

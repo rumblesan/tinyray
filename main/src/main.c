@@ -20,8 +20,6 @@
 #include "scene.h"
 #include "tracing.h"
 
-#include "img_export.h"
-
 
 DataValue *print_output(DataValue *value) {
     if (value == NULL) {
@@ -84,26 +82,17 @@ int main(int argc, char *argv[]) {
     interpreter_set_variable(interpreter, bfromcstr("sphere"), datavalue_function(sphere));
     interpreter_set_variable(interpreter, bfromcstr("plane"), datavalue_function(plane));
     interpreter_set_variable(interpreter, bfromcstr("rayscene"), datavalue_function(rayscene));
+    interpreter_set_variable(interpreter, bfromcstr("trace"), datavalue_function(trace_scene));
 
     interpreter_set_variable(interpreter, bfromcstr("list"), datavalue_function(list));
     interpreter_set_variable(interpreter, bfromcstr("append"), datavalue_function(append));
 
-    DataValue *output = interpret(interpreter, ast);
+    interpret(interpreter, ast);
 
     if (interpreter->error == 1) {
         printf("Error whilst interpreting: %s", interpreter->err_message->data);
         return 1;
     }
-    if (output->type == CDATA) {
-        printf("Rendering\n");
-        rays_calc(output->value);
-        render_png(output->value, bfromcstr("output.png"));
-        scene_cleanup(output->value);
-    } else {
-        print_output(output);
-        printf("No scene output so not rendering\n");
-    }
-
     return 0;
 }
 
