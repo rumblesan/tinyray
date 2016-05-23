@@ -8,8 +8,10 @@
 #include "bclib/list.h"
 
 DataValue *print(Interpreter *interpreter, int arg_num) {
-    DataValue *arg1 = interpreter_stack_pop(interpreter);
-    print_value(arg1);
+    int i;
+    for (i = 0; i < arg_num; i += 1) {
+        print_value(get_arg(interpreter));
+    }
     return datavalue_nothing();
 }
 
