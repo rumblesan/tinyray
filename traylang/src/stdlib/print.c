@@ -1,9 +1,10 @@
 #include <stdio.h>
 
+#include "stdlib/print.h"
+
 #include "interpreter.h"
 #include "interpreter_funcs.h"
 #include "datavalue.h"
-#include "stdlib/print.h"
 #include "bclib/list.h"
 
 DataValue *print(Interpreter *interpreter, int arg_num) {

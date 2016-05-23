@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include "stdlib/math.h"
 
 #include "interpreter.h"
 #include "interpreter_funcs.h"
