@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "dbg.h"
 
@@ -14,12 +15,24 @@
 
 int main(int argc, char *argv[]) {
 
-    if (argc != 2) {
-        printf("Need to have 1 argument\nHave %d\n", (argc - 1));
-        return 0;
+    char *input_file = NULL;
+    int debug_mode = 0;
+    int c;
+
+    while ((c = getopt(argc, argv, "di:")) != -1) {
+        switch(c) {
+            case 'i':
+                input_file = optarg;
+                break;
+            case 'd':
+                debug_mode = 1;
+                break;
+        }
     }
 
-    char *input_file = argv[1];
+    if (input_file == NULL) {
+        printf("Need to supply input scene file\n");
+    }
 
     FILE *fp = fopen(input_file, "r");
     if (fp == NULL) {
@@ -65,7 +78,7 @@ int main(int argc, char *argv[]) {
     interpreter_set_variable(interpreter, bfromcstr("list"), datavalue_function(list));
     interpreter_set_variable(interpreter, bfromcstr("append"), datavalue_function(append));
 
-    //interpreter_set_debug(interpreter, 1);
+    interpreter_set_debug(interpreter, debug_mode);
 
     interpret(interpreter, ast);
 
