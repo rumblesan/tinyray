@@ -32,6 +32,10 @@ DataValue *datavalue_number(double num) {
     return datavalue_create(NUMBER, val);
 }
 
+DataValue *datavalue_string(bstring string) {
+    return datavalue_create(STRING, string);
+}
+
 DataValue *datavalue_cdata(void *cdata) {
     return datavalue_create(CDATA, cdata);
 }
@@ -54,6 +58,9 @@ void datavalue_clear_destroy(DataValue *data) {
         case NUMBER:
             free(data->value);
             break;
+        case STRING:
+            bdestroy(data->value);
+            break;
         case CDATA:
             debug("Not freeing up CData");
             break;
@@ -72,6 +79,10 @@ List *datavalue_get_list(DataValue *data){
 double datavalue_get_number(DataValue *data){
     double *v = data->value;
     return *v;
+}
+
+bstring datavalue_get_string(DataValue *data){
+    return data->value;
 }
 
 void *datavalue_get_cdata(DataValue *data){

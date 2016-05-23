@@ -96,6 +96,13 @@ Expression *ast_number_expression(Number *number) {
     return expression;
 }
 
+Expression *ast_string_expression(String *string) {
+    Expression *expression = ast_expression_create();
+    expression->expressionType = STRINGEXPR;
+    expression->string = string;
+    return expression;
+}
+
 Expression *ast_variable_expression(Variable *variable) {
     Expression *expression = ast_expression_create();
     expression->expressionType = VARIABLEEXPR;
@@ -113,6 +120,18 @@ Number *ast_number_create(double value) {
 
 void ast_number_cleanup(Number *number) {
     free(number);
+}
+
+/* String Literal AST Node */
+String *ast_string_create(bstring value) {
+    String *string = malloc(sizeof(String));
+    string->value = value;
+
+    return string;
+}
+
+void ast_string_cleanup(String *string) {
+    free(string);
 }
 
 /* Variable AST Node */

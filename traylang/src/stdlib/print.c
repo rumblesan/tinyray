@@ -12,6 +12,7 @@ DataValue *print(List *args) {
 
 void print_value(DataValue *data) {
     double *v;
+    bstring str;
     switch(data->type) {
         case FUNCTION:
             printf("Function\n");
@@ -25,6 +26,10 @@ void print_value(DataValue *data) {
         case NUMBER:
             v = data->value;
             printf("%f\n", *v);
+            break;
+        case STRING:
+            str = data->value;
+            printf("%s\n", str->data);
             break;
         case CDATA:
             printf("C Data\n");

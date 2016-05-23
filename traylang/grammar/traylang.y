@@ -12,6 +12,8 @@
 #include "y.tab.h"
 #include "lex.yy.h"
 
+#include "bclib/bstrlib.h"
+
 void yyerror(yyscan_t scanner, Block **ast, const char *str) {
     fprintf(stderr, "error: %s\n", str);
 }
@@ -48,13 +50,17 @@ int parse(Block **ast, FILE *fp) {
     Number        *numberNode;
     Variable      *variableNode;
     Identifier    *identifier;
+    bstring       string;
     double        number;
 }
 
 %token DEFINE
 %token OPAREN
 %token CPAREN
+%token DQUOTE
+%token SQUOTE
 %token<number> NUMBER
+%token<string> STRING
 %token<identifier> IDENTIFIER
 %type<blockNode> body
 %type<elementsNode> elements
@@ -120,6 +126,13 @@ vardefinition: OPAREN DEFINE IDENTIFIER expression CPAREN
 expression: variable
           {
               $$ = ast_variable_expression($1);
+          }
+          | STRING
+          {
+              bstring noquotes = bmidstr($1, 1, blength($1) - 2);
+              $$ = ast_string_expression(
+                  ast_string_create(noquotes)
+              );
           }
           | NUMBER
           {

@@ -65,6 +65,9 @@ void ast_expression_print(Expression *expression, int indentation) {
         case NUMBEREXPR:
             ast_number_print(expression->number, indentation + DEPTH);
             break;
+        case STRINGEXPR:
+            ast_string_print(expression->string, indentation + DEPTH);
+            break;
         case VARIABLEEXPR:
             ast_variable_print(expression->variable, indentation + DEPTH);
             break;
@@ -74,6 +77,12 @@ void ast_expression_print(Expression *expression, int indentation) {
 void ast_number_print(Number *number, int indentation) {
     indent(indentation);
     printf("Number: %f\n", number->value);
+
+}
+
+void ast_string_print(String *string, int indentation) {
+    indent(indentation);
+    printf("String: %s\n", string->value->data);
 
 }
 

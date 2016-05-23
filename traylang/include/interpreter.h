@@ -45,4 +45,6 @@ DataValue *interpret_expression(Interpreter *interpreter, Expression *expression
 
 DataValue *interpret_number(Interpreter *interpreter, Number *number);
 
+DataValue *interpret_string(Interpreter *interpreter, String *string);
+
 #endif

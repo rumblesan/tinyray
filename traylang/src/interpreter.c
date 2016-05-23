@@ -158,6 +158,10 @@ DataValue *interpret_expression(Interpreter *interpreter, Expression *expression
             debug("interpret number");
             v = interpret_number(interpreter, expression->number);
             break;
+        case STRINGEXPR:
+            debug("interpret string");
+            v = interpret_string(interpreter, expression->string);
+            break;
         case VARIABLEEXPR:
             debug("interpret variable");
             v = interpreter_get_variable(interpreter, expression->variable->name);
@@ -168,6 +172,17 @@ DataValue *interpret_expression(Interpreter *interpreter, Expression *expression
 
 DataValue *interpret_number(Interpreter *interpreter, Number *number) {
     DataValue *dv = datavalue_number(number->value);
+    check(dv != NULL, "Could not create datavalue")
+    return dv;
+error:
+    if (interpreter->error == 0) {
+        interpreter_error(interpreter, bfromcstr("Error whilst creating number data value"));
+    }
+    return NULL;
+}
+
+DataValue *interpret_string(Interpreter *interpreter, String *string) {
+    DataValue *dv = datavalue_string(string->value);
     check(dv != NULL, "Could not create datavalue")
     return dv;
 error:

@@ -20,6 +20,8 @@ void ast_expression_print(Expression *expression, int indentation);
 
 void ast_number_print(Number *number, int indentation);
 
+void ast_string_print(String *string, int indentation);
+
 void ast_variable_print(Variable *variable, int indentation);
 
 #endif

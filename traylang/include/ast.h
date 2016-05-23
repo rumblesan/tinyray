@@ -17,6 +17,17 @@ Number *ast_number_create(double value);
 
 void ast_number_cleanup(Number *number);
 
+/* String Literal AST Node */
+typedef struct String {
+
+    bstring value;
+
+} String;
+
+String *ast_string_create(bstring value);
+
+void ast_string_cleanup(String *string);
+
 /* Variable AST Node */
 typedef struct Variable {
 
@@ -42,7 +53,7 @@ Application *ast_application_create(bstring name, List *args);
 void ast_application_cleanup(Application *application);
 
 /* Expression AST Node */
-typedef enum {APPLICATIONEXPR, NUMBEREXPR, VARIABLEEXPR} ExpressionType;
+typedef enum {APPLICATIONEXPR, NUMBEREXPR, STRINGEXPR, VARIABLEEXPR} ExpressionType;
 
 typedef struct Expression {
 
@@ -51,6 +62,7 @@ typedef struct Expression {
     union {
         Application *application;
         Number *number;
+        String *string;
         Variable *variable;
     };
 
@@ -63,6 +75,8 @@ void ast_expression_cleanup(Expression *expression);
 Expression *ast_application_expression(Application *application);
 
 Expression *ast_number_expression(Number *number);
+
+Expression *ast_string_expression(String *string);
 
 Expression *ast_variable_expression(Variable *variable);
 
