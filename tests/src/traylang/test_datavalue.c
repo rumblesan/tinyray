@@ -5,8 +5,8 @@
 static char * test_number() {
     DataValue *data = datavalue_number(3);
     mu_assert(data != NULL, "failed to create datavalue");
-    double num = datavalue_get_number(data);
-    mu_assert(num == 3, "incorrect number in datavalue");
+    double *num = data->value;
+    mu_assert(*num == 3, "incorrect number in datavalue");
     datavalue_clear_destroy(data);
     return 0;
 }

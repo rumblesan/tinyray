@@ -67,24 +67,3 @@ void datavalue_clear_destroy(DataValue *data) {
     free(data);
 }
 
-func_cb datavalue_get_function(DataValue *data) {
-    return data->value;
-}
-
-List *datavalue_get_list(DataValue *data){
-    return data->value;
-}
-
-double datavalue_get_number(DataValue *data){
-    double *v = data->value;
-    return *v;
-}
-
-bstring datavalue_get_string(DataValue *data){
-    return data->value;
-}
-
-void *datavalue_get_cdata(DataValue *data){
-    return data->value;
-}
-
