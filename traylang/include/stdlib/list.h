@@ -1,12 +1,13 @@
 #ifndef LANGUAGE_STDLIB_LIST_H
 #define LANGUAGE_STDLIB_LIST_H
 
+#include "interpreter.h"
 #include "datavalue.h"
 #include "bclib/list.h"
 
-DataValue *list(List *args);
+DataValue *list(Interpreter *interpreter, int arg_num);
 
-DataValue *append(List *args);
+DataValue *append(Interpreter *interpreter, int arg_num);
 
 #endif
 

@@ -1,6 +1,7 @@
 #ifndef TRAYLANG_DATAVALUE_H
 #define TRAYLANG_DATAVALUE_H
 
+#include "interpreter.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
@@ -14,7 +15,7 @@ typedef struct DataValue {
 
 } DataValue;
 
-typedef DataValue *(*func_cb)(List *args);
+typedef DataValue *(*func_cb)(Interpreter *interpreter, int arg_count);
 
 DataValue *datavalue_function(func_cb func);
 

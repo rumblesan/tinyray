@@ -1,31 +1,32 @@
 #ifndef LANGUAGE_STDLIB_SCENE_H
 #define LANGUAGE_STDLIB_SCENE_H
 
+#include "interpreter.h"
 #include "datavalue.h"
 #include "bclib/list.h"
 
-DataValue *config(List *args);
+DataValue *config(Interpreter *interpreter, int arg_num);
 
-DataValue *camera(List *args);
+DataValue *camera(Interpreter *interpreter, int arg_num);
 
-DataValue *col(List *args);
+DataValue *col(Interpreter *interpreter, int arg_num);
 
-DataValue *vec(List *args);
+DataValue *vec(Interpreter *interpreter, int arg_num);
 
-DataValue *texture(List *args);
+DataValue *texture(Interpreter *interpreter, int arg_num);
 
-DataValue *pointlight(List *args);
+DataValue *pointlight(Interpreter *interpreter, int arg_num);
 
-DataValue *ambientlight(List *args);
+DataValue *ambientlight(Interpreter *interpreter, int arg_num);
 
-DataValue *triangle(List *args);
+DataValue *triangle(Interpreter *interpreter, int arg_num);
 
-DataValue *sphere(List *args);
+DataValue *sphere(Interpreter *interpreter, int arg_num);
 
-DataValue *plane(List *args);
+DataValue *plane(Interpreter *interpreter, int arg_num);
 
-DataValue *rayscene(List *args);
+DataValue *rayscene(Interpreter *interpreter, int arg_num);
 
-DataValue *trace_scene(List *args);
+DataValue *trace_scene(Interpreter *interpreter, int arg_num);
 
 #endif

@@ -29,9 +29,9 @@ DataValue *interpret_vardef(Interpreter *interpreter, VarDefinition *vardef);
 
 DataValue *interpret_application(Interpreter *interpreter, Application *application);
 
-DataValue *interpret_call_function(Interpreter *interpreter, bstring name, List *args);
+DataValue *interpret_call_function(Interpreter *interpreter, bstring name, int arg_num);
 
-void *get_arg(List *args, int idx);
+void *get_arg(Interpreter *interpreter);
 
 DataValue *interpret_expression(Interpreter *interpreter, Expression *expression);
 

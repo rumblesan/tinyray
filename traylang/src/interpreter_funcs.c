@@ -101,50 +101,45 @@ error:
     return NULL;
 }
 
-List *create_arg_list(Interpreter *interpreter, Application *application) {
-    List *arg_values = list_create();
+Stack *interpreter_push_args(Interpreter *interpreter, Application *application) {
     DataValue *val;
-    LIST_FOREACH(application->args, first, next, cur) {
+    // Iterate list in reverse so first arg is highest on stack
+    LIST_FOREACH(application->args, last, prev, cur) {
         val = interpret_expression(interpreter, cur->value);
-        list_push(arg_values, val);
+        interpreter_stack_push(interpreter, val);
         check(interpreter->error != 1, "Error whilst interpreting");
     }
-    if (interpreter->debug_mode) {
-        debug("arg num: %d", list_count(arg_values));
-    }
-    return arg_values;
+    return interpreter->call_stack;
 error:
     return NULL;
 }
 
-void destroy_arg_list(List *arg_values) {
-    list_destroy(arg_values);
-}
-
 DataValue *interpret_application(Interpreter *interpreter, Application *application) {
+    int arg_num = list_count(application->args);
     if (interpreter->debug_mode) {
         debug("Application: %s", application->name->data);
+        debug("Arg num: %d", arg_num);
     }
-    List *arg_values = create_arg_list(interpreter, application);
-    DataValue *result = interpret_call_function(interpreter, application->name, arg_values);
-    destroy_arg_list(arg_values);
+    Stack *stack = interpreter_push_args(interpreter, application);
+    check(stack, "Error whilst pushing args to stack");
+    DataValue *result = interpret_call_function(interpreter, application->name, arg_num);
     check(interpreter->error != 1, "Error whilst interpreting");
     return result;
 error:
     return NULL;
 }
 
-DataValue *interpret_call_function(Interpreter *interpreter, bstring name, List *args) {
+DataValue *interpret_call_function(Interpreter *interpreter, bstring name, int arg_num) {
     DataValue *func_data = interpreter_get_variable(interpreter, name);
     check(interpreter->error != 1, "Error whilst calling function");
     func_cb f = func_data->value;
-    return f(args);
+    return f(interpreter, arg_num);
 error:
     return NULL;
 }
 
-void *get_arg(List *args, int idx) {
-    DataValue *dv = list_get(args, idx);
+void *get_arg(Interpreter *interpreter) {
+    DataValue *dv = interpreter_stack_pop(interpreter);
     return dv != NULL ? dv->value : NULL;
 }
 

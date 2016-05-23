@@ -1,11 +1,13 @@
 #include <stdio.h>
 
+#include "interpreter.h"
+#include "interpreter_funcs.h"
 #include "datavalue.h"
 #include "stdlib/print.h"
 #include "bclib/list.h"
 
-DataValue *print(List *args) {
-    DataValue *arg1 = list_get(args, 0);
+DataValue *print(Interpreter *interpreter, int arg_num) {
+    DataValue *arg1 = interpreter_stack_pop(interpreter);
     print_value(arg1);
     return datavalue_nothing();
 }
