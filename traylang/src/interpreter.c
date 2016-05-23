@@ -17,9 +17,13 @@ Interpreter *interpreter_create() {
     Hashmap *variables = hashmap_create(NULL, NULL);
     check_mem(variables);
 
+    Stack *call_stack = stack_create();
+    check_mem(call_stack);
+
     interpreter->debug_mode = 0;
     interpreter->error = 0;
     interpreter->variables = variables;
+    interpreter->call_stack = call_stack;
 
     return interpreter;
 error:
@@ -39,6 +43,9 @@ void interpreter_destroy(Interpreter *interpreter) {
             // TODO
             // delete datavalues stored in hashmap
             hashmap_destroy(interpreter->variables);
+        }
+        if (interpreter->call_stack) {
+            stack_clear_destroy(interpreter->call_stack);
         }
         free(interpreter);
     }
@@ -73,6 +80,25 @@ DataValue *interpreter_get_variable(Interpreter *interpreter, bstring name) {
     return value;
 error:
     interpreter_error(interpreter, bfromcstr("Could not get variable"));
+    return NULL;
+}
+
+DataValue *interpreter_stack_push(Interpreter *interpreter, DataValue *value) {
+    check(value, "NULL value pushed to stack");
+    Stack *stack = stack_push(interpreter->call_stack, value);
+    check(stack, "Error pushing value to stack");
+    return value;
+error:
+    interpreter_error(interpreter, bfromcstr("Error pushing value to stack"));
+    return NULL;
+}
+
+DataValue *interpreter_stack_pop(Interpreter *interpreter) {
+    DataValue *value = stack_pop(interpreter->call_stack);
+    check(value, "Error getting value from stack");
+    return value;
+error:
+    interpreter_error(interpreter, bfromcstr("Error getting value from stack"));
     return NULL;
 }
 

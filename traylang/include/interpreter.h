@@ -5,6 +5,7 @@
 #include "ast.h"
 #include "bclib/hashmap.h"
 #include "bclib/list.h"
+#include "bclib/stack.h"
 #include "bclib/bstrlib.h"
 
 typedef struct Interpreter {
@@ -14,6 +15,8 @@ typedef struct Interpreter {
     bstring err_message;
 
     int debug_mode;
+
+    Stack *call_stack;
 
     Hashmap *variables;
 
@@ -30,6 +33,10 @@ void interpreter_error(Interpreter *interpreter, bstring err_message);
 DataValue *interpreter_set_variable(Interpreter *interpreter, bstring name, DataValue *value);
 
 DataValue *interpreter_get_variable(Interpreter *interpreter, bstring name);
+
+DataValue *interpreter_stack_push(Interpreter *interpreter, DataValue *value);
+
+DataValue *interpreter_stack_pop(Interpreter *interpreter);
 
 DataValue *interpret(Interpreter *interpreter, Block *block);
 
