@@ -3,36 +3,14 @@
 
 #include "dbg.h"
 
-
-#include "bclib/bstrlib.h"
-
 #include "parser.h"
-#include "ast.h"
 #include "interpreter.h"
-#include "ast-print.h"
 
 #include "langfuncs/tracescene.h"
 
 #include "stdlib/print.h"
 #include "stdlib/math.h"
 #include "stdlib/list.h"
-
-#include "scene.h"
-#include "tracing.h"
-
-
-DataValue *print_output(DataValue *value) {
-    if (value == NULL) {
-        printf("Could not print NULL output\n");
-        return NULL;
-    }
-    printf("Result: ");
-    List *list = list_create();
-    list_push(list, value);
-    print(list);
-    list_destroy(list);
-    return value;
-}
 
 int main(int argc, char *argv[]) {
 
