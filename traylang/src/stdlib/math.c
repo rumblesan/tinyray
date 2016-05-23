@@ -2,19 +2,19 @@
 
 #include "interpreter.h"
 #include "interpreter_funcs.h"
-#include "datavalue.h"
+#include "object.h"
 
-DataValue *add(Interpreter *interpreter, int arg_num) {
+Object *add(Interpreter *interpreter, int arg_num) {
     double *v1 = get_arg(interpreter);
     double *v2 = get_arg(interpreter);
     double result = *v1 + *v2;
-    return datavalue_number(result);
+    return object_number(result);
 }
 
-DataValue *sub(Interpreter *interpreter, int arg_num) {
+Object *sub(Interpreter *interpreter, int arg_num) {
     double *v1 = get_arg(interpreter);
     double *v2 = get_arg(interpreter);
     double result = *v1 - *v2;
-    return datavalue_number(result);
+    return object_number(result);
 }
 

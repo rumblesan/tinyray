@@ -4,36 +4,36 @@
 
 #include "interpreter.h"
 #include "interpreter_funcs.h"
-#include "datavalue.h"
+#include "object.h"
 #include "bclib/list.h"
 
-DataValue *print(Interpreter *interpreter, int arg_num) {
+Object *print(Interpreter *interpreter, int arg_num) {
     int i;
     for (i = 0; i < arg_num; i += 1) {
         print_value(get_arg(interpreter));
     }
-    return datavalue_nothing();
+    return object_nothing();
 }
 
-void print_value(DataValue *data) {
+void print_value(Object *obj) {
     double *v;
     bstring str;
-    switch(data->type) {
+    switch(obj->type) {
         case FUNCTION:
             printf("Function\n");
             break;
         case LIST:
-            print_list(data->value);
+            print_list(obj->value);
             break;
         case NOTHING:
             printf("Nothing\n");
             break;
         case NUMBER:
-            v = data->value;
+            v = obj->value;
             printf("%f\n", *v);
             break;
         case STRING:
-            str = data->value;
+            str = obj->value;
             printf("%s\n", str->data);
             break;
         case CDATA:

@@ -35,7 +35,7 @@ void interpreter_destroy(Interpreter *interpreter) {
     if (interpreter) {
         if (interpreter->variables) {
             // TODO
-            // delete datavalues stored in hashmap
+            // delete objects stored in hashmap
             hashmap_destroy(interpreter->variables);
         }
         if (interpreter->call_stack) {

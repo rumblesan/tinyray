@@ -49,25 +49,25 @@ int main(int argc, char *argv[]) {
     Interpreter *interpreter = interpreter_create();
     check(interpreter, "Could not create interpreter");
 
-    interpreter_set_variable(interpreter, bfromcstr("print"), datavalue_function(print));
-    interpreter_set_variable(interpreter, bfromcstr("add"), datavalue_function(add));
-    interpreter_set_variable(interpreter, bfromcstr("sub"), datavalue_function(sub));
+    interpreter_set_variable(interpreter, bfromcstr("print"), object_function(print));
+    interpreter_set_variable(interpreter, bfromcstr("add"), object_function(add));
+    interpreter_set_variable(interpreter, bfromcstr("sub"), object_function(sub));
 
-    interpreter_set_variable(interpreter, bfromcstr("config"), datavalue_function(config));
-    interpreter_set_variable(interpreter, bfromcstr("camera"), datavalue_function(camera));
-    interpreter_set_variable(interpreter, bfromcstr("col"), datavalue_function(col));
-    interpreter_set_variable(interpreter, bfromcstr("vec"), datavalue_function(vec));
-    interpreter_set_variable(interpreter, bfromcstr("texture"), datavalue_function(texture));
-    interpreter_set_variable(interpreter, bfromcstr("pointlight"), datavalue_function(pointlight));
-    interpreter_set_variable(interpreter, bfromcstr("ambientlight"), datavalue_function(ambientlight));
-    interpreter_set_variable(interpreter, bfromcstr("triangle"), datavalue_function(triangle));
-    interpreter_set_variable(interpreter, bfromcstr("sphere"), datavalue_function(sphere));
-    interpreter_set_variable(interpreter, bfromcstr("plane"), datavalue_function(plane));
-    interpreter_set_variable(interpreter, bfromcstr("rayscene"), datavalue_function(rayscene));
-    interpreter_set_variable(interpreter, bfromcstr("trace"), datavalue_function(trace_scene));
+    interpreter_set_variable(interpreter, bfromcstr("config"), object_function(config));
+    interpreter_set_variable(interpreter, bfromcstr("camera"), object_function(camera));
+    interpreter_set_variable(interpreter, bfromcstr("col"), object_function(col));
+    interpreter_set_variable(interpreter, bfromcstr("vec"), object_function(vec));
+    interpreter_set_variable(interpreter, bfromcstr("texture"), object_function(texture));
+    interpreter_set_variable(interpreter, bfromcstr("pointlight"), object_function(pointlight));
+    interpreter_set_variable(interpreter, bfromcstr("ambientlight"), object_function(ambientlight));
+    interpreter_set_variable(interpreter, bfromcstr("triangle"), object_function(triangle));
+    interpreter_set_variable(interpreter, bfromcstr("sphere"), object_function(sphere));
+    interpreter_set_variable(interpreter, bfromcstr("plane"), object_function(plane));
+    interpreter_set_variable(interpreter, bfromcstr("rayscene"), object_function(rayscene));
+    interpreter_set_variable(interpreter, bfromcstr("trace"), object_function(trace_scene));
 
-    interpreter_set_variable(interpreter, bfromcstr("list"), datavalue_function(list));
-    interpreter_set_variable(interpreter, bfromcstr("append"), datavalue_function(append));
+    interpreter_set_variable(interpreter, bfromcstr("list"), object_function(list));
+    interpreter_set_variable(interpreter, bfromcstr("append"), object_function(append));
 
     interpreter_set_debug(interpreter, debug_mode);
 

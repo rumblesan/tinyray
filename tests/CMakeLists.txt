@@ -21,7 +21,7 @@ endforeach(TEST_FILE)
 
 set(TRAYLANG_TEST_SOURCES
     "src/traylang/test_interpreter.c"
-    "src/traylang/test_datavalue.c"
+    "src/traylang/test_object.c"
     )
 
 foreach(TEST_FILE ${TRAYLANG_TEST_SOURCES})

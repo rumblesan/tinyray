@@ -2,11 +2,11 @@
 #define LANGUAGE_STDLIB_MATH_H
 
 #include "interpreter.h"
-#include "datavalue.h"
+#include "object.h"
 
-DataValue *add(Interpreter *interpreter, int arg_num);
+Object *add(Interpreter *interpreter, int arg_num);
 
-DataValue *sub(Interpreter *interpreter, int arg_num);
+Object *sub(Interpreter *interpreter, int arg_num);
 
 #endif
 

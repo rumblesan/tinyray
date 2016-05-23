@@ -2,31 +2,31 @@
 #define LANGUAGE_STDLIB_SCENE_H
 
 #include "interpreter.h"
-#include "datavalue.h"
+#include "object.h"
 #include "bclib/list.h"
 
-DataValue *config(Interpreter *interpreter, int arg_num);
+Object *config(Interpreter *interpreter, int arg_num);
 
-DataValue *camera(Interpreter *interpreter, int arg_num);
+Object *camera(Interpreter *interpreter, int arg_num);
 
-DataValue *col(Interpreter *interpreter, int arg_num);
+Object *col(Interpreter *interpreter, int arg_num);
 
-DataValue *vec(Interpreter *interpreter, int arg_num);
+Object *vec(Interpreter *interpreter, int arg_num);
 
-DataValue *texture(Interpreter *interpreter, int arg_num);
+Object *texture(Interpreter *interpreter, int arg_num);
 
-DataValue *pointlight(Interpreter *interpreter, int arg_num);
+Object *pointlight(Interpreter *interpreter, int arg_num);
 
-DataValue *ambientlight(Interpreter *interpreter, int arg_num);
+Object *ambientlight(Interpreter *interpreter, int arg_num);
 
-DataValue *triangle(Interpreter *interpreter, int arg_num);
+Object *triangle(Interpreter *interpreter, int arg_num);
 
-DataValue *sphere(Interpreter *interpreter, int arg_num);
+Object *sphere(Interpreter *interpreter, int arg_num);
 
-DataValue *plane(Interpreter *interpreter, int arg_num);
+Object *plane(Interpreter *interpreter, int arg_num);
 
-DataValue *rayscene(Interpreter *interpreter, int arg_num);
+Object *rayscene(Interpreter *interpreter, int arg_num);
 
-DataValue *trace_scene(Interpreter *interpreter, int arg_num);
+Object *trace_scene(Interpreter *interpreter, int arg_num);
 
 #endif
