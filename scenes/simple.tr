@@ -22,5 +22,7 @@
   )
 )
 
-(rayscene cam conf lights shapes)
+(def scene (rayscene cam conf lights shapes))
+
+(trace scene)
 
