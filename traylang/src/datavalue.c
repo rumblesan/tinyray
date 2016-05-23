@@ -8,7 +8,6 @@ DataValue *datavalue_create(DataType type, void *value) {
     check_mem(data);
     data->type = type;
     data->value = value;
-    data->ref_count = 1;
     return data;
 error:
     return NULL;
@@ -87,25 +86,5 @@ bstring datavalue_get_string(DataValue *data){
 
 void *datavalue_get_cdata(DataValue *data){
     return data->value;
-}
-
-DataValue *datavalue_incr_ref(DataValue *data) {
-    check(data, "DataValue is null");
-    data->ref_count += 1;
-    return data;
-error:
-    return NULL;
-}
-
-void *datavalue_decr_ref(DataValue *data) {
-    check(data, "DataValue is null");
-    check(data->ref_count >= 1, "DataValue ref count can't be less than 0");
-    data->ref_count -= 1;
-    if (data->ref_count == 0) {
-        datavalue_clear_destroy(data);
-    }
-    return NULL;
-error:
-    return NULL;
 }
 

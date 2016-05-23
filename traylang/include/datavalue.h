@@ -12,8 +12,6 @@ typedef struct DataValue {
 
     void *value;
 
-    int ref_count;
-
 } DataValue;
 
 typedef DataValue *(*func_cb)(List *args);
@@ -45,9 +43,5 @@ double datavalue_get_number(DataValue *data);
 bstring datavalue_get_string(DataValue *data);
 
 void *datavalue_get_cdata(DataValue *data);
-
-DataValue *datavalue_incr_ref(DataValue *data);
-
-void *datavalue_decr_ref(DataValue *data);
 
 #endif
