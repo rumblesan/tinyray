@@ -12,10 +12,6 @@ typedef struct PointLight {
 
 } PointLight;
 
-typedef struct AmbientLight {
-
-} AmbientLight;
-
 typedef struct Light {
 
     LightType type;
@@ -26,7 +22,6 @@ typedef struct Light {
 
     union {
         PointLight point;
-        AmbientLight ambient;
     };
 
 } Light;

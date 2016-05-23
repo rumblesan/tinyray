@@ -9,9 +9,6 @@ Light *ambient_light_create(double intensity, Colour colour) {
 
     Light *light = malloc(sizeof(Light));
 
-    AmbientLight ambient;
-
-    light->ambient = ambient;
     light->type = AMBIENT;
     light->colour = colour;
     light->intensity = intensity;
