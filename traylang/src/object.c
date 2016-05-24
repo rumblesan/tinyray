@@ -14,7 +14,6 @@ Object *object_create(Interpreter *interpreter, ObjectType type, void *value) {
             debug("Triggering garbage collection");
         }
         interpreter_gc(interpreter);
-        interpreter->max_objects = interpreter->max_objects * 2;
     }
     Object *obj = malloc(sizeof(Object));
     check_mem(obj);

@@ -14,7 +14,11 @@ void interpreter_gc(Interpreter *interpreter) {
     int ocount = list_count(interpreter->objects);
     interpreter_gc_mark(interpreter);
     interpreter_gc_sweep(interpreter);
-    interpreter->max_objects = list_count(interpreter->objects) * 2;
+    int new_max = list_count(interpreter->objects) * 2;
+    if (new_max < INITIAL_GC_THRESHOLD) {
+        new_max = INITIAL_GC_THRESHOLD;
+    }
+    interpreter->max_objects = new_max;
     if (interpreter->debug_mode) {
         debug("%d objects reduced to %d", ocount, list_count(interpreter->objects));
     }
