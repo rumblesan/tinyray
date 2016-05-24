@@ -11,6 +11,7 @@ Object *object_create(Interpreter *interpreter, ObjectType type, void *value) {
     check_mem(obj);
     obj->type = type;
     obj->value = value;
+    obj->marked = 0;
     list_push(interpreter->objects, obj);
     return obj;
 error:
@@ -71,3 +72,15 @@ void object_clear_destroy(Object *object) {
     free(object);
 }
 
+void object_mark(Object *object) {
+    if (object->marked == 1) {
+        return;
+    }
+    object->marked = 1;
+    if (object->type == LIST) {
+        List *list = object->value;
+        LIST_FOREACH(list, first, next, el) {
+            object_mark(el->value);
+        }
+    }
+}
