@@ -143,6 +143,10 @@ void *get_arg(Interpreter *interpreter) {
     return dv != NULL ? dv->value : NULL;
 }
 
+Object *get_obj(Interpreter *interpreter) {
+    return interpreter_stack_pop(interpreter);
+}
+
 Object *interpret_expression(Interpreter *interpreter, Expression *expression) {
     Object *v = NULL;
     switch(expression->expressionType) {

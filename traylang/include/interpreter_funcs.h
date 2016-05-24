@@ -33,6 +33,8 @@ Object *interpret_call_function(Interpreter *interpreter, bstring name, int arg_
 
 void *get_arg(Interpreter *interpreter);
 
+Object *get_obj(Interpreter *interpreter);
+
 Object *interpret_expression(Interpreter *interpreter, Expression *expression);
 
 Object *interpret_number(Interpreter *interpreter, Number *number);

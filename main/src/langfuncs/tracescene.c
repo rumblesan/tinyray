@@ -16,11 +16,11 @@
 
 void *tlist_to_clist(List *traylist) {
     List *clist = list_create();
-    void *v;
+    Object *obj;
     int len = list_count(traylist);
     for (int i = 0; i < len; i += 1) {
-        v = list_get(traylist, i);
-        list_push(clist, v);
+        obj = list_get(traylist, i);
+        list_push(clist, obj->value);
     }
     return clist;
 }
