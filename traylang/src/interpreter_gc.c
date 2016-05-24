@@ -7,28 +7,69 @@
 
 #include "bclib/list.h"
 #include "bclib/stack.h"
+#include "bclib/hashmap.h"
+#include "bclib/bstrlib.h"
 
 void interpreter_gc(Interpreter *interpreter) {
+    int ocount = list_count(interpreter->objects);
     interpreter_gc_mark(interpreter);
     interpreter_gc_sweep(interpreter);
+    interpreter->max_objects = list_count(interpreter->objects) * 2;
+    if (interpreter->debug_mode) {
+        debug("%d objects reduced to %d", ocount, list_count(interpreter->objects));
+    }
+}
+
+int mark_variable(HashmapNode *node) {
+    Object *obj = node->data;
+    object_mark(obj);
+    return 0;
 }
 
 void interpreter_gc_mark(Interpreter *interpreter) {
+    if (interpreter->debug_mode) {
+        debug("Marking stack");
+    }
     STACK_FOREACH(interpreter->call_stack, el) {
         object_mark(el->value);
     }
+    if (interpreter->debug_mode) {
+        debug("Marking variables");
+    }
+    hashmap_traverse(interpreter->variables, mark_variable);
 }
 
 void interpreter_gc_sweep(Interpreter *interpreter) {
+    if (interpreter->debug_mode) {
+        debug("Sweeping");
+    }
+    List *objects = interpreter->objects;
+    ListNode *node = objects->first;
+    ListNode *next_node;
     Object *obj;
-    LIST_FOREACH(interpreter->objects, first, next, el) {
-        obj = el->value;
+    while(node) {
+        next_node = node->next;
+        obj = node->value;
+
         if (obj->marked == 0) {
-            list_remove(interpreter->objects, el);
+            if (node == objects->first) {
+                objects->first = node->next;
+            }
+            if (node == objects->last) {
+                objects->last = node->prev;
+            }
+            if (node->prev) {
+                node->prev->next = node->next;
+            }
+            if (node->next) {
+                node->next->prev = node->prev;
+            }
             object_destroy(obj);
+            free(node);
+            objects->length -= 1;
         }
+
+        node = next_node;
     }
 }
-
-
 

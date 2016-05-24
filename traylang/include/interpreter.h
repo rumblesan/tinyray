@@ -6,6 +6,8 @@
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
+#define INITIAL_GC_THRESHOLD 20
+
 typedef struct Interpreter {
 
     int error;
@@ -17,6 +19,8 @@ typedef struct Interpreter {
     Stack *call_stack;
 
     List *objects;
+
+    int max_objects;
 
     Hashmap *variables;
 

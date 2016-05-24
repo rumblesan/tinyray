@@ -27,6 +27,7 @@ Interpreter *interpreter_create() {
     interpreter->variables = variables;
     interpreter->call_stack = call_stack;
     interpreter->objects = objects;
+    interpreter->max_objects = INITIAL_GC_THRESHOLD;
 
     return interpreter;
 error:
