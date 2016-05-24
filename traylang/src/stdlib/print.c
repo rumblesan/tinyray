@@ -19,7 +19,7 @@ void print_value(Object *obj) {
     double *v;
     bstring str;
     switch(obj->type) {
-        case FUNCTION:
+        case CFUNCTION:
             printf("Function\n");
             break;
         case LIST:

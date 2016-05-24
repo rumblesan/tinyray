@@ -22,8 +22,8 @@ error:
     return NULL;
 }
 
-Object *object_function(Interpreter *interpreter, func_cb func) {
-    return object_create(interpreter, FUNCTION, func);
+Object *object_c_function(Interpreter *interpreter, c_func func) {
+    return object_create(interpreter, CFUNCTION, func);
 }
 
 Object *object_list(Interpreter *interpreter, List *list) {
@@ -54,8 +54,8 @@ void object_destroy(Object *object) {
 
 void object_clear_destroy(Object *object) {
     switch(object->type) {
-        case FUNCTION:
-            debug("Not freeing up function pointer");
+        case CFUNCTION:
+            debug("Not freeing up c function pointer");
             break;
         case LIST:
             list_clear_destroy(object->value);

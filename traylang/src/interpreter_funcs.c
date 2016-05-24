@@ -132,7 +132,7 @@ error:
 Object *interpret_call_function(Interpreter *interpreter, bstring name, int arg_num) {
     Object *func_obj = interpreter_get_variable(interpreter, name);
     check(interpreter->error != 1, "Error whilst calling function");
-    func_cb f = func_obj->value;
+    c_func f = func_obj->value;
     return f(interpreter, arg_num);
 error:
     return NULL;
