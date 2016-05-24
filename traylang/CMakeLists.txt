@@ -13,6 +13,7 @@ add_flex_bison_dependency(TRLLexer TRLParser)
 set(SOURCES
     "src/interpreter.c"
     "src/interpreter_funcs.c"
+    "src/interpreter_gc.c"
     "src/object.c"
     "src/ast.c"
     "src/ast-print.c"
