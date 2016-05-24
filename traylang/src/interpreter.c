@@ -6,6 +6,7 @@
 
 #include "bclib/hashmap.h"
 #include "bclib/stack.h"
+#include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
 Interpreter *interpreter_create() {
@@ -18,10 +19,14 @@ Interpreter *interpreter_create() {
     Stack *call_stack = stack_create();
     check_mem(call_stack);
 
+    List *objects = list_create();
+    check_mem(objects);
+
     interpreter->debug_mode = 0;
     interpreter->error = 0;
     interpreter->variables = variables;
     interpreter->call_stack = call_stack;
+    interpreter->objects = objects;
 
     return interpreter;
 error:
@@ -40,6 +45,9 @@ void interpreter_destroy(Interpreter *interpreter) {
         }
         if (interpreter->call_stack) {
             stack_clear_destroy(interpreter->call_stack);
+        }
+        if (interpreter->objects) {
+            list_clear_destroy(interpreter->objects);
         }
         free(interpreter);
     }

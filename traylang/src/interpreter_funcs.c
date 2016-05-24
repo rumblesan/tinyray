@@ -175,7 +175,7 @@ Object *interpret_expression(Interpreter *interpreter, Expression *expression) {
 }
 
 Object *interpret_number(Interpreter *interpreter, Number *number) {
-    Object *dv = object_number(number->value);
+    Object *dv = object_number(interpreter, number->value);
     check(dv != NULL, "Could not create object")
     return dv;
 error:
@@ -186,7 +186,7 @@ error:
 }
 
 Object *interpret_string(Interpreter *interpreter, String *string) {
-    Object *dv = object_string(string->value);
+    Object *dv = object_string(interpreter, string->value);
     check(dv != NULL, "Could not create object")
     return dv;
 error:

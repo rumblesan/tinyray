@@ -17,17 +17,17 @@ typedef struct Object {
 
 typedef Object *(*func_cb)(Interpreter *interpreter, int arg_count);
 
-Object *object_function(func_cb func);
+Object *object_function(Interpreter *interpreter, func_cb func);
 
-Object *object_list(List *list);
+Object *object_list(Interpreter *interpreter, List *list);
 
-Object *object_nothing();
+Object *object_nothing(Interpreter *interpreter);
 
-Object *object_number(double number);
+Object *object_number(Interpreter *interpreter, double number);
 
-Object *object_string(bstring string);
+Object *object_string(Interpreter *interpreter, bstring string);
 
-Object *object_cdata(void *cdata);
+Object *object_cdata(Interpreter *interpreter, void *cdata);
 
 void object_destroy(Object *object);
 

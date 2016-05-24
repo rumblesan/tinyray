@@ -1,42 +1,46 @@
 #include <stdlib.h>
 
 #include "dbg.h"
-#include "object.h"
 
-Object *object_create(ObjectType type, void *value) {
+#include "interpreter.h"
+#include "object.h"
+#include "bclib/list.h"
+
+Object *object_create(Interpreter *interpreter, ObjectType type, void *value) {
     Object *obj = malloc(sizeof(Object));
     check_mem(obj);
     obj->type = type;
     obj->value = value;
+    list_push(interpreter->objects, obj);
     return obj;
 error:
     return NULL;
 }
 
-Object *object_function(func_cb func) {
-    return object_create(FUNCTION, func);
+Object *object_function(Interpreter *interpreter, func_cb func) {
+    return object_create(interpreter, FUNCTION, func);
 }
 
-Object *object_list(List *list) {
-    return object_create(LIST, list);
+Object *object_list(Interpreter *interpreter, List *list) {
+    return object_create(interpreter, LIST, list);
 }
 
-Object *object_nothing() {
-    return object_create(NOTHING, NULL);
+Object *object_nothing(Interpreter *interpreter) {
+    return object_create(interpreter, NOTHING, NULL);
 }
 
-Object *object_number(double num) {
+Object *object_number(Interpreter *interpreter, double num) {
     double *val = malloc(sizeof(double));
     *val = num;
-    return object_create(NUMBER, val);
+    return object_create(interpreter, NUMBER, val);
 }
 
-Object *object_string(bstring string) {
-    return object_create(STRING, string);
+Object *object_string(Interpreter *interpreter, bstring string) {
+    return object_create(interpreter, STRING, string);
 }
 
-Object *object_cdata(void *cdata) {
-    return object_create(CDATA, cdata);
+Object *object_cdata(Interpreter *interpreter, void *cdata) {
+    return object_create(interpreter, CDATA, cdata);
 }
 
 void object_destroy(Object *object) {

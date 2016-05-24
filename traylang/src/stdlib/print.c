@@ -12,7 +12,7 @@ Object *print(Interpreter *interpreter, int arg_num) {
     for (i = 0; i < arg_num; i += 1) {
         print_value(get_arg(interpreter));
     }
-    return object_nothing();
+    return object_nothing(interpreter);
 }
 
 void print_value(Object *obj) {

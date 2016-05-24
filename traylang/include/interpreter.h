@@ -3,6 +3,7 @@
 
 #include "bclib/hashmap.h"
 #include "bclib/stack.h"
+#include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
 typedef struct Interpreter {
@@ -14,6 +15,8 @@ typedef struct Interpreter {
     int debug_mode;
 
     Stack *call_stack;
+
+    List *objects;
 
     Hashmap *variables;
 

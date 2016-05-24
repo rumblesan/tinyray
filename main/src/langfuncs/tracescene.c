@@ -36,7 +36,7 @@ Object *config(Interpreter *interpreter, int arg_num) {
     check(reflect, "config reflections arg error");
     Colour *colour  = get_arg(interpreter);
     check(colour, "config colour arg error");
-    return object_cdata(config_create(*width, *height, *maxdist, *reflect, *colour));
+    return object_cdata(interpreter, config_create(*width, *height, *maxdist, *reflect, *colour));
 error:
     return NULL;
 }
@@ -48,7 +48,7 @@ Object *camera(Interpreter *interpreter, int arg_num) {
     check(pos, "camera position arg error");
     Vector3D *look = get_arg(interpreter);
     check(look, "camera look_at arg error");
-    return object_cdata(camera_create(*fov, *pos, *look));
+    return object_cdata(interpreter, camera_create(*fov, *pos, *look));
 error:
     return NULL;
 }
@@ -63,7 +63,7 @@ Object *col(Interpreter *interpreter, int arg_num) {
     Colour *c = malloc(sizeof(Colour));
     check_mem(c);
     *c = colour(*r, *g, *b);
-    return object_cdata(c);
+    return object_cdata(interpreter, c);
 error:
     return NULL;
 }
@@ -78,7 +78,7 @@ Object *vec(Interpreter *interpreter, int arg_num) {
     Vector3D *v = malloc(sizeof(Vector3D));
     check_mem(v);
     *v = vector3d(*x, *y, *z);
-    return object_cdata(v);
+    return object_cdata(interpreter, v);
 error:
     return NULL;
 }
@@ -93,7 +93,7 @@ Object *texture(Interpreter *interpreter, int arg_num) {
     Texture *t = malloc(sizeof(Texture));
     check_mem(t);
     *t = texture_flat(*lambert, *specular, *col);
-    return object_cdata(t);
+    return object_cdata(interpreter, t);
 error:
     return NULL;
 }
@@ -105,7 +105,7 @@ Object *pointlight(Interpreter *interpreter, int arg_num) {
     check(intensity, "pointlight intensity arg error");
     Colour   *colour    = get_arg(interpreter);
     check(colour, "pointlight colour arg error");
-    return object_cdata(point_light_create(*position, *intensity, *colour));
+    return object_cdata(interpreter, point_light_create(*position, *intensity, *colour));
 error:
     return NULL;
 }
@@ -115,7 +115,7 @@ Object *ambientlight(Interpreter *interpreter, int arg_num) {
     check(intensity, "ambientlight intensity arg error");
     Colour *colour    = get_arg(interpreter);
     check(colour, "ambientlight colour arg error");
-    return object_cdata(ambient_light_create(*intensity, *colour));
+    return object_cdata(interpreter, ambient_light_create(*intensity, *colour));
 error:
     return NULL;
 }
@@ -129,7 +129,7 @@ Object *triangle(Interpreter *interpreter, int arg_num) {
     check(p3, "triangle p3 arg error");
     Texture  *txt = get_arg(interpreter);
     check(txt, "triangle texture arg error");
-    return object_cdata(shape_triangle(*p1, *p2, *p3, *txt));
+    return object_cdata(interpreter, shape_triangle(*p1, *p2, *p3, *txt));
 error:
     return NULL;
 }
@@ -141,7 +141,7 @@ Object *sphere(Interpreter *interpreter, int arg_num) {
     check(rad, "sphere radius arg error");
     Texture  *txt = get_arg(interpreter);
     check(txt, "sphere texture arg error");
-    return object_cdata(shape_sphere(*pos, *rad, *txt));
+    return object_cdata(interpreter, shape_sphere(*pos, *rad, *txt));
 error:
     return NULL;
 }
@@ -153,7 +153,7 @@ Object *plane(Interpreter *interpreter, int arg_num) {
     check(nor, "plane normal arg error");
     Texture  *txt = get_arg(interpreter);
     check(txt, "plane texture arg error");
-    return object_cdata(shape_plane(*pos, *nor, *txt));
+    return object_cdata(interpreter, shape_plane(*pos, *nor, *txt));
 error:
     return NULL;
 }
@@ -167,7 +167,7 @@ Object *rayscene(Interpreter *interpreter, int arg_num) {
     check(lights, "scene lights arg error");
     List   *shapes = tlist_to_clist(get_arg(interpreter));
     check(shapes, "scene shapes arg error");
-    return object_cdata(scene_create(camera, config, lights, shapes));
+    return object_cdata(interpreter, scene_create(camera, config, lights, shapes));
 error:
     return NULL;
 }
@@ -181,7 +181,7 @@ Object *trace_scene(Interpreter *interpreter, int arg_num) {
     render_png(scene, name);
     scene_cleanup(scene);
     printf("output scene to file: %s\n", bdata(name));
-    return object_cdata(object_nothing());
+    return object_nothing(interpreter);
 error:
     return NULL;
 }
