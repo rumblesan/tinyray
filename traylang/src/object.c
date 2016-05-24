@@ -9,10 +9,6 @@
 
 Object *object_create(Interpreter *interpreter, ObjectType type, void *value) {
     if (list_count(interpreter->objects) == interpreter->max_objects) {
-
-        if (interpreter->debug_mode) {
-            debug("Triggering garbage collection");
-        }
         interpreter_gc(interpreter);
     }
     Object *obj = malloc(sizeof(Object));

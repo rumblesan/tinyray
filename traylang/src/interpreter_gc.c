@@ -11,6 +11,9 @@
 #include "bclib/bstrlib.h"
 
 void interpreter_gc(Interpreter *interpreter) {
+    if (interpreter->debug_mode) {
+        debug("Running garbage collection");
+    }
     int ocount = list_count(interpreter->objects);
     interpreter_gc_mark(interpreter);
     interpreter_gc_sweep(interpreter);
