@@ -71,6 +71,8 @@ void interpreter_gc_sweep(Interpreter *interpreter) {
             object_destroy(obj);
             free(node);
             objects->length -= 1;
+        } else {
+            obj->marked = 0;
         }
 
         node = next_node;
