@@ -154,11 +154,9 @@ Object *interpret_application(Interpreter *interpreter, Application *application
         debug("Application: %s", application->name->data);
         debug("Arg num: %d", arg_num);
     }
-    interpreter_enter_scope(interpreter);
     Stack *stack = interpreter_push_args(interpreter, application);
     check(stack, "Error whilst pushing args to stack");
     Object *result = interpret_call_function(interpreter, application->name, arg_num);
-    interpreter_leave_scope(interpreter);
     check(interpreter->error != 1, "Error whilst interpreting");
     return result;
 error:
@@ -169,7 +167,10 @@ Object *interpret_call_function(Interpreter *interpreter, bstring name, int arg_
     Object *func_obj = interpreter_get_variable(interpreter, name);
     check(interpreter->error != 1, "Error whilst calling function");
     c_func f = func_obj->value;
-    return f(interpreter, arg_num);
+    interpreter_enter_scope(interpreter);
+    Object *result = f(interpreter, arg_num);
+    interpreter_leave_scope(interpreter);
+    return result;
 error:
     return NULL;
 }
