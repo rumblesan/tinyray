@@ -3,6 +3,7 @@
 #include "interpreter_gc.h"
 
 #include "interpreter.h"
+#include "interpreter_stackframe.h"
 #include "object.h"
 
 #include "bclib/list.h"
@@ -33,6 +34,18 @@ int mark_variable(HashmapNode *node) {
     return 0;
 }
 
+int mark_scopes(Stack *scopes) {
+    StackFrame *frame;
+    STACK_FOREACH(scopes, el) {
+        frame = el->value;
+        hashmap_traverse(
+            frame->variables,
+            mark_variable
+        );
+    }
+    return 0;
+}
+
 void interpreter_gc_mark(Interpreter *interpreter) {
     if (interpreter->debug_mode) {
         debug("Marking stack");
@@ -40,6 +53,7 @@ void interpreter_gc_mark(Interpreter *interpreter) {
     STACK_FOREACH(interpreter->call_stack, el) {
         object_mark(el->value);
     }
+    mark_scopes(interpreter->scopes);
     if (interpreter->debug_mode) {
         debug("Marking globals");
     }
