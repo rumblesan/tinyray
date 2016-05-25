@@ -33,6 +33,7 @@ Interpreter *interpreter_create() {
     interpreter->error = 0;
     interpreter->globals = globals;
     interpreter->call_stack = call_stack;
+    interpreter->scopes = scopes;
     interpreter->objects = objects;
     interpreter->max_objects = INITIAL_GC_THRESHOLD;
 
