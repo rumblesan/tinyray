@@ -14,6 +14,7 @@ set(SOURCES
     "src/interpreter.c"
     "src/interpreter_funcs.c"
     "src/interpreter_gc.c"
+    "src/interpreter_stackframe.c"
     "src/object.c"
     "src/ast.c"
     "src/ast-print.c"
