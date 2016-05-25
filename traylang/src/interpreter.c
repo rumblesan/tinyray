@@ -13,8 +13,8 @@ Interpreter *interpreter_create() {
     Interpreter *interpreter = malloc(sizeof(Interpreter));
     check_mem(interpreter);
 
-    Hashmap *variables = hashmap_create(NULL, NULL);
-    check_mem(variables);
+    Hashmap *globals = hashmap_create(NULL, NULL);
+    check_mem(globals);
 
     Stack *call_stack = stack_create();
     check_mem(call_stack);
@@ -24,7 +24,7 @@ Interpreter *interpreter_create() {
 
     interpreter->debug_mode = 0;
     interpreter->error = 0;
-    interpreter->variables = variables;
+    interpreter->globals = globals;
     interpreter->call_stack = call_stack;
     interpreter->objects = objects;
     interpreter->max_objects = INITIAL_GC_THRESHOLD;
@@ -39,10 +39,10 @@ error:
 
 void interpreter_destroy(Interpreter *interpreter) {
     if (interpreter) {
-        if (interpreter->variables) {
+        if (interpreter->globals) {
             // TODO
             // delete objects stored in hashmap
-            hashmap_destroy(interpreter->variables);
+            hashmap_destroy(interpreter->globals);
         }
         if (interpreter->call_stack) {
             stack_clear_destroy(interpreter->call_stack);

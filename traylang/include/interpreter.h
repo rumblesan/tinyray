@@ -22,7 +22,7 @@ typedef struct Interpreter {
 
     int max_objects;
 
-    Hashmap *variables;
+    Hashmap *globals;
 
 } Interpreter;
 

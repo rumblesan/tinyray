@@ -41,9 +41,9 @@ void interpreter_gc_mark(Interpreter *interpreter) {
         object_mark(el->value);
     }
     if (interpreter->debug_mode) {
-        debug("Marking variables");
+        debug("Marking globals");
     }
-    hashmap_traverse(interpreter->variables, mark_variable);
+    hashmap_traverse(interpreter->globals, mark_variable);
 }
 
 void interpreter_gc_sweep(Interpreter *interpreter) {

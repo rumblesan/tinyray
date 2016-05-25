@@ -18,13 +18,27 @@ void interpreter_error(Interpreter *interpreter, bstring err_message) {
     interpreter->err_message = err_message;
 }
 
+Object *interpreter_set_global(Interpreter *interpreter, bstring name, Object *value) {
+    if (interpreter->debug_mode) {
+        debug("Set global: %s", name->data);
+    }
+    check(name, "NULL key passed for global name");
+    check(value, "NULL value passed for global value: %s", name->data);
+    int result = hashmap_set(interpreter->globals, name, value);
+    check(result == 0, "Could not set value in globals hashmap");
+    return value;
+error:
+    interpreter_error(interpreter, bfromcstr("Could not set global"));
+    return NULL;
+}
+
 Object *interpreter_set_variable(Interpreter *interpreter, bstring name, Object *value) {
     if (interpreter->debug_mode) {
         debug("Set variable: %s", name->data);
     }
     check(name, "NULL key passed for variable name");
     check(value, "NULL value passed for variable value: %s", name->data);
-    int result = hashmap_set(interpreter->variables, name, value);
+    int result = hashmap_set(interpreter->globals, name, value);
     check(result == 0, "Could not set value in variables hashmap");
     return value;
 error:
@@ -37,7 +51,7 @@ Object *interpreter_get_variable(Interpreter *interpreter, bstring name) {
         debug("Get variable: %s", name->data);
     }
     check(name, "NULL key passed for variable name");
-    Object *value = hashmap_get(interpreter->variables, name);
+    Object *value = hashmap_get(interpreter->globals, name);
     check(value, "Could not get variable: %s", name->data);
     return value;
 error:
