@@ -18,6 +18,8 @@ typedef struct Interpreter {
 
     Stack *call_stack;
 
+    Stack *scopes;
+
     List *objects;
 
     int max_objects;

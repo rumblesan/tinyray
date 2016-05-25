@@ -3,6 +3,7 @@
 #include "dbg.h"
 
 #include "interpreter.h"
+#include "interpreter_stackframe.h"
 
 #include "bclib/hashmap.h"
 #include "bclib/stack.h"
@@ -18,6 +19,12 @@ Interpreter *interpreter_create() {
 
     Stack *call_stack = stack_create();
     check_mem(call_stack);
+
+    Stack *scopes = stack_create();
+    check_mem(scopes);
+    StackFrame *stackframe = stackframe_create();
+    check_mem(stackframe);
+    stack_push(scopes, stackframe);
 
     List *objects = list_create();
     check_mem(objects);
@@ -46,6 +53,9 @@ void interpreter_destroy(Interpreter *interpreter) {
         }
         if (interpreter->call_stack) {
             stack_clear_destroy(interpreter->call_stack);
+        }
+        if (interpreter->scopes) {
+            stack_clear_destroy(interpreter->scopes);
         }
         if (interpreter->objects) {
             list_clear_destroy(interpreter->objects);
