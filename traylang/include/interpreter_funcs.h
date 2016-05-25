@@ -11,6 +11,10 @@ void interpreter_set_debug(Interpreter *interpreter, int debug_value);
 
 void interpreter_error(Interpreter *interpreter, bstring err_message);
 
+Interpreter *interpreter_enter_scope(Interpreter *interpreter);
+
+Interpreter *interpreter_leave_scope(Interpreter *interpreter);
+
 Object *interpreter_set_global(Interpreter *interpreter, bstring name, Object *value);
 
 Object *interpreter_set_variable(Interpreter *interpreter, bstring name, Object *value);

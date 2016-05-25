@@ -3,6 +3,7 @@
 #include "interpreter_funcs.h"
 
 #include "interpreter.h"
+#include "interpreter_stackframe.h"
 #include "object.h"
 
 #include "bclib/hashmap.h"
@@ -16,6 +17,25 @@ void interpreter_set_debug(Interpreter *interpreter, int debug_value) {
 void interpreter_error(Interpreter *interpreter, bstring err_message) {
     interpreter->error = 1;
     interpreter->err_message = err_message;
+}
+
+Interpreter *interpreter_enter_scope(Interpreter *interpreter) {
+    StackFrame *stackframe = stackframe_create();
+    check(stackframe, "Could not create new stackframe");
+    stack_push(interpreter->scopes, stackframe);
+    return interpreter;
+error:
+    return NULL;
+}
+
+Interpreter *interpreter_leave_scope(Interpreter *interpreter) {
+    StackFrame *stackframe = stack_pop(interpreter->scopes);
+    check(stackframe, "Could not leave previous scope");
+
+    stackframe_destroy(stackframe);
+    return interpreter;
+error:
+    return NULL;
 }
 
 Object *interpreter_set_global(Interpreter *interpreter, bstring name, Object *value) {
