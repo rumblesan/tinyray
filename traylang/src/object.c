@@ -32,9 +32,23 @@ error:
 }
 
 void lambda_destroy(LambdaObject *lambda) {
+    bstring name;
+    LIST_FOREACH(lambda->arg_names, first, next, el) {
+        name = el->value;
+        bdestroy(name);
+    }
     list_destroy(lambda->arg_names);
-    // TODO where should the ast be destroyed?
+    // AST section is destroyed when the interpreter quits
     free(lambda);
+}
+
+void object_list_destroy(List *list) {
+    Object *obj;
+    LIST_FOREACH(list, first, next, el) {
+        obj = el->value;
+        object_destroy(obj);
+    }
+    list_destroy(list);
 }
 
 Object *object_c_function(Interpreter *interpreter, c_func func) {
@@ -87,10 +101,6 @@ Object *object_cdata(Interpreter *interpreter, void *cdata) {
 }
 
 void object_destroy(Object *object) {
-    free(object);
-}
-
-void object_clear_destroy(Object *object) {
     switch(object->type) {
         case CFUNCTION:
             debug("Not freeing up c function pointer");
@@ -99,7 +109,7 @@ void object_clear_destroy(Object *object) {
             lambda_destroy(object->lambda);
             break;
         case LIST:
-            list_clear_destroy(object->list);
+            object_list_destroy(object->list);
             break;
         case NOTHING:
             debug("Not freeing up Nothing");
