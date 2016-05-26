@@ -8,24 +8,31 @@
 Block *ast_block_create(List *elements) {
     Block *block = malloc(sizeof(Block));
     block->elements = elements;
-
     return block;
 }
 
 void ast_block_cleanup(Block *block) {
-    // TODO Free up nodes
+    LIST_FOREACH(block->elements, first, next, cur) {
+        ast_element_cleanup(cur->value);
+    }
     free(block);
 }
 
 /* Element AST Node */
 Element *ast_element_create() {
     Element *element = malloc(sizeof(Element));
-
     return element;
 }
 
 void ast_element_cleanup(Element *element) {
-    // TODO Free up node
+    switch(element->elementType) {
+        case VARDEFINITIONEL:
+            ast_vardef_cleanup(element->varDefinition);
+            break;
+        case APPLICATIONEL:
+            ast_application_cleanup(element->application);
+            break;
+    }
     free(element);
 }
 
@@ -53,7 +60,13 @@ Application *ast_application_create(Expression *expr, List *args) {
 }
 
 void ast_application_cleanup(Application *application) {
-    // TODO Free up expr and args
+    ast_expression_cleanup(application->expr);
+    bstring argname;
+    LIST_FOREACH(application->args, first, next, cur) {
+        argname = cur->value;
+        bdestroy(argname);
+    }
+    list_destroy(application->args);
     free(application);
 }
 
@@ -67,7 +80,8 @@ VarDefinition *ast_vardef_create(bstring name, Expression *expression) {
 }
 
 void ast_vardef_cleanup(VarDefinition *vardef) {
-    // TODO Free up name and expr
+    bdestroy(vardef->name);
+    ast_expression_cleanup(vardef->expression);
     free(vardef);
 }
 
@@ -78,7 +92,23 @@ Expression *ast_expression_create() {
 }
 
 void ast_expression_cleanup(Expression *expression) {
-    // TODO Free up expr
+    switch(expression->expressionType) {
+        case APPLICATIONEXPR:
+            ast_application_cleanup(expression->application);
+            break;
+        case NUMBEREXPR:
+            ast_number_cleanup(expression->number);
+            break;
+        case STRINGEXPR:
+            ast_string_cleanup(expression->string);
+            break;
+        case VARIABLEEXPR:
+            ast_variable_cleanup(expression->variable);
+            break;
+        case LAMBDAEXPR:
+            ast_lambda_cleanup(expression->lambda);
+            break;
+    }
     free(expression);
 }
 
@@ -138,6 +168,7 @@ String *ast_string_create(bstring value) {
 }
 
 void ast_string_cleanup(String *string) {
+    bdestroy(string->value);
     free(string);
 }
 
@@ -150,7 +181,7 @@ Variable *ast_variable_create(bstring name) {
 }
 
 void ast_variable_cleanup(Variable *variable) {
-    // TODO Free up name as well?
+    bdestroy(variable->name);
     free(variable);
 }
 
@@ -163,6 +194,12 @@ Lambda *ast_lambda_create(List *arg_names, Block *body) {
 }
 
 void ast_lambda_cleanup(Lambda *lambda) {
+    bstring argname;
+    LIST_FOREACH(lambda->arg_names, first, next, cur) {
+        argname = cur->value;
+        bdestroy(argname);
+    }
+    ast_block_cleanup(lambda->body);
     free(lambda);
 }
 
