@@ -37,8 +37,6 @@ Object *interpret_application(Interpreter *interpreter, Application *application
 
 Object *interpret_call_function(Interpreter *interpreter, bstring name, int arg_num);
 
-void *get_arg(Interpreter *interpreter);
-
 Object *get_obj(Interpreter *interpreter);
 
 Object *interpret_expression(Interpreter *interpreter, Expression *expression);

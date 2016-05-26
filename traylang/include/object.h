@@ -7,17 +7,23 @@
 
 typedef enum {CFUNCTION, LIST, NOTHING, NUMBER, STRING, CDATA} ObjectType;
 
+typedef struct Object *(*c_func)(Interpreter *interpreter, int arg_count);
+
 typedef struct Object {
 
     ObjectType type;
 
     unsigned char marked;
 
-    void *value;
+    union {
+        c_func cfunction;
+        List *list;
+        double number;
+        bstring string;
+        void *cdata;
+    };
 
 } Object;
-
-typedef Object *(*c_func)(Interpreter *interpreter, int arg_count);
 
 Object *object_c_function(Interpreter *interpreter, c_func func);
 

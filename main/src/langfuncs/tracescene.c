@@ -20,167 +20,212 @@ void *tlist_to_clist(List *traylist) {
     int len = list_count(traylist);
     for (int i = 0; i < len; i += 1) {
         obj = list_get(traylist, i);
-        list_push(clist, obj->value);
+        list_push(clist, obj->cdata);
     }
     return clist;
 }
 
 Object *config(Interpreter *interpreter, int arg_num) {
-    double *width   = get_arg(interpreter);
+    Object *width   = get_obj(interpreter);
     check(width, "config width arg error");
-    double *height  = get_arg(interpreter);
+    Object *height  = get_obj(interpreter);
     check(height, "config height arg error");
-    double *maxdist = get_arg(interpreter);
+    Object *maxdist = get_obj(interpreter);
     check(maxdist, "config max distance arg error");
-    double *reflect = get_arg(interpreter);
+    Object *reflect = get_obj(interpreter);
     check(reflect, "config reflections arg error");
-    Colour *colour  = get_arg(interpreter);
+    Object *colour  = get_obj(interpreter);
     check(colour, "config colour arg error");
-    return object_cdata(interpreter, config_create(*width, *height, *maxdist, *reflect, *colour));
+    return object_cdata(
+        interpreter,
+        config_create(
+            width->number, height->number, maxdist->number,
+            reflect->number, *(Colour*)(colour->cdata)
+        )
+    );
 error:
     return NULL;
 }
 
 Object *camera(Interpreter *interpreter, int arg_num) {
-    double   *fov  = get_arg(interpreter);
+    Object *fov  = get_obj(interpreter);
     check(fov, "camera fov arg error");
-    Vector3D *pos  = get_arg(interpreter);
+    Object *pos  = get_obj(interpreter);
     check(pos, "camera position arg error");
-    Vector3D *look = get_arg(interpreter);
+    Object *look = get_obj(interpreter);
     check(look, "camera look_at arg error");
-    return object_cdata(interpreter, camera_create(*fov, *pos, *look));
+    return object_cdata(
+        interpreter,
+        camera_create(fov->number, *(Vector3D*)pos->cdata, *(Vector3D*)look->cdata)
+    );
 error:
     return NULL;
 }
 
 Object *col(Interpreter *interpreter, int arg_num) {
-    double *r = get_arg(interpreter);
+    Object *r = get_obj(interpreter);
     check(r, "col red arg error");
-    double *g = get_arg(interpreter);
+    Object *g = get_obj(interpreter);
     check(g, "col green arg error");
-    double *b = get_arg(interpreter);
+    Object *b = get_obj(interpreter);
     check(b, "col blue arg error");
     Colour *c = malloc(sizeof(Colour));
     check_mem(c);
-    *c = colour(*r, *g, *b);
+    *c = colour(r->number, g->number, b->number);
     return object_cdata(interpreter, c);
 error:
     return NULL;
 }
 
 Object *vec(Interpreter *interpreter, int arg_num) {
-    double   *x = get_arg(interpreter);
+    Object   *x = get_obj(interpreter);
     check(x, "vec x arg error");
-    double   *y = get_arg(interpreter);
+    Object   *y = get_obj(interpreter);
     check(y, "vec y arg error");
-    double   *z = get_arg(interpreter);
+    Object   *z = get_obj(interpreter);
     check(z, "vec z arg error");
     Vector3D *v = malloc(sizeof(Vector3D));
     check_mem(v);
-    *v = vector3d(*x, *y, *z);
+    *v = vector3d(x->number, y->number, z->number);
     return object_cdata(interpreter, v);
 error:
     return NULL;
 }
 
 Object *texture(Interpreter *interpreter, int arg_num) {
-    double *lambert  = get_arg(interpreter);
+    Object *lambert  = get_obj(interpreter);
     check(lambert, "texture lambert arg error");
-    double *specular = get_arg(interpreter);
+    Object *specular = get_obj(interpreter);
     check(specular, "texture specular arg error");
-    Colour *col      = get_arg(interpreter);
+    Object *col      = get_obj(interpreter);
     check(col, "texture col arg error");
     Texture *t = malloc(sizeof(Texture));
     check_mem(t);
-    *t = texture_flat(*lambert, *specular, *col);
+    *t = texture_flat(lambert->number, specular->number, *(Colour*)col->cdata);
     return object_cdata(interpreter, t);
 error:
     return NULL;
 }
 
 Object *pointlight(Interpreter *interpreter, int arg_num) {
-    Vector3D *position  = get_arg(interpreter);
+    Object *position  = get_obj(interpreter);
     check(position, "pointlight position arg error");
-    double   *intensity = get_arg(interpreter);
+    Object *intensity = get_obj(interpreter);
     check(intensity, "pointlight intensity arg error");
-    Colour   *colour    = get_arg(interpreter);
+    Object *colour    = get_obj(interpreter);
     check(colour, "pointlight colour arg error");
-    return object_cdata(interpreter, point_light_create(*position, *intensity, *colour));
+    return object_cdata(
+        interpreter,
+        point_light_create(
+            *(Vector3D*)position->cdata, intensity->number, *(Colour*)colour->cdata
+        )
+    );
 error:
     return NULL;
 }
 
 Object *ambientlight(Interpreter *interpreter, int arg_num) {
-    double *intensity = get_arg(interpreter);
+    Object *intensity = get_obj(interpreter);
     check(intensity, "ambientlight intensity arg error");
-    Colour *colour    = get_arg(interpreter);
+    Object *colour    = get_obj(interpreter);
     check(colour, "ambientlight colour arg error");
-    return object_cdata(interpreter, ambient_light_create(*intensity, *colour));
+    return object_cdata(
+        interpreter,
+        ambient_light_create(intensity->number, *(Colour*)colour->cdata)
+    );
 error:
     return NULL;
 }
 
 Object *triangle(Interpreter *interpreter, int arg_num) {
-    Vector3D *p1  = get_arg(interpreter);
+    Object *p1  = get_obj(interpreter);
     check(p1, "triangle p1 arg error");
-    Vector3D *p2  = get_arg(interpreter);
+    Object *p2  = get_obj(interpreter);
     check(p2, "triangle p2 arg error");
-    Vector3D *p3  = get_arg(interpreter);
+    Object *p3  = get_obj(interpreter);
     check(p3, "triangle p3 arg error");
-    Texture  *txt = get_arg(interpreter);
+    Object *txt = get_obj(interpreter);
     check(txt, "triangle texture arg error");
-    return object_cdata(interpreter, shape_triangle(*p1, *p2, *p3, *txt));
+    return object_cdata(
+        interpreter,
+        shape_triangle(
+            *(Vector3D*)p1->cdata,
+            *(Vector3D*)p2->cdata,
+            *(Vector3D*)p3->cdata,
+            *(Texture*)txt->cdata)
+    );
 error:
     return NULL;
 }
 
 Object *sphere(Interpreter *interpreter, int arg_num) {
-    Vector3D *pos = get_arg(interpreter);
+    Object *pos = get_obj(interpreter);
     check(pos, "sphere position arg error");
-    double   *rad = get_arg(interpreter);
+    Object *rad = get_obj(interpreter);
     check(rad, "sphere radius arg error");
-    Texture  *txt = get_arg(interpreter);
+    Object *txt = get_obj(interpreter);
     check(txt, "sphere texture arg error");
-    return object_cdata(interpreter, shape_sphere(*pos, *rad, *txt));
+    return object_cdata(
+        interpreter,
+        shape_sphere(
+            *(Vector3D*)pos->cdata,
+            rad->number,
+            *(Texture*)txt->cdata
+        )
+    );
 error:
     return NULL;
 }
 
 Object *plane(Interpreter *interpreter, int arg_num) {
-    Vector3D *pos = get_arg(interpreter);
+    Object *pos = get_obj(interpreter);
     check(pos, "plane position arg error");
-    Vector3D *nor = get_arg(interpreter);
+    Object *nor = get_obj(interpreter);
     check(nor, "plane normal arg error");
-    Texture  *txt = get_arg(interpreter);
+    Object *txt = get_obj(interpreter);
     check(txt, "plane texture arg error");
-    return object_cdata(interpreter, shape_plane(*pos, *nor, *txt));
+    return object_cdata(
+        interpreter,
+        shape_plane(
+            *(Vector3D*)pos->cdata,
+            *(Vector3D*)nor->cdata,
+            *(Texture*)txt->cdata
+        )
+    );
 error:
     return NULL;
 }
 
 Object *rayscene(Interpreter *interpreter, int arg_num) {
-    Camera *camera = get_arg(interpreter);
+    Object *camera = get_obj(interpreter);
     check(camera, "scene camera arg error");
-    Config *config = get_arg(interpreter);
+    Object *config = get_obj(interpreter);
     check(config, "scene config arg error");
-    List   *lights = tlist_to_clist(get_arg(interpreter));
+
+    Object *lights = get_obj(interpreter);
     check(lights, "scene lights arg error");
-    List   *shapes = tlist_to_clist(get_arg(interpreter));
+    List *light_list = tlist_to_clist(lights->list);
+
+    Object *shapes = get_obj(interpreter);
     check(shapes, "scene shapes arg error");
-    return object_cdata(interpreter, scene_create(camera, config, lights, shapes));
+    List *shape_list = tlist_to_clist(shapes->list);
+    return object_cdata(
+        interpreter,
+        scene_create(camera->cdata, config->cdata, light_list, shape_list)
+    );
 error:
     return NULL;
 }
 
 Object *trace_scene(Interpreter *interpreter, int arg_num) {
-    Scene *scene = get_arg(interpreter);
+    Object *scene = get_obj(interpreter);
     check(scene, "trace scene arg error");
-    bstring name = get_arg(interpreter);
+    Object *name = get_obj(interpreter);
     check(scene, "output name arg error");
-    rays_calc(scene);
-    render_png(scene, name);
-    scene_cleanup(scene);
-    printf("output scene to file: %s\n", bdata(name));
+    rays_calc(scene->cdata);
+    render_png(scene->cdata, name->string);
+    scene_cleanup(scene->cdata);
+    printf("output scene to file: %s\n", bdata(name->string));
     return object_nothing(interpreter);
 error:
     return NULL;

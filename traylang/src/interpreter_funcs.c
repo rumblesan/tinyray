@@ -173,18 +173,13 @@ error:
 Object *interpret_call_function(Interpreter *interpreter, bstring name, int arg_num) {
     Object *func_obj = interpreter_get_variable(interpreter, name);
     check(interpreter->error != 1, "Error whilst calling function");
-    c_func f = func_obj->value;
+    c_func f = func_obj->cfunction;
     interpreter_enter_scope(interpreter);
     Object *result = f(interpreter, arg_num);
     interpreter_leave_scope(interpreter);
     return result;
 error:
     return NULL;
-}
-
-void *get_arg(Interpreter *interpreter) {
-    Object *dv = interpreter_stack_pop(interpreter);
-    return dv != NULL ? dv->value : NULL;
 }
 
 Object *get_obj(Interpreter *interpreter) {

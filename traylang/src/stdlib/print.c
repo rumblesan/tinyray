@@ -10,31 +10,27 @@
 Object *print(Interpreter *interpreter, int arg_num) {
     int i;
     for (i = 0; i < arg_num; i += 1) {
-        print_value(get_arg(interpreter));
+        print_value(get_obj(interpreter));
     }
     return object_nothing(interpreter);
 }
 
 void print_value(Object *obj) {
-    double *v;
-    bstring str;
     switch(obj->type) {
         case CFUNCTION:
             printf("Function\n");
             break;
         case LIST:
-            print_list(obj->value);
+            print_list(obj->list);
             break;
         case NOTHING:
             printf("Nothing\n");
             break;
         case NUMBER:
-            v = obj->value;
-            printf("%f\n", *v);
+            printf("%f\n", obj->number);
             break;
         case STRING:
-            str = obj->value;
-            printf("%s\n", str->data);
+            printf("%s\n", bdata(obj->string));
             break;
         case CDATA:
             printf("C Data\n");

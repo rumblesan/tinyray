@@ -7,14 +7,12 @@
 #include "object.h"
 #include "bclib/list.h"
 
-Object *object_create(Interpreter *interpreter, ObjectType type, void *value) {
+Object *object_create(Interpreter *interpreter) {
     if (list_count(interpreter->objects) == interpreter->max_objects) {
         interpreter_gc(interpreter);
     }
     Object *obj = malloc(sizeof(Object));
     check_mem(obj);
-    obj->type = type;
-    obj->value = value;
     obj->marked = 0;
     list_push(interpreter->objects, obj);
     return obj;
@@ -23,29 +21,44 @@ error:
 }
 
 Object *object_c_function(Interpreter *interpreter, c_func func) {
-    return object_create(interpreter, CFUNCTION, func);
+    Object *object = object_create(interpreter);
+    object->type = CFUNCTION;
+    object->cfunction = func;
+    return object;
 }
 
 Object *object_list(Interpreter *interpreter, List *list) {
-    return object_create(interpreter, LIST, list);
+    Object *object = object_create(interpreter);
+    object->type = LIST;
+    object->list = list;
+    return object;
 }
 
 Object *object_nothing(Interpreter *interpreter) {
-    return object_create(interpreter, NOTHING, NULL);
+    Object *object = object_create(interpreter);
+    object->type = NOTHING;
+    return object;
 }
 
 Object *object_number(Interpreter *interpreter, double num) {
-    double *val = malloc(sizeof(double));
-    *val = num;
-    return object_create(interpreter, NUMBER, val);
+    Object *object = object_create(interpreter);
+    object->type = NUMBER;
+    object->number = num;
+    return object;
 }
 
 Object *object_string(Interpreter *interpreter, bstring string) {
-    return object_create(interpreter, STRING, string);
+    Object *object = object_create(interpreter);
+    object->type = STRING;
+    object->string = string;
+    return object;
 }
 
 Object *object_cdata(Interpreter *interpreter, void *cdata) {
-    return object_create(interpreter, CDATA, cdata);
+    Object *object = object_create(interpreter);
+    object->type = CDATA;
+    object->cdata = cdata;
+    return object;
 }
 
 void object_destroy(Object *object) {
@@ -58,16 +71,16 @@ void object_clear_destroy(Object *object) {
             debug("Not freeing up c function pointer");
             break;
         case LIST:
-            list_clear_destroy(object->value);
+            list_clear_destroy(object->list);
             break;
         case NOTHING:
             debug("Not freeing up Nothing");
             break;
         case NUMBER:
-            free(object->value);
+            debug("No need to free number");
             break;
         case STRING:
-            bdestroy(object->value);
+            bdestroy(object->string);
             break;
         case CDATA:
             debug("Not freeing up CData");
@@ -82,7 +95,7 @@ void object_mark(Object *object) {
     }
     object->marked = 1;
     if (object->type == LIST) {
-        List *list = object->value;
+        List *list = object->list;
         LIST_FOREACH(list, first, next, el) {
             object_mark(el->value);
         }

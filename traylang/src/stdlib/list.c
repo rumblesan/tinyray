@@ -15,9 +15,9 @@ Object *list(Interpreter *interpreter, int arg_num) {
 }
 
 Object *append(Interpreter *interpreter, int arg_num) {
-    List *list = get_arg(interpreter);
-    Object *obj = get_obj(interpreter);
-    list_push(list, obj);
-    return object_list(interpreter, list);
+    Object *list_obj = get_obj(interpreter);
+    Object *arg_obj = get_obj(interpreter);
+    list_push(list_obj->list, arg_obj);
+    return list_obj;
 }
 
