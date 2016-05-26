@@ -2,10 +2,17 @@
 #define TRAYLANG_OBJECT_H
 
 #include "interpreter.h"
+#include "ast.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
-typedef enum {CFUNCTION, LIST, NOTHING, NUMBER, STRING, CDATA} ObjectType;
+typedef enum {CFUNCTION, LAMBDA, LIST, NOTHING, NUMBER, STRING, CDATA} ObjectType;
+
+typedef struct Lambda {
+    List *arg_names;
+
+    Block *body;
+} Lambda;
 
 typedef struct Object *(*c_func)(Interpreter *interpreter, int arg_count);
 
@@ -17,6 +24,7 @@ typedef struct Object {
 
     union {
         c_func cfunction;
+        Lambda *lambda;
         List *list;
         double number;
         bstring string;
@@ -26,6 +34,8 @@ typedef struct Object {
 } Object;
 
 Object *object_c_function(Interpreter *interpreter, c_func func);
+
+Object *object_lambda(Interpreter *interpreter, List *arg_names, Block *body);
 
 Object *object_list(Interpreter *interpreter, List *list);
 

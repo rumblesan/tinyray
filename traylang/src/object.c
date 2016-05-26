@@ -5,6 +5,7 @@
 #include "interpreter.h"
 #include "interpreter_gc.h"
 #include "object.h"
+#include "ast.h"
 #include "bclib/list.h"
 
 Object *object_create(Interpreter *interpreter) {
@@ -20,10 +21,34 @@ error:
     return NULL;
 }
 
+Lambda *lambda_create(List *arg_names, Block *body) {
+    Lambda *lambda = malloc(sizeof(Lambda));
+    check_mem(lambda);
+    lambda->arg_names = arg_names;
+    lambda->body = body;
+    return lambda;
+error:
+    return NULL;
+}
+
+void lambda_destroy(Lambda *lambda) {
+    list_destroy(lambda->arg_names);
+    // TODO where should the ast be destroyed?
+    free(lambda);
+}
+
 Object *object_c_function(Interpreter *interpreter, c_func func) {
     Object *object = object_create(interpreter);
     object->type = CFUNCTION;
     object->cfunction = func;
+    return object;
+}
+
+Object *object_lambda(Interpreter *interpreter, List *arg_names, Block *body) {
+    Object *object = object_create(interpreter);
+    object->type = LAMBDA;
+    Lambda *lambda = lambda_create(arg_names, body);
+    object->lambda = lambda;
     return object;
 }
 
@@ -69,6 +94,9 @@ void object_clear_destroy(Object *object) {
     switch(object->type) {
         case CFUNCTION:
             debug("Not freeing up c function pointer");
+            break;
+        case LAMBDA:
+            lambda_destroy(object->lambda);
             break;
         case LIST:
             list_clear_destroy(object->list);
