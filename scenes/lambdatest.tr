@@ -1,0 +1,13 @@
+
+(def somemath
+  (lambda (a b c)
+    (
+      (add a (add b c))
+    )
+  )
+)
+
+(print
+  (somemath 1 2 3)
+)
+

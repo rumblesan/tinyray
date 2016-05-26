@@ -10,6 +10,7 @@
 %%
 
 "def"                         return DEFINE;
+"lambda"                      return LAMBDA;
 
 "("                           return OPAREN;
 ")"                           return CPAREN;

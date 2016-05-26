@@ -9,6 +9,7 @@
 #include "bclib/hashmap.h"
 #include "bclib/stack.h"
 #include "bclib/bstrlib.h"
+#include "stdlib/print.h"
 
 void interpreter_set_debug(Interpreter *interpreter, int debug_value) {
     interpreter->debug_mode = debug_value;
@@ -142,6 +143,17 @@ error:
     return NULL;
 }
 
+Object *interpret_lambda(Interpreter *interpreter, Lambda *lambda) {
+    Object *lambda_object = object_lambda(interpreter, lambda->arg_names, lambda->body);
+    check(lambda_object, "Error evaluating vardef");
+    return lambda_object;
+error:
+    if (interpreter->error == 0) {
+        interpreter_error(interpreter, bfromcstr("Error interpreting lambda"));
+    }
+    return NULL;
+}
+
 Stack *interpreter_push_args(Interpreter *interpreter, List *args) {
     Object *val;
     // Iterate list in reverse so first arg is highest on stack
@@ -159,17 +171,18 @@ Interpreter *interpreter_assign_args(Interpreter *interpreter, List *arg_names, 
     int arg_count = list_count(args);
     check(list_count(arg_names) == arg_count, "Different arg names and values length");
 
-    Object *name;
+    bstring name;
     Expression *val;
+    Object *evaled;
     int i;
     for (i = 0; i < arg_count; i += 1) {
         name = list_get(arg_names, i);
+        check(name, "Couldn't get argument name");
         val = list_get(args, i);
-        interpreter_set_variable(
-            interpreter,
-            name->string,
-            interpret_expression(interpreter, val)
-        );
+        evaled = interpret_expression(interpreter, val);
+        check(evaled, "arg expression didn't evaluate");
+
+        interpreter_set_variable(interpreter, name, evaled);
         check(interpreter->error != 1, "Error whilst interpreting");
     }
     return interpreter;
@@ -257,6 +270,12 @@ Object *interpret_expression(Interpreter *interpreter, Expression *expression) {
                 debug("interpret application");
             }
             v = interpret_application(interpreter, expression->application);
+            break;
+        case LAMBDAEXPR:
+            if (interpreter->debug_mode) {
+                debug("interpret lambda");
+            }
+            v = interpret_lambda(interpreter, expression->lambda);
             break;
         case NUMBEREXPR:
             if (interpreter->debug_mode) {

@@ -44,7 +44,8 @@ int parse(Block **ast, FILE *fp) {
     List          *elementsNode;
     Element       *elementNode;
     Application   *applicationNode;
-    List          *argListNode;
+    List          *listNode;
+    Lambda        *lambdaNode;
     VarDefinition *varDefNode;
     Expression    *expressionNode;
     Number        *numberNode;
@@ -55,6 +56,7 @@ int parse(Block **ast, FILE *fp) {
 }
 
 %token DEFINE
+%token LAMBDA
 %token OPAREN
 %token CPAREN
 %token DQUOTE
@@ -66,7 +68,9 @@ int parse(Block **ast, FILE *fp) {
 %type<elementsNode> elements
 %type<elementNode> element
 %type<applicationNode> application
-%type<argListNode> argList
+%type<listNode> argList
+%type<listNode> argNamesList
+%type<lambdaNode> lambda
 %type<varDefNode> vardefinition
 %type<expressionNode> expression
 %type<variableNode> variable
@@ -116,6 +120,21 @@ argList: %empty
        }
        ;
 
+argNamesList: %empty
+       {
+           $$ = list_create();
+       }
+       | argNamesList IDENTIFIER
+       {
+           $$ = list_push($1, $2);
+       }
+       ;
+
+lambda: OPAREN LAMBDA OPAREN argNamesList CPAREN OPAREN body CPAREN CPAREN
+       {
+           $$ = ast_lambda_create($4, $7);
+       }
+       ;
 
 vardefinition: OPAREN DEFINE IDENTIFIER expression CPAREN
           {
@@ -126,6 +145,10 @@ vardefinition: OPAREN DEFINE IDENTIFIER expression CPAREN
 expression: variable
           {
               $$ = ast_variable_expression($1);
+          }
+          | lambda
+          {
+              $$ = ast_lambda_expression($1);
           }
           | STRING
           {

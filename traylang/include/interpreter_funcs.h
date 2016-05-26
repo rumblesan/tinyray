@@ -33,6 +33,8 @@ Object *interpret_element(Interpreter *interpreter, Element *element);
 
 Object *interpret_vardef(Interpreter *interpreter, VarDefinition *vardef);
 
+Object *interpret_lambda(Interpreter *interpreter, Lambda *lambda);
+
 Object *interpret_application(Interpreter *interpreter, Application *application);
 
 Object *interpret_call_lambda(Interpreter *interpreter, LambdaObject *lambda, List *args);
