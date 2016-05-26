@@ -226,7 +226,10 @@ error:
     return NULL;
 }
 
-Object *interpret_call_lambda(Interpreter *interpreter, Lambda *lambda, List *args) {
+Object *interpret_call_lambda(Interpreter *interpreter, LambdaObject *lambda, List *args) {
+    if (interpreter->debug_mode) {
+        debug("Applying lambda");
+    }
     Interpreter *i = interpreter_assign_args(
         interpreter,
         lambda->arg_names,

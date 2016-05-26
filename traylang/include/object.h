@@ -8,11 +8,11 @@
 
 typedef enum {CFUNCTION, LAMBDA, LIST, NOTHING, NUMBER, STRING, CDATA} ObjectType;
 
-typedef struct Lambda {
+typedef struct LambdaObject {
     List *arg_names;
 
     Block *body;
-} Lambda;
+} LambdaObject;
 
 typedef struct Object *(*c_func)(Interpreter *interpreter, int arg_count);
 
@@ -24,7 +24,7 @@ typedef struct Object {
 
     union {
         c_func cfunction;
-        Lambda *lambda;
+        LambdaObject *lambda;
         List *list;
         double number;
         bstring string;

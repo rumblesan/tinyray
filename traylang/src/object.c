@@ -21,8 +21,8 @@ error:
     return NULL;
 }
 
-Lambda *lambda_create(List *arg_names, Block *body) {
-    Lambda *lambda = malloc(sizeof(Lambda));
+LambdaObject *lambda_create(List *arg_names, Block *body) {
+    LambdaObject *lambda = malloc(sizeof(LambdaObject));
     check_mem(lambda);
     lambda->arg_names = arg_names;
     lambda->body = body;
@@ -31,7 +31,7 @@ error:
     return NULL;
 }
 
-void lambda_destroy(Lambda *lambda) {
+void lambda_destroy(LambdaObject *lambda) {
     list_destroy(lambda->arg_names);
     // TODO where should the ast be destroyed?
     free(lambda);
@@ -47,7 +47,7 @@ Object *object_c_function(Interpreter *interpreter, c_func func) {
 Object *object_lambda(Interpreter *interpreter, List *arg_names, Block *body) {
     Object *object = object_create(interpreter);
     object->type = LAMBDA;
-    Lambda *lambda = lambda_create(arg_names, body);
+    LambdaObject *lambda = lambda_create(arg_names, body);
     object->lambda = lambda;
     return object;
 }
