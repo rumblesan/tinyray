@@ -4,6 +4,8 @@
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
+struct Block;
+
 typedef struct tagbstring Identifier;
 
 /* Number Literal AST Node */
@@ -27,6 +29,19 @@ typedef struct String {
 String *ast_string_create(bstring value);
 
 void ast_string_cleanup(String *string);
+
+/* Lambda AST Node */
+typedef struct Lambda {
+
+    List *arg_names;
+
+    struct Block *body;
+
+} Lambda;
+
+Lambda *ast_lambda_create(List *arg_names, struct Block *body);
+
+void ast_lambda_cleanup(Lambda *lambda);
 
 /* Variable AST Node */
 typedef struct Variable {
@@ -53,7 +68,7 @@ Application *ast_application_create(bstring name, List *args);
 void ast_application_cleanup(Application *application);
 
 /* Expression AST Node */
-typedef enum {APPLICATIONEXPR, NUMBEREXPR, STRINGEXPR, VARIABLEEXPR} ExpressionType;
+typedef enum {APPLICATIONEXPR, NUMBEREXPR, STRINGEXPR, VARIABLEEXPR, LAMBDAEXPR} ExpressionType;
 
 typedef struct Expression {
 
@@ -64,6 +79,7 @@ typedef struct Expression {
         Number *number;
         String *string;
         Variable *variable;
+        Lambda *lambda;
     };
 
 } Expression;
@@ -79,6 +95,8 @@ Expression *ast_number_expression(Number *number);
 Expression *ast_string_expression(String *string);
 
 Expression *ast_variable_expression(Variable *variable);
+
+Expression *ast_lambda_expression(Lambda *lambda);
 
 
 /* Variable Definition AST Node */

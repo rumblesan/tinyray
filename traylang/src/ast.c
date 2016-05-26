@@ -110,6 +110,13 @@ Expression *ast_variable_expression(Variable *variable) {
     return expression;
 }
 
+Expression *ast_lambda_expression(Lambda *lambda) {
+    Expression *expression = ast_expression_create();
+    expression->expressionType = LAMBDAEXPR;
+    expression->lambda = lambda;
+    return expression;
+}
+
 /* Number Literal AST Node */
 Number *ast_number_create(double value) {
     Number *number = malloc(sizeof(Number));
@@ -145,5 +152,17 @@ Variable *ast_variable_create(bstring name) {
 void ast_variable_cleanup(Variable *variable) {
     // TODO Free up name as well?
     free(variable);
+}
+
+/* Lambda AST Node */
+Lambda *ast_lambda_create(List *arg_names, Block *body) {
+    Lambda *lambda = malloc(sizeof(Lambda));
+    lambda->arg_names = arg_names;
+    lambda->body = body;
+    return lambda;
+}
+
+void ast_lambda_cleanup(Lambda *lambda) {
+    free(lambda);
 }
 

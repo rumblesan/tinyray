@@ -24,4 +24,6 @@ void ast_string_print(String *string, int indentation);
 
 void ast_variable_print(Variable *variable, int indentation);
 
+void ast_lambda_print(Lambda *lambda, int indentation);
+
 #endif

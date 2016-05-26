@@ -71,6 +71,9 @@ void ast_expression_print(Expression *expression, int indentation) {
         case VARIABLEEXPR:
             ast_variable_print(expression->variable, indentation + DEPTH);
             break;
+        case LAMBDAEXPR:
+            ast_lambda_print(expression->lambda, indentation + DEPTH);
+            break;
     }
 }
 
@@ -89,6 +92,17 @@ void ast_string_print(String *string, int indentation) {
 void ast_variable_print(Variable *variable, int indentation) {
     indent(indentation);
     printf("Variable: %s\n", variable->name->data);
+}
+
+void ast_lambda_print(Lambda *lambda, int indentation) {
+    indent(indentation);
+    printf("Lambda: %d args\n", list_count(lambda->arg_names));
+    indent(indentation + DEPTH);
+    bstring name;
+    LIST_FOREACH(lambda->arg_names, first, next, cur) {
+        name = cur->value;
+        printf("%s  ", bdata(name));
+    }
 }
 
 
