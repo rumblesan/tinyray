@@ -142,10 +142,10 @@ error:
     return NULL;
 }
 
-Stack *interpreter_push_args(Interpreter *interpreter, Application *application) {
+Stack *interpreter_push_args(Interpreter *interpreter, List *args) {
     Object *val;
     // Iterate list in reverse so first arg is highest on stack
-    LIST_FOREACH(application->args, last, prev, cur) {
+    LIST_FOREACH(args, last, prev, cur) {
         val = interpret_expression(interpreter, cur->value);
         interpreter_stack_push(interpreter, val);
         check(interpreter->error != 1, "Error whilst interpreting");
@@ -155,27 +155,87 @@ error:
     return NULL;
 }
 
+Interpreter *interpreter_assign_args(Interpreter *interpreter, List *arg_names, List *args) {
+    int arg_count = list_count(args);
+    check(list_count(arg_names) == arg_count, "Different arg names and values length");
+
+    Object *name;
+    Expression *val;
+    int i;
+    for (i = 0; i < arg_count; i += 1) {
+        name = list_get(arg_names, i);
+        val = list_get(args, i);
+        interpreter_set_variable(
+            interpreter,
+            name->string,
+            interpret_expression(interpreter, val)
+        );
+        check(interpreter->error != 1, "Error whilst interpreting");
+    }
+    return interpreter;
+error:
+    interpreter_error(
+        interpreter,
+        bfromcstr("Error assigning args")
+    );
+    return NULL;
+}
+
 Object *interpret_application(Interpreter *interpreter, Application *application) {
     int arg_num = list_count(application->args);
     if (interpreter->debug_mode) {
         debug("Application: %s", application->name->data);
         debug("Arg num: %d", arg_num);
     }
-    Stack *stack = interpreter_push_args(interpreter, application);
-    check(stack, "Error whilst pushing args to stack");
-    Object *result = interpret_call_function(interpreter, application->name, arg_num);
+
+    Object *func_obj = interpreter_get_variable(interpreter, application->name);
+    Object *result;
+    switch(func_obj->type) {
+        case CFUNCTION:
+            result = interpret_call_c_function(
+                interpreter, func_obj->cfunction, application->args
+            );
+            break;
+        case LAMBDA:
+            result = interpret_call_lambda(
+                interpreter, func_obj->lambda, application->args
+            );
+            break;
+        default:
+            interpreter_error(
+                interpreter,
+                bfromcstr("Could not apply object")
+            );
+            break;
+    }
     check(interpreter->error != 1, "Error whilst interpreting");
     return result;
 error:
     return NULL;
 }
 
-Object *interpret_call_function(Interpreter *interpreter, bstring name, int arg_num) {
-    Object *func_obj = interpreter_get_variable(interpreter, name);
-    check(interpreter->error != 1, "Error whilst calling function");
-    c_func f = func_obj->cfunction;
+Object *interpret_call_c_function(Interpreter *interpreter, c_func func, List *args) {
+    Stack *stack = interpreter_push_args(interpreter, args);
+    check(stack, "Error whilst pushing args to stack");
+
     interpreter_enter_scope(interpreter);
-    Object *result = f(interpreter, arg_num);
+    Object *result = func(interpreter, list_count(args));
+    interpreter_leave_scope(interpreter);
+    return result;
+error:
+    return NULL;
+}
+
+Object *interpret_call_lambda(Interpreter *interpreter, Lambda *lambda, List *args) {
+    Interpreter *i = interpreter_assign_args(
+        interpreter,
+        lambda->arg_names,
+        args
+    );
+    check(i, "Error whilst assigning args");
+
+    interpreter_enter_scope(interpreter);
+    Object *result = interpret(interpreter, lambda->body);
     interpreter_leave_scope(interpreter);
     return result;
 error:

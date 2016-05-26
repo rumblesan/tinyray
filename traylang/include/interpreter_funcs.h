@@ -35,7 +35,9 @@ Object *interpret_vardef(Interpreter *interpreter, VarDefinition *vardef);
 
 Object *interpret_application(Interpreter *interpreter, Application *application);
 
-Object *interpret_call_function(Interpreter *interpreter, bstring name, int arg_num);
+Object *interpret_call_lambda(Interpreter *interpreter, Lambda *lambda, List *args);
+
+Object *interpret_call_c_function(Interpreter *interpreter, c_func func, List *args);
 
 Object *get_obj(Interpreter *interpreter);
 
