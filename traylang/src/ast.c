@@ -44,16 +44,16 @@ Element *ast_vardefinition_element(VarDefinition *varDefinition) {
 }
 
 /* Application AST Node */
-Application *ast_application_create(bstring name, List *args) {
+Application *ast_application_create(Expression *expr, List *args) {
     Application *application = malloc(sizeof(Application));
-    application->name = name;
+    application->expr = expr;
     application->args = args;
 
     return application;
 }
 
 void ast_application_cleanup(Application *application) {
-    // TODO Free up name and args
+    // TODO Free up expr and args
     free(application);
 }
 

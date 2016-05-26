@@ -21,6 +21,9 @@ void interpreter_error(Interpreter *interpreter, bstring err_message) {
 }
 
 Interpreter *interpreter_enter_scope(Interpreter *interpreter) {
+    if (interpreter->debug_mode) {
+        debug("Entering scope");
+    }
     StackFrame *stackframe = stackframe_create();
     check(stackframe, "Could not create new stackframe");
     stack_push(interpreter->scopes, stackframe);
@@ -30,6 +33,9 @@ error:
 }
 
 Interpreter *interpreter_leave_scope(Interpreter *interpreter) {
+    if (interpreter->debug_mode) {
+        debug("Leaving scope");
+    }
     StackFrame *stackframe = stack_pop(interpreter->scopes);
     check(stackframe, "Could not leave previous scope");
 
@@ -197,11 +203,11 @@ error:
 Object *interpret_application(Interpreter *interpreter, Application *application) {
     int arg_num = list_count(application->args);
     if (interpreter->debug_mode) {
-        debug("Application: %s", application->name->data);
+        debug("Application");
         debug("Arg num: %d", arg_num);
     }
 
-    Object *func_obj = interpreter_get_variable(interpreter, application->name);
+    Object *func_obj = interpret_expression(interpreter, application->expr);
     Object *result;
     switch(func_obj->type) {
         case CFUNCTION:
@@ -243,6 +249,7 @@ Object *interpret_call_lambda(Interpreter *interpreter, LambdaObject *lambda, Li
     if (interpreter->debug_mode) {
         debug("Applying lambda");
     }
+    interpreter_enter_scope(interpreter);
     Interpreter *i = interpreter_assign_args(
         interpreter,
         lambda->arg_names,
@@ -250,7 +257,6 @@ Object *interpret_call_lambda(Interpreter *interpreter, LambdaObject *lambda, Li
     );
     check(i, "Error whilst assigning args");
 
-    interpreter_enter_scope(interpreter);
     Object *result = interpret(interpreter, lambda->body);
     interpreter_leave_scope(interpreter);
     return result;

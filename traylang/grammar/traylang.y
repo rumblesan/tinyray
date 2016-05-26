@@ -104,7 +104,7 @@ element: application
        }
        ;
 
-application: OPAREN IDENTIFIER argList CPAREN
+application: OPAREN expression argList CPAREN
            {
                $$ = ast_application_create($2, $3);
            }

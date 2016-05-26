@@ -5,6 +5,7 @@
 #include "bclib/bstrlib.h"
 
 struct Block;
+struct Expression;
 
 typedef struct tagbstring Identifier;
 
@@ -57,13 +58,13 @@ void ast_variable_cleanup(Variable *variable);
 /* Application AST Node */
 typedef struct Application {
 
-    bstring name;
+    struct Expression *expr;
 
     List *args;
 
 } Application;
 
-Application *ast_application_create(bstring name, List *args);
+Application *ast_application_create(struct Expression *expr, List *args);
 
 void ast_application_cleanup(Application *application);
 
