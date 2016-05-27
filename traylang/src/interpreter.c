@@ -39,29 +39,6 @@ Interpreter *interpreter_create() {
 
     return interpreter;
 error:
-    if (interpreter) {
-        interpreter_destroy(interpreter);
-    }
     return NULL;
-}
-
-void interpreter_destroy(Interpreter *interpreter) {
-    if (interpreter) {
-        if (interpreter->globals) {
-            // TODO
-            // delete objects stored in hashmap
-            hashmap_destroy(interpreter->globals);
-        }
-        if (interpreter->call_stack) {
-            stack_clear_destroy(interpreter->call_stack);
-        }
-        if (interpreter->scopes) {
-            stack_clear_destroy(interpreter->scopes);
-        }
-        if (interpreter->objects) {
-            list_clear_destroy(interpreter->objects);
-        }
-        free(interpreter);
-    }
 }
 

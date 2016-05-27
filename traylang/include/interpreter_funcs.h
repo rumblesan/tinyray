@@ -7,6 +7,8 @@
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
+void interpreter_destroy(Interpreter *interpreter);
+
 void interpreter_set_debug(Interpreter *interpreter, int debug_value);
 
 void interpreter_error(Interpreter *interpreter, bstring err_message);

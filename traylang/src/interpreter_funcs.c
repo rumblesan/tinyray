@@ -11,6 +11,33 @@
 #include "bclib/bstrlib.h"
 #include "stdlib/print.h"
 
+int globals_hashmap_object_destroy(HashmapNode *node) {
+    Object *obj = node->data;
+    object_destroy(obj);
+    return 0;
+}
+
+void interpreter_destroy(Interpreter *interpreter) {
+    if (interpreter) {
+        if (interpreter->globals) {
+            hashmap_destroy(interpreter->globals);
+        }
+        if (interpreter->call_stack) {
+            stack_destroy(interpreter->call_stack);
+        }
+        if (interpreter->scopes) {
+            stack_destroy(interpreter->scopes);
+        }
+        if (interpreter->objects) {
+            if (interpreter->debug_mode) {
+                debug("Clearing objects");
+            }
+            object_list_destroy(interpreter->objects);
+        }
+        free(interpreter);
+    }
+}
+
 void interpreter_set_debug(Interpreter *interpreter, int debug_value) {
     interpreter->debug_mode = debug_value;
 }

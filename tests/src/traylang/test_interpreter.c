@@ -1,6 +1,7 @@
 #include "minunit.h"
 
 #include "interpreter.h"
+#include "interpreter_funcs.h"
 
 static Interpreter *interpreter = NULL;
 

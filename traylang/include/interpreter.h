@@ -30,6 +30,4 @@ typedef struct Interpreter {
 
 Interpreter *interpreter_create();
 
-void interpreter_destroy(Interpreter *interpreter);
-
 #endif
