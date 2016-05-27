@@ -103,6 +103,7 @@ void ast_lambda_print(Lambda *lambda, int indentation) {
         name = cur->value;
         printf("%s  ", bdata(name));
     }
+    printf("\n");
 }
 
 
