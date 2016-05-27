@@ -49,6 +49,8 @@ Object *object_cdata(Interpreter *interpreter, void *cdata);
 
 void object_destroy(Object *object);
 
+void object_list_destroy(List *list);
+
 void object_mark(Object *object);
 
 #endif
