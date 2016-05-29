@@ -78,6 +78,10 @@ int main(int argc, char *argv[]) {
         "Error whilst interpreting: %s", interpreter->err_message->data
     );
 
+
+    interpreter_destroy(interpreter);
+    ast_block_cleanup(ast);
+
     return 0;
 error:
     return 1;
