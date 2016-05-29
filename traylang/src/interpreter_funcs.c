@@ -166,7 +166,7 @@ Object *interpret_vardef(Interpreter *interpreter, VarDefinition *vardef) {
     Object *expr_value = interpret_expression(interpreter, vardef->expression);
     check(interpreter->error != 1, "Error interpreting vardef");
     check(expr_value, "Error evaluating vardef");
-    interpreter_set_variable(interpreter, vardef->name, expr_value);
+    interpreter_set_variable(interpreter, bstrcpy(vardef->name), expr_value);
     check(interpreter->error != 1, "Error interpreting vardef");
     return expr_value;
 error:
@@ -177,7 +177,11 @@ error:
 }
 
 Object *interpret_lambda(Interpreter *interpreter, Lambda *lambda) {
-    Object *lambda_object = object_lambda(interpreter, lambda->arg_names, lambda->body);
+    List *arg_names = list_create();
+    LIST_FOREACH(lambda->arg_names, last, prev, cur) {
+        list_push(arg_names, bstrcpy(cur->value));
+    }
+    Object *lambda_object = object_lambda(interpreter, arg_names, lambda->body);
     check(lambda_object, "Error evaluating vardef");
     return lambda_object;
 error:
@@ -344,7 +348,7 @@ error:
 }
 
 Object *interpret_string(Interpreter *interpreter, String *string) {
-    Object *dv = object_string(interpreter, string->value);
+    Object *dv = object_string(interpreter, bstrcpy(string->value));
     check(dv != NULL, "Could not create object")
     return dv;
 error:
