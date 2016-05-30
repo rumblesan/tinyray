@@ -4,15 +4,15 @@
 
 #include "dbg.h"
 
-#include "parser.h"
-#include "interpreter.h"
-#include "interpreter_funcs.h"
+#include "traylang/parser.h"
+#include "traylang/interpreter.h"
+#include "traylang/interpreter_funcs.h"
 
 #include "langfuncs/tracescene.h"
 
-#include "stdlib/print.h"
-#include "stdlib/math.h"
-#include "stdlib/list.h"
+#include "traylang/print.h"
+#include "traylang/math.h"
+#include "traylang/list.h"
 
 int main(int argc, char *argv[]) {
 

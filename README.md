@@ -8,6 +8,16 @@ I'm building a raytracer!
 
 Because everybody should... and my C really needs brushing up;
 
+Dependencies
+------------
+
+tinyray depends on two libraries I've created,
+
+* BCLib
+* TrayLang
+
+Make sure you have these built and installed before attempting to build. Follow the instructions in their READMES.
+
 Building
 --------
 
@@ -18,16 +28,6 @@ make
 make tests
 ```
 
-Bison & Flex
-----
-
-TinyRay uses bison and flex for parsing, so these need to be installed.
-
-On OSX, the following may be necessary to make sure that CMake finds the versions of bison and flex installed with homebrew.
-
-```bash
-export CMAKE_PREFIX_PATH=`brew --prefix`/opt/bison/bin:`brew --prefix`/opt/flex/bin
-```
 Contact
 -------
 

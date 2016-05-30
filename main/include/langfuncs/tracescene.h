@@ -1,8 +1,8 @@
 #ifndef LANGUAGE_STDLIB_SCENE_H
 #define LANGUAGE_STDLIB_SCENE_H
 
-#include "interpreter.h"
-#include "object.h"
+#include "traylang/interpreter.h"
+#include "traylang/object.h"
 #include "bclib/list.h"
 
 Object *config(Interpreter *interpreter, int arg_num);

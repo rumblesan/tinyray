@@ -1,6 +1,0 @@
-(def a 2)
-(def b 4)
-(print (add a b))
-(print (sub b a))
-(print (add b 4))
-(add 3 4)

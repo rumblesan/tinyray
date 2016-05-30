@@ -2,9 +2,9 @@
 
 #include "langfuncs/tracescene.h"
 
-#include "interpreter.h"
-#include "interpreter_funcs.h"
-#include "object.h"
+#include "traylang/interpreter.h"
+#include "traylang/interpreter_funcs.h"
+#include "traylang/object.h"
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 

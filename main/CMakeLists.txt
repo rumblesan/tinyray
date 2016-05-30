@@ -11,5 +11,8 @@ add_executable(tinyray ${SOURCES})
 
 set_property(TARGET tinyray PROPERTY C_STANDARD 99)
 
-target_link_libraries(tinyray traylang-lib)
+find_package(TrayLang REQUIRED)
+include_directories("${TRAYLANG_INCLUDE_DIRS}")
+target_link_libraries(tinyray traylang)
+
 target_link_libraries(tinyray tracer-lib)
