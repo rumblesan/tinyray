@@ -4,15 +4,10 @@
 
 #include "dbg.h"
 
-#include "traylang/parser.h"
-#include "traylang/interpreter.h"
-#include "traylang/interpreter_funcs.h"
+#include "traylang/traylang.h"
+#include "traylang/traylang_ffi.h"
 
 #include "langfuncs/tracescene.h"
-
-#include "traylang/print.h"
-#include "traylang/math.h"
-#include "traylang/list.h"
 
 int main(int argc, char *argv[]) {
 
@@ -36,51 +31,33 @@ int main(int argc, char *argv[]) {
     FILE *fp = fopen(input_file, "r");
     check(fp, "Could not open file %s", input_file);
 
-    Block *ast;
 
-    int parseResult = parse(&ast, fp);
+    TrayLang *tray = traylang_init();
+    check(tray, "Could not init traylang");
 
-    fclose(fp);
+    traylang_add_function(tray, "config", config);
+    traylang_add_function(tray, "camera", camera);
+    traylang_add_function(tray, "col", col);
+    traylang_add_function(tray, "vec", vec);
+    traylang_add_function(tray, "texture", texture);
+    traylang_add_function(tray, "pointlight", pointlight);
+    traylang_add_function(tray, "ambientlight", ambientlight);
+    traylang_add_function(tray, "triangle", triangle);
+    traylang_add_function(tray, "sphere", sphere);
+    traylang_add_function(tray, "plane", plane);
+    traylang_add_function(tray, "rayscene", rayscene);
+    traylang_add_function(tray, "trace", trace_scene);
 
-    check(parseResult == 0, "Error during parsing");
-
-    printf("Parsed input scene file: %s\n", input_file);
-
-    Interpreter *interpreter = interpreter_create();
-    check(interpreter, "Could not create interpreter");
-
-    interpreter_set_global(interpreter, bfromcstr("print"), object_c_function(interpreter, print));
-    interpreter_set_global(interpreter, bfromcstr("add"), object_c_function(interpreter, add));
-    interpreter_set_global(interpreter, bfromcstr("sub"), object_c_function(interpreter, sub));
-
-    interpreter_set_global(interpreter, bfromcstr("config"), object_c_function(interpreter, config));
-    interpreter_set_global(interpreter, bfromcstr("camera"), object_c_function(interpreter, camera));
-    interpreter_set_global(interpreter, bfromcstr("col"), object_c_function(interpreter, col));
-    interpreter_set_global(interpreter, bfromcstr("vec"), object_c_function(interpreter, vec));
-    interpreter_set_global(interpreter, bfromcstr("texture"), object_c_function(interpreter, texture));
-    interpreter_set_global(interpreter, bfromcstr("pointlight"), object_c_function(interpreter, pointlight));
-    interpreter_set_global(interpreter, bfromcstr("ambientlight"), object_c_function(interpreter, ambientlight));
-    interpreter_set_global(interpreter, bfromcstr("triangle"), object_c_function(interpreter, triangle));
-    interpreter_set_global(interpreter, bfromcstr("sphere"), object_c_function(interpreter, sphere));
-    interpreter_set_global(interpreter, bfromcstr("plane"), object_c_function(interpreter, plane));
-    interpreter_set_global(interpreter, bfromcstr("rayscene"), object_c_function(interpreter, rayscene));
-    interpreter_set_global(interpreter, bfromcstr("trace"), object_c_function(interpreter, trace_scene));
-
-    interpreter_set_global(interpreter, bfromcstr("list"), object_c_function(interpreter, list));
-    interpreter_set_global(interpreter, bfromcstr("append"), object_c_function(interpreter, append));
-
-    interpreter_set_debug(interpreter, debug_mode);
-
-    interpret(interpreter, ast);
+    int result = traylang_interpret_file(tray, fp);
 
     check(
-        interpreter->error == 0,
-        "Error whilst interpreting: %s", interpreter->err_message->data
+        result == 0,
+        "Error whilst interpreting"
     );
 
+    traylang_cleanup(tray);
 
-    interpreter_destroy(interpreter);
-    ast_block_cleanup(ast);
+    fclose(fp);
 
     return 0;
 error:

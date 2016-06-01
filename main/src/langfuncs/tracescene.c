@@ -2,9 +2,9 @@
 
 #include "langfuncs/tracescene.h"
 
-#include "traylang/interpreter.h"
-#include "traylang/interpreter_funcs.h"
-#include "traylang/object.h"
+#include "traylang/traylang.h"
+#include "traylang/traylang_ffi.h"
+
 #include "bclib/list.h"
 #include "bclib/bstrlib.h"
 
@@ -16,7 +16,7 @@
 
 void *tlist_to_clist(List *traylist) {
     List *clist = list_create();
-    Object *obj;
+    TrayObject *obj;
     int len = list_count(traylist);
     for (int i = 0; i < len; i += 1) {
         obj = list_get(traylist, i);
@@ -25,19 +25,19 @@ void *tlist_to_clist(List *traylist) {
     return clist;
 }
 
-Object *config(Interpreter *interpreter, int arg_num) {
-    Object *width   = get_obj(interpreter);
+TrayObject *config(TrayLangState *state, int arg_num) {
+    TrayObject *width   = traylang_get_obj(state);
     check(width, "config width arg error");
-    Object *height  = get_obj(interpreter);
+    TrayObject *height  = traylang_get_obj(state);
     check(height, "config height arg error");
-    Object *maxdist = get_obj(interpreter);
+    TrayObject *maxdist = traylang_get_obj(state);
     check(maxdist, "config max distance arg error");
-    Object *reflect = get_obj(interpreter);
+    TrayObject *reflect = traylang_get_obj(state);
     check(reflect, "config reflections arg error");
-    Object *colour  = get_obj(interpreter);
+    TrayObject *colour  = traylang_get_obj(state);
     check(colour, "config colour arg error");
-    return object_cdata(
-        interpreter,
+    return traylang_new_cdata(
+        state,
         config_create(
             width->number, height->number, maxdist->number,
             reflect->number, *(Colour*)(colour->cdata)
@@ -47,75 +47,75 @@ error:
     return NULL;
 }
 
-Object *camera(Interpreter *interpreter, int arg_num) {
-    Object *fov  = get_obj(interpreter);
+TrayObject *camera(TrayLangState *state, int arg_num) {
+    TrayObject *fov  = traylang_get_obj(state);
     check(fov, "camera fov arg error");
-    Object *pos  = get_obj(interpreter);
+    TrayObject *pos  = traylang_get_obj(state);
     check(pos, "camera position arg error");
-    Object *look = get_obj(interpreter);
+    TrayObject *look = traylang_get_obj(state);
     check(look, "camera look_at arg error");
-    return object_cdata(
-        interpreter,
+    return traylang_new_cdata(
+        state,
         camera_create(fov->number, *(Vector3D*)pos->cdata, *(Vector3D*)look->cdata)
     );
 error:
     return NULL;
 }
 
-Object *col(Interpreter *interpreter, int arg_num) {
-    Object *r = get_obj(interpreter);
+TrayObject *col(TrayLangState *state, int arg_num) {
+    TrayObject *r = traylang_get_obj(state);
     check(r, "col red arg error");
-    Object *g = get_obj(interpreter);
+    TrayObject *g = traylang_get_obj(state);
     check(g, "col green arg error");
-    Object *b = get_obj(interpreter);
+    TrayObject *b = traylang_get_obj(state);
     check(b, "col blue arg error");
     Colour *c = malloc(sizeof(Colour));
     check_mem(c);
     *c = colour(r->number, g->number, b->number);
-    return object_cdata(interpreter, c);
+    return traylang_new_cdata(state, c);
 error:
     return NULL;
 }
 
-Object *vec(Interpreter *interpreter, int arg_num) {
-    Object   *x = get_obj(interpreter);
+TrayObject *vec(TrayLangState *state, int arg_num) {
+    TrayObject   *x = traylang_get_obj(state);
     check(x, "vec x arg error");
-    Object   *y = get_obj(interpreter);
+    TrayObject   *y = traylang_get_obj(state);
     check(y, "vec y arg error");
-    Object   *z = get_obj(interpreter);
+    TrayObject   *z = traylang_get_obj(state);
     check(z, "vec z arg error");
     Vector3D *v = malloc(sizeof(Vector3D));
     check_mem(v);
     *v = vector3d(x->number, y->number, z->number);
-    return object_cdata(interpreter, v);
+    return traylang_new_cdata(state, v);
 error:
     return NULL;
 }
 
-Object *texture(Interpreter *interpreter, int arg_num) {
-    Object *lambert  = get_obj(interpreter);
+TrayObject *texture(TrayLangState *state, int arg_num) {
+    TrayObject *lambert  = traylang_get_obj(state);
     check(lambert, "texture lambert arg error");
-    Object *specular = get_obj(interpreter);
+    TrayObject *specular = traylang_get_obj(state);
     check(specular, "texture specular arg error");
-    Object *col      = get_obj(interpreter);
+    TrayObject *col      = traylang_get_obj(state);
     check(col, "texture col arg error");
     Texture *t = malloc(sizeof(Texture));
     check_mem(t);
     *t = texture_flat(lambert->number, specular->number, *(Colour*)col->cdata);
-    return object_cdata(interpreter, t);
+    return traylang_new_cdata(state, t);
 error:
     return NULL;
 }
 
-Object *pointlight(Interpreter *interpreter, int arg_num) {
-    Object *position  = get_obj(interpreter);
+TrayObject *pointlight(TrayLangState *state, int arg_num) {
+    TrayObject *position  = traylang_get_obj(state);
     check(position, "pointlight position arg error");
-    Object *intensity = get_obj(interpreter);
+    TrayObject *intensity = traylang_get_obj(state);
     check(intensity, "pointlight intensity arg error");
-    Object *colour    = get_obj(interpreter);
+    TrayObject *colour    = traylang_get_obj(state);
     check(colour, "pointlight colour arg error");
-    return object_cdata(
-        interpreter,
+    return traylang_new_cdata(
+        state,
         point_light_create(
             *(Vector3D*)position->cdata, intensity->number, *(Colour*)colour->cdata
         )
@@ -124,30 +124,30 @@ error:
     return NULL;
 }
 
-Object *ambientlight(Interpreter *interpreter, int arg_num) {
-    Object *intensity = get_obj(interpreter);
+TrayObject *ambientlight(TrayLangState *state, int arg_num) {
+    TrayObject *intensity = traylang_get_obj(state);
     check(intensity, "ambientlight intensity arg error");
-    Object *colour    = get_obj(interpreter);
+    TrayObject *colour    = traylang_get_obj(state);
     check(colour, "ambientlight colour arg error");
-    return object_cdata(
-        interpreter,
+    return traylang_new_cdata(
+        state,
         ambient_light_create(intensity->number, *(Colour*)colour->cdata)
     );
 error:
     return NULL;
 }
 
-Object *triangle(Interpreter *interpreter, int arg_num) {
-    Object *p1  = get_obj(interpreter);
+TrayObject *triangle(TrayLangState *state, int arg_num) {
+    TrayObject *p1  = traylang_get_obj(state);
     check(p1, "triangle p1 arg error");
-    Object *p2  = get_obj(interpreter);
+    TrayObject *p2  = traylang_get_obj(state);
     check(p2, "triangle p2 arg error");
-    Object *p3  = get_obj(interpreter);
+    TrayObject *p3  = traylang_get_obj(state);
     check(p3, "triangle p3 arg error");
-    Object *txt = get_obj(interpreter);
+    TrayObject *txt = traylang_get_obj(state);
     check(txt, "triangle texture arg error");
-    return object_cdata(
-        interpreter,
+    return traylang_new_cdata(
+        state,
         shape_triangle(
             *(Vector3D*)p1->cdata,
             *(Vector3D*)p2->cdata,
@@ -158,15 +158,15 @@ error:
     return NULL;
 }
 
-Object *sphere(Interpreter *interpreter, int arg_num) {
-    Object *pos = get_obj(interpreter);
+TrayObject *sphere(TrayLangState *state, int arg_num) {
+    TrayObject *pos = traylang_get_obj(state);
     check(pos, "sphere position arg error");
-    Object *rad = get_obj(interpreter);
+    TrayObject *rad = traylang_get_obj(state);
     check(rad, "sphere radius arg error");
-    Object *txt = get_obj(interpreter);
+    TrayObject *txt = traylang_get_obj(state);
     check(txt, "sphere texture arg error");
-    return object_cdata(
-        interpreter,
+    return traylang_new_cdata(
+        state,
         shape_sphere(
             *(Vector3D*)pos->cdata,
             rad->number,
@@ -177,15 +177,15 @@ error:
     return NULL;
 }
 
-Object *plane(Interpreter *interpreter, int arg_num) {
-    Object *pos = get_obj(interpreter);
+TrayObject *plane(TrayLangState *state, int arg_num) {
+    TrayObject *pos = traylang_get_obj(state);
     check(pos, "plane position arg error");
-    Object *nor = get_obj(interpreter);
+    TrayObject *nor = traylang_get_obj(state);
     check(nor, "plane normal arg error");
-    Object *txt = get_obj(interpreter);
+    TrayObject *txt = traylang_get_obj(state);
     check(txt, "plane texture arg error");
-    return object_cdata(
-        interpreter,
+    return traylang_new_cdata(
+        state,
         shape_plane(
             *(Vector3D*)pos->cdata,
             *(Vector3D*)nor->cdata,
@@ -196,37 +196,37 @@ error:
     return NULL;
 }
 
-Object *rayscene(Interpreter *interpreter, int arg_num) {
-    Object *camera = get_obj(interpreter);
+TrayObject *rayscene(TrayLangState *state, int arg_num) {
+    TrayObject *camera = traylang_get_obj(state);
     check(camera, "scene camera arg error");
-    Object *config = get_obj(interpreter);
+    TrayObject *config = traylang_get_obj(state);
     check(config, "scene config arg error");
 
-    Object *lights = get_obj(interpreter);
+    TrayObject *lights = traylang_get_obj(state);
     check(lights, "scene lights arg error");
     List *light_list = tlist_to_clist(lights->list);
 
-    Object *shapes = get_obj(interpreter);
+    TrayObject *shapes = traylang_get_obj(state);
     check(shapes, "scene shapes arg error");
     List *shape_list = tlist_to_clist(shapes->list);
-    return object_cdata(
-        interpreter,
+    return traylang_new_cdata(
+        state,
         scene_create(camera->cdata, config->cdata, light_list, shape_list)
     );
 error:
     return NULL;
 }
 
-Object *trace_scene(Interpreter *interpreter, int arg_num) {
-    Object *scene = get_obj(interpreter);
+TrayObject *trace_scene(TrayLangState *state, int arg_num) {
+    TrayObject *scene = traylang_get_obj(state);
     check(scene, "trace scene arg error");
-    Object *name = get_obj(interpreter);
+    TrayObject *name = traylang_get_obj(state);
     check(scene, "output name arg error");
     rays_calc(scene->cdata);
     render_png(scene->cdata, name->string);
     scene_cleanup(scene->cdata);
     printf("output scene to file: %s\n", bdata(name->string));
-    return object_nothing(interpreter);
+    return traylang_new_nothing(state);
 error:
     return NULL;
 }
