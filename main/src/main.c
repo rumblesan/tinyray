@@ -12,16 +12,12 @@
 int main(int argc, char *argv[]) {
 
     char *input_file = NULL;
-    int debug_mode = 0;
     int c;
 
-    while ((c = getopt(argc, argv, "di:")) != -1) {
+    while ((c = getopt(argc, argv, "i:")) != -1) {
         switch(c) {
             case 'i':
                 input_file = optarg;
-                break;
-            case 'd':
-                debug_mode = 1;
                 break;
         }
     }
